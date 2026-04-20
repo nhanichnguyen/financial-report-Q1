@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuộc Thanh Lọc 14 Nghìn Tỷ — Quỹ Đầu Tư Việt Nam Q1/2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #122040;
+    --navy-light: #1a3260;
+    --gold: #c9a84c;
+    --gold-light: #e8c878;
+    --gold-dim: #9a7a35;
+    --red: #e84040;
+    --green: #2ecc71;
+    --teal: #00b4d8;
+    --white: #f5f0e8;
+    --white-dim: #c8c0b0;
+    --gray: #8a8070;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 8% 8%;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 70% 30%, #1a3260 0%, #0a1628 60%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(201,168,76,0.05) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(201,168,76,0.05) 80px);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    max-width: 900px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--white-dim);
+    max-width: 620px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    border-left: 2px solid var(--gold);
+    padding-left: 1rem;
+  }
+  .hero-meta-item .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .hero-meta-item .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .hero-meta-item .value.neg { color: var(--red); }
+  .hero-meta-item .value.pos { color: var(--green); }
+  .hero-meta-item .value.gold { color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    right: 8%;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--gray), transparent);
+  }
+
+  /* ─── LAYOUT ─── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 6%; }
+
+  section { padding: 5rem 0; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::before {
+    content: attr(data-num);
+    font-size: 0.55rem;
+    color: var(--gold-dim);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--gold-light);
+  }
+
+  p { margin-bottom: 1rem; color: var(--white-dim); font-size: 0.97rem; }
+
+  p strong { color: var(--white); font-weight: 600; }
+
+  /* ─── KPI CARDS ─── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.15);
+    margin: 3rem 0;
+  }
+  .kpi-card {
+    background: var(--navy-mid);
+    padding: 1.75rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .kpi-card:hover { background: var(--navy-light); }
+  .kpi-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--gold);
+  }
+  .kpi-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .kpi-card .num.neg { color: var(--red); }
+  .kpi-card .num.pos { color: var(--green); }
+  .kpi-card .num.gold { color: var(--gold); }
+  .kpi-card .num.teal { color: var(--teal); }
+  .kpi-card .desc {
+    font-size: 0.78rem;
+    color: var(--gray);
+    line-height: 1.4;
+  }
+  .kpi-card .desc strong { color: var(--white-dim); font-weight: 500; }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent);
+    margin: 1rem 0;
+  }
+
+  /* ─── CHART WRAPPERS ─── */
+  .chart-wrap {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 2px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+  .chart-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .chart-subtitle {
+    font-size: 0.82rem;
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+  }
+  .chart-canvas-wrap {
+    position: relative;
+  }
+
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .chart-row { grid-template-columns: 1fr; }
+    .hero-meta { gap: 1.5rem; }
+  }
+
+  /* ─── INSIGHT BOXES ─── */
+  .insight {
+    border-left: 3px solid var(--gold);
+    padding: 1.25rem 1.5rem;
+    background: rgba(201,168,76,0.05);
+    margin: 1.5rem 0;
+    position: relative;
+  }
+  .insight.red { border-color: var(--red); background: rgba(232,64,64,0.05); }
+  .insight.green { border-color: var(--green); background: rgba(46,204,113,0.05); }
+  .insight.teal { border-color: var(--teal); background: rgba(0,180,216,0.05); }
+
+  .insight-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .insight.red .insight-label { color: var(--red); }
+  .insight.green .insight-label { color: var(--green); }
+  .insight.teal .insight-label { color: var(--teal); }
+
+  .insight p { color: var(--white-dim); font-size: 0.9rem; margin: 0; }
+
+  /* ─── TABLE ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 1.5rem 0;
+  }
+  .data-table thead tr {
+    background: rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+  .data-table thead th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .data-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s;
+  }
+  .data-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+  .data-table td {
+    padding: 0.7rem 1rem;
+    color: var(--white-dim);
+  }
+  .data-table td.fund-name { color: var(--white); font-weight: 500; }
+  .data-table td.pos { color: var(--green); font-weight: 500; font-family: 'IBM Plex Mono', monospace; }
+  .data-table td.neg { color: var(--red); font-weight: 500; font-family: 'IBM Plex Mono', monospace; }
+  .data-table td.mono { font-family: 'IBM Plex Mono', monospace; }
+  .data-table tr.highlight { background: rgba(201,168,76,0.07); }
+
+  /* ─── PULLQUOTE ─── */
+  .pullquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--gold-light);
+    padding: 2.5rem 0;
+    border-top: 1px solid rgba(201,168,76,0.3);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    margin: 3rem 0;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ─── TWO-COL TEXT ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin: 2rem 0;
+  }
+  @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+  /* ─── SIGNAL CARDS ─── */
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .signal-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem;
+    position: relative;
+  }
+  .signal-card .icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  .signal-card h4 {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+  .signal-card p { font-size: 0.8rem; color: var(--gray); margin: 0; }
+  .signal-card.red-top { border-top: 2px solid var(--red); }
+  .signal-card.green-top { border-top: 2px solid var(--green); }
+  .signal-card.gold-top { border-top: 2px solid var(--gold); }
+  .signal-card.teal-top { border-top: 2px solid var(--teal); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 4rem 0 3rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    margin-top: 5rem;
+  }
+  .footer-disclaimer {
+    font-size: 0.72rem;
+    color: var(--gray);
+    line-height: 1.6;
+    max-width: 700px;
+  }
+  .footer-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  /* ─── SECTION BG ALTERNATES ─── */
+  .bg-alt {
+    background: linear-gradient(180deg, var(--navy) 0%, rgba(18,32,64,0.5) 50%, var(--navy) 100%);
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 6%;
+    background: rgba(10,22,40,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--gold-dim);
+  }
+  .nav-brand { color: var(--gold); font-weight: 500; }
+
+  /* ─── CASH WEIGHT BAR ─── */
+  .cash-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.82rem;
+  }
+  .cash-bar-name { width: 160px; color: var(--white); font-size: 0.78rem; flex-shrink: 0; }
+  .cash-bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 0;
+    position: relative;
+    overflow: visible;
+  }
+  .cash-bar-fill {
+    height: 100%;
+    background: var(--teal);
+    position: relative;
+    transition: width 1s ease;
+  }
+  .cash-bar-fill.prev { background: rgba(255,255,255,0.2); }
+  .cash-bar-value { width: 50px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">FIINGROUP × SENIOR ANALYSIS</span>
+  <span>Q1/2026 · FUND MONITOR</span>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-badge" data-num="">FiinGroup Senior Research Desk · Phát hành 03/04/2026</div>
+  <h1>Cuộc Thanh Lọc<br><em>14 Nghìn Tỷ</em><br>& Dấu Chân Smart Money</h1>
+  <p class="hero-subtitle">
+    Phân tích toàn diện hiệu suất, dòng tiền và phân bổ tài sản của 108 quỹ đầu tư tại Việt Nam — 
+    Quỹ Cổ phiếu, Trái phiếu và Cân bằng — trong bối cảnh thị trường biến động mạnh nhất kể từ tháng 10/2022.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Rút ròng Q1/2026</span>
+      <span class="value neg">−14,4K tỷ</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">VN-Index Q1</span>
+      <span class="value neg">−6,2%</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Top quỹ chủ động</span>
+      <span class="value pos">+6,7%</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">NAV theo dõi</span>
+      <span class="value gold">246K tỷ</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Quỹ CP âm tháng 3</span>
+      <span class="value neg">82/82</span>
+    </div>
+  </div>
+  <span class="hero-scroll">SCROLL TO READ</span>
+</section>
+
+<!-- ─── SECTION 1: TỔNG QUAN ─── -->
+<section>
+  <div class="container">
+    <div class="section-label" data-num="01 —">Điểm nhấn chính & Hiệu suất Tổng quan</div>
+    <h2>Thị trường biến động cực đoan —<br>Bức tranh phân hóa khốc liệt</h2>
+    <p>Quý 1/2026 chứng kiến cuộc thanh lọc tàn khốc nhất trong vòng 3 năm: <strong>VN-Index lao dốc −10,95% chỉ riêng tháng 3/2026</strong>, xóa sạch đà tăng của 4 tháng trước đó. Nguyên nhân: căng thẳng Trung Đông leo thang đột ngột, dòng vốn ngoại rút ròng cơ học khỏi ETF, và 320/404 cổ phiếu cùng giảm. Nhưng trong đống đổ nát đó — smart money đã để lại dấu chân rõ ràng.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="num neg">−7,8%</span>
+        <div class="desc"><strong>Quỹ CP trung bình</strong><br>Tháng 3/2026</div>
+      </div>
+      <div class="kpi-card">
+        <span class="num pos">+0,5%</span>
+        <div class="desc"><strong>Quỹ TP trung bình</strong><br>Tháng 3/2026</div>
+      </div>
+      <div class="kpi-card">
+        <span class="num neg">−4,2%</span>
+        <div class="desc"><strong>Quỹ CB trung bình</strong><br>Tháng 3/2026</div>
+      </div>
+      <div class="kpi-card">
+        <span class="num neg">−11,0%</span>
+        <div class="desc"><strong>VN-Index</strong><br>Tháng 3/2026 · Tệ nhất từ 10/2022</div>
+      </div>
+      <div class="kpi-card">
+        <span class="num neg">−11,3%</span>
+        <div class="desc"><strong>VN30</strong><br>Tháng 3/2026</div>
+      </div>
+      <div class="kpi-card">
+        <span class="num pos">+0,5%</span>
+        <div class="desc"><strong>Lãi suất tiết kiệm</strong><br>Tháng 3 · Big 4 banks</div>
+      </div>
+    </div>
+
+    <!-- Chart 1: Performance Comparison Bar -->
+    <div class="chart-wrap">
+      <div class="chart-title">Biểu đồ 01 — So sánh Hiệu suất Tổng hợp</div>
+      <div class="chart-subtitle">Tháng 3/2026 vs Q1/2026 — Tất cả loại quỹ mở & Chỉ số tham chiếu (Nguồn: FiinPro-X)</div>
+      <div class="chart-canvas-wrap" style="height:300px">
+        <canvas id="chart-overview-bar"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <!-- NAV Distribution Donut -->
+      <div class="chart-wrap">
+        <div class="chart-title">Biểu đồ 02 — Phân bổ NAV theo loại quỹ</div>
+        <div class="chart-subtitle">Tổng NAV: 246,000 tỷ đồng · 31/03/2026</div>
+        <div class="chart-canvas-wrap" style="height:250px">
+          <canvas id="chart-nav-donut"></canvas>
+        </div>
+      </div>
+      <!-- Quarterly flow line -->
+      <div class="chart-wrap">
+        <div class="chart-title">Biểu đồ 03 — Dòng tiền ròng theo Quý</div>
+        <div class="chart-subtitle">2023–Q1/2026 · nghìn tỷ đồng · 81 quỹ CP + 27 quỹ TP</div>
+        <div class="chart-canvas-wrap" style="height:250px">
+          <canvas id="chart-quarterly-flow"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <span class="insight-label">① Tín hiệu vĩ mô</span>
+      <p>82/82 quỹ cổ phiếu cùng âm tháng 3 — mức đồng thuận tiêu cực hiếm gặp, lần cuối xảy ra tháng 10/2022. Tuy nhiên, <strong>biên độ thua kém VN-Index có sự phân hóa cực rõ</strong>: quỹ chủ động mất ít hơn 1–5 điểm, ETF theo VN30 mất thêm 1–3 điểm so với chỉ số.</p>
+    </div>
+    <div class="insight green">
+      <span class="insight-label">② Tín hiệu đảo chiều tháng 3</span>
+      <p>Dù tổng Q1 rút ròng 14,4K tỷ, <strong>riêng tháng 3/2026 quỹ mở cổ phiếu nội địa ghi nhận vào ròng +0,9K tỷ</strong> — lần đầu tiên sau nhiều tháng liên tiếp. Dòng tiền nội đang quay lại với quỹ chủ động có alpha bền vững.</p>
+    </div>
+    <div class="insight red">
+      <span class="insight-label">③ Risk premium trái phiếu biến mất</span>
+      <p>Quỹ TP trung bình chỉ đạt <strong>+1,5% trong cả Q1</strong> trong khi lãi suất tiết kiệm Big 4 đã leo lên 4,9%/năm (~1,4%/Q). Sau phí quản lý, risk premium thực âm — lý do kinh tế học thuần túy cho xu hướng rút vốn về ngân hàng.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 2: QUỸ CỔ PHIẾU ─── -->
+<section class="bg-alt">
+  <div class="container">
+    <div class="section-label" data-num="02 —">Quỹ Cổ Phiếu</div>
+    <h2>Chủ động thắng thụ động —<br>Alpha 15–17 điểm phần trăm</h2>
+
+    <div class="two-col">
+      <div>
+        <p>Đây là quý chứng minh luận điểm "quỹ chủ động có giá trị" một cách thuyết phục nhất trong nhiều năm. <strong>VESAF của VinaCapital đạt +6,2% và VMEEF +6,7% trong Q1</strong>, trong khi các ETF bám theo VN30 mất từ −9,8% đến −10,1%. Khoảng cách alpha 15–17 điểm phần trăm — kỷ lục trong 5 năm gần nhất.</p>
+        <p>Chiến lược bí quyết của VinaCapital: <strong>nắm giữ BVH và REE</strong> — hai mã phòng thủ hưởng lợi môi trường lãi suất cao — đồng thời tránh hoàn toàn VIC, VCB, SSI là những cổ phiếu mà ETF buộc phải giữ theo trọng số index.</p>
+      </div>
+      <div>
+        <div class="insight">
+          <span class="insight-label">ETF Bẫy Thụ Động</span>
+          <p>Các ETF ngoại (Fubon FTSE VN, VNM-ETF) và ETF nội (E1VFVN30, KIM VN30) <strong>buộc phải nắm giữ cổ phiếu bị khối ngoại xả ròng cơ học</strong>. VIC bán ròng tháng 3 liên tiếp. Fubon và VanEck rút kỷ lục, không thể thoát hàng nhanh — bẫy thanh khoản điển hình khi dòng vốn đảo chiều.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Individual fund performance horizontal bar -->
+    <div class="chart-wrap">
+      <div class="chart-title">Biểu đồ 04 — Hiệu suất Q1/2026 các quỹ tiêu biểu</div>
+      <div class="chart-subtitle">% thay đổi NAV/CCQ · NAV >1,000 tỷ đồng · Sắp xếp giảm dần (Nguồn: FiinPro-X)</div>
+      <div class="chart-canvas-wrap" style="height:420px">
+        <canvas id="chart-fund-perf"></canvas>
+      </div>
+    </div>
+
+    <!-- Fund detail table -->
+    <h3>Bảng Hiệu Suất Chi Tiết — Quỹ Cổ Phiếu Lớn</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Quỹ</th>
+          <th>NAV (tỷ)</th>
+          <th>T3/2026</th>
+          <th>Q1/2026</th>
+          <th>Q1/2025</th>
+          <th>1 Năm</th>
+          <th>3 Năm</th>
+          <th>Loại</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td class="fund-name">VINACAPITAL-VMEEF</td>
+          <td class="mono">2,395</td>
+          <td class="neg">−6,5%</td>
+          <td class="pos">+6,7%</td>
+          <td class="neg">−2,9%</td>
+          <td class="pos">+18,0%</td>
+          <td class="mono">—</td>
+          <td>Chủ động</td>
+        </tr>
+        <tr class="highlight">
+          <td class="fund-name">VINACAPITAL-VESAF</td>
+          <td class="mono">2,529</td>
+          <td class="neg">−5,9%</td>
+          <td class="pos">+6,2%</td>
+          <td class="neg">−3,8%</td>
+          <td class="pos">+17,3%</td>
+          <td class="pos">+19,2%</td>
+          <td>Chủ động</td>
+        </tr>
+        <tr class="highlight">
+          <td class="fund-name">VINACAPITAL-VEOF (VVF)</td>
+          <td class="mono">1,772</td>
+          <td class="neg">−6,9%</td>
+          <td class="pos">+2,6%</td>
+          <td class="neg">−2,1%</td>
+          <td class="pos">+19,0%</td>
+          <td class="pos">+18,8%</td>
+          <td>Chủ động</td>
+        </tr>
+        <tr>
+          <td class="fund-name">VCBF-BCF</td>
+          <td class="mono">1,521</td>
+          <td class="neg">−7,2%</td>
+          <td class="pos">+0,3%</td>
+          <td class="neg">−1,8%</td>
+          <td class="pos">+25,5%</td>
+          <td class="pos">+20,4%</td>
+          <td>Chủ động</td>
+        </tr>
+        <tr>
+          <td class="fund-name">SSI-SCA</td>
+          <td class="mono">1,364</td>
+          <td class="neg">−7,1%</td>
+          <td class="neg">−0,3%</td>
+          <td class="neg">−1,1%</td>
+          <td class="pos">+13,0%</td>
+          <td class="pos">+22,4%</td>
+          <td>Chủ động</td>
+        </tr>
+        <tr>
+          <td class="fund-name">VLGF (VinaCapital)</td>
+          <td class="mono">4,802</td>
+          <td class="neg">−8,0%</td>
+          <td class="neg">−0,9%</td>
+          <td class="neg">−3,9%</td>
+          <td class="pos">+11,1%</td>
+          <td class="pos">+16,7%</td>
+          <td>Chủ động</td>
+        </tr>
+        <tr style="border-top: 1px solid rgba(201,168,76,0.2);">
+          <td class="fund-name">Diamond ETF (FUEVFVND)</td>
+          <td class="mono">12,043</td>
+          <td class="neg">−9,8%</td>
+          <td class="neg">−4,3%</td>
+          <td class="neg">−5,8%</td>
+          <td class="pos">+16,1%</td>
+          <td class="pos">+18,0%</td>
+          <td>ETF Nội</td>
+        </tr>
+        <tr>
+          <td class="fund-name">Fubon FTSE Vietnam</td>
+          <td class="mono">10,425</td>
+          <td class="neg">−11,7%</td>
+          <td class="neg">−7,2%</td>
+          <td class="pos">+6,6%</td>
+          <td class="pos">+46,1%</td>
+          <td class="pos">+17,6%</td>
+          <td>ETF Ngoại</td>
+        </tr>
+        <tr>
+          <td class="fund-name">VanEck Vietnam ETF (VNM)</td>
+          <td class="mono">13,603</td>
+          <td class="neg">−9,8%</td>
+          <td class="neg">−8,0%</td>
+          <td class="pos">+8,8%</td>
+          <td class="pos">+41,5%</td>
+          <td class="pos">+17,1%</td>
+          <td>ETF Ngoại</td>
+        </tr>
+        <tr>
+          <td class="fund-name">E1VFVN30 (DCVFMVN30)</td>
+          <td class="mono">5,782</td>
+          <td class="neg">−11,1%</td>
+          <td class="neg">−9,8%</td>
+          <td class="pos">+1,3%</td>
+          <td class="pos">+36,0%</td>
+          <td class="pos">+20,9%</td>
+          <td>ETF VN30</td>
+        </tr>
+        <tr>
+          <td class="fund-name">KIM GROWTH VN30 ETF</td>
+          <td class="mono">2,355</td>
+          <td class="neg">−11,3%</td>
+          <td class="neg">−10,1%</td>
+          <td class="pos">+1,2%</td>
+          <td class="pos">+35,7%</td>
+          <td class="pos">+20,6%</td>
+          <td>ETF VN30</td>
+        </tr>
+        <tr style="background: rgba(255,255,255,0.03); border-top: 1px solid rgba(201,168,76,0.2);">
+          <td class="fund-name" style="color:var(--gold)">VN-Index (chuẩn)</td>
+          <td class="mono">—</td>
+          <td class="neg">−11,0%</td>
+          <td class="neg">−6,2%</td>
+          <td class="pos">+3,2%</td>
+          <td class="pos">+28,1%</td>
+          <td class="pos">+16,3%</td>
+          <td>Benchmark</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pullquote">
+      "52/82 quỹ cổ phiếu đánh bại VN-Index trong tháng 3 — chứng minh rằng kỹ năng lựa chọn cổ phiếu có giá trị thực sự khi thị trường hoảng loạn."
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 3: TRÁI PHIẾU & CÂN BẰNG ─── -->
+<section>
+  <div class="container">
+    <div class="section-label" data-num="03 —">Quỹ Trái Phiếu & Cân Bằng</div>
+    <h2>"Hầm trú ẩn" thất thủ —<br>Tiết kiệm thắng quỹ trái phiếu</h2>
+
+    <div class="two-col">
+      <div>
+        <h3>Quỹ Trái Phiếu — Khi tiết kiệm thắng</h3>
+        <p>Nghịch lý Q1/2026 bộc lộ rõ ràng: <strong>quỹ TP trung bình chỉ đạt +1,5% trong cả quý</strong>, nhỉnh hơn lãi suất tiết kiệm Big 4 đúng 0,1%. Sau khi trừ phí quản lý (thường 0,5–1%/năm), nhà đầu tư thực chất bị thua thiệt so với kênh tiết kiệm không rủi ro.</p>
+        <p>Ngoại lệ đáng chú ý: <strong>VCBF-FIF đạt 3,0% trong Q1</strong> — cao nhất nhóm, nhờ chiến lược phân bổ linh hoạt vào trái phiếu doanh nghiệp lãi suất cao. Quỹ Lighthouse (LHBF) cũng ghi dấu nhờ khoản thu nhập bất thường từ việc bán cổ phiếu NAB.</p>
+      </div>
+      <div>
+        <h3>TCBF Shock — Rủi ro thanh khoản</h3>
+        <div class="insight red">
+          <span class="insight-label">⚠ Cảnh báo thanh khoản</span>
+          <p>TCBF — từng là quỹ trái phiếu lớn nhất Việt Nam — chứng kiến <strong>NAV giảm 44% từ T11/2025 xuống còn 6,800 tỷ</strong>, riêng tháng 3 rút ròng −1,524 tỷ. NAV/share vẫn tăng +2,5% nhưng quy mô co lại mạnh → rủi ro vòng xoáy thanh khoản. Tổng rút ròng TCBF trong Q1: −3,240 tỷ đồng.</p>
+        </div>
+        <div class="insight green">
+          <span class="insight-label">Quỹ CB nổi bật</span>
+          <p><strong>TCFF (Techcom Cân bằng) +7,2% trong Q1</strong> — duy nhất dương tháng 3 (+0,1%). Nghịch lý thú vị: dù hiệu suất dẫn đầu, quỹ vẫn bị rút ròng tháng thứ 3 liên tiếp với hơn 18 tỷ trong Q1. Nhà đầu tư rút tiền khi định giá khả quan hơn — hành vi <em>contra-momentum</em>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-wrap">
+        <div class="chart-title">Biểu đồ 05 — Hiệu suất Quỹ Trái phiếu Q1/2026</div>
+        <div class="chart-subtitle">vs Lãi suất tiết kiệm 1.4%/Q · Benchmark Big 4 banks</div>
+        <div class="chart-canvas-wrap" style="height:320px">
+          <canvas id="chart-bond-perf"></canvas>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Biểu đồ 06 — Hiệu suất Quỹ Cân bằng Q1/2026</div>
+        <div class="chart-subtitle">11/12 quỹ CB âm tháng 3 · TCFF duy nhất dương</div>
+        <div class="chart-canvas-wrap" style="height:320px">
+          <canvas id="chart-balanced-perf"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <h3>So Sánh 3 Loại Quỹ vs Tiết Kiệm</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Loại Tài sản</th>
+          <th>Rủi ro</th>
+          <th>Tháng 3/2026</th>
+          <th>Q1/2026</th>
+          <th>Ghi chú</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fund-name">Quỹ Cổ Phiếu</td>
+          <td>Rất cao</td>
+          <td class="neg">−7,8%</td>
+          <td class="neg">−1,7%</td>
+          <td>52/82 vượt VN-Index T3</td>
+        </tr>
+        <tr>
+          <td class="fund-name">Quỹ Trái Phiếu</td>
+          <td>Thấp</td>
+          <td class="pos">+0,5%</td>
+          <td class="pos">+1,5%</td>
+          <td>Risk premium thực âm sau phí</td>
+        </tr>
+        <tr>
+          <td class="fund-name">Quỹ Cân Bằng</td>
+          <td>Trung bình</td>
+          <td class="neg">−4,2%</td>
+          <td class="neg">−0,7%</td>
+          <td>TCFF ngoại lệ +7,2% Q1</td>
+        </tr>
+        <tr class="highlight">
+          <td class="fund-name">Lãi suất tiết kiệm Big 4</td>
+          <td style="color:var(--green)">Zero</td>
+          <td class="pos">+0,5%</td>
+          <td class="pos">+1,4%</td>
+          <td>4,9%/năm · Không rủi ro</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── SECTION 4: DÒNG TIỀN ─── -->
+<section class="bg-alt">
+  <div class="container">
+    <div class="section-label" data-num="04 —">Dòng tiền chi tiết & Phân bổ tài sản</div>
+    <h2>ETF ngoại tháo chạy —<br>Quỹ mở nội địa phản công</h2>
+
+    <p>Tổng rút ròng Q1/2026 đạt <strong>14,4 nghìn tỷ đồng</strong> — gấp 2,6 lần so với cùng kỳ 2025, cao hơn 48% so với Q4/2025 và tương đương 41,7% tổng rút ròng cả năm 2025. Đây là quý thứ 5 liên tiếp dòng vốn ở trạng thái âm. Tuy nhiên, <strong>câu chuyện chi tiết phức tạp hơn con số gộp</strong>.</p>
+
+    <div class="chart-row">
+      <div class="chart-wrap">
+        <div class="chart-title">Biểu đồ 07 — Dòng tiền ròng hàng tháng</div>
+        <div class="chart-subtitle">T4/2024 – T3/2026 · nghìn tỷ đồng · Quỹ CP + Quỹ TP</div>
+        <div class="chart-canvas-wrap" style="height:260px">
+          <canvas id="chart-monthly-flow"></canvas>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Biểu đồ 08 — Top Dòng tiền tháng 3/2026</div>
+        <div class="chart-subtitle">Nghìn tỷ đồng · Vào ròng vs Rút ròng</div>
+        <div class="chart-canvas-wrap" style="height:260px">
+          <canvas id="chart-top-flows"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3>Top 5 Vào Ròng Tháng 3</h3>
+        <table class="data-table">
+          <thead><tr><th>Quỹ</th><th>T3 (tỷ)</th><th>Q1 (tỷ)</th></tr></thead>
+          <tbody>
+            <tr><td class="fund-name">EVESG</td><td class="pos">+348</td><td class="pos">+849</td></tr>
+            <tr><td class="fund-name">DCDS</td><td class="pos">+197</td><td class="pos">+502</td></tr>
+            <tr><td class="fund-name">VCBF-BCF</td><td class="pos">+122</td><td class="pos">+264</td></tr>
+            <tr><td class="fund-name">VINACAPITAL-VMEEF</td><td class="pos">+111</td><td class="pos">+113</td></tr>
+            <tr><td class="fund-name">E1VFVN30</td><td class="pos">+109</td><td class="neg">−241</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Top 5 Rút Ròng Tháng 3</h3>
+        <table class="data-table">
+          <thead><tr><th>Quỹ</th><th>T3 (tỷ)</th><th>Q1 (tỷ)</th></tr></thead>
+          <tbody>
+            <tr><td class="fund-name">VNM-ETF</td><td class="neg">−1,966</td><td class="neg">−1,022</td></tr>
+            <tr><td class="fund-name">Diamond ETF</td><td class="neg">−1,093</td><td class="neg">−932</td></tr>
+            <tr><td class="fund-name">TCBF</td><td class="neg">−1,524</td><td class="neg">−3,240</td></tr>
+            <tr><td class="fund-name">VEIL</td><td class="neg">−674</td><td class="neg">−7,267</td></tr>
+            <tr><td class="fund-name">Fubon FTSE VN</td><td class="neg">−365</td><td class="neg">−1,063</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Cash weight section -->
+    <h3 style="margin-top:3rem">Tỷ Trọng Tiền Mặt — Các Quỹ Lớn "Nạp Đạn"</h3>
+    <p>20/36 quỹ mở cổ phiếu tăng tỷ trọng tiền trong tháng 3, đặc biệt tập trung ở nhóm NAV 5–8 nghìn tỷ. <strong>Đây là tín hiệu chuẩn bị giải ngân, không phải rút lui</strong> — khi DCDS giảm từ 15,1% xuống đó là tín hiệu mua rõ ràng.</p>
+
+    <div class="chart-wrap">
+      <div class="chart-title">Biểu đồ 09 — Tỷ trọng tiền mặt T2 → T3/2026</div>
+      <div class="chart-subtitle">Nhóm TĂNG tỷ trọng tiền · Quỹ quy mô lớn "nạp đạn" chờ giải ngân</div>
+      <div style="margin-top:1.5rem">
+        <div class="cash-bar-item">
+          <span class="cash-bar-name">VFMVSF</span>
+          <div class="cash-bar-track">
+            <div style="position:relative;height:100%">
+              <div style="width:72%;background:rgba(255,255,255,0.15);height:100%;position:absolute"></div>
+              <div style="width:100%;background:var(--teal);height:100%;position:absolute;opacity:0.85"></div>
+            </div>
+          </div>
+          <span style="width:80px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--white-dim)">9,0% → <span style="color:var(--teal)">12,5%</span></span>
+        </div>
+        <div class="cash-bar-item">
+          <span class="cash-bar-name">DCDS</span>
+          <div class="cash-bar-track">
+            <div style="position:relative;height:100%">
+              <div style="width:74.2%;background:rgba(255,255,255,0.15);height:100%;position:absolute"></div>
+              <div style="width:100%;background:var(--teal);height:100%;position:absolute;opacity:0.85"></div>
+            </div>
+          </div>
+          <span style="width:80px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--white-dim)">11,2% → <span style="color:var(--teal)">15,1%</span></span>
+        </div>
+        <div class="cash-bar-item">
+          <span class="cash-bar-name">VINACAPITAL-VESAF</span>
+          <div class="cash-bar-track">
+            <div style="position:relative;height:100%">
+              <div style="width:88.3%;background:rgba(255,255,255,0.15);height:100%;position:absolute"></div>
+              <div style="width:100%;background:var(--teal);height:100%;position:absolute;opacity:0.85"></div>
+            </div>
+          </div>
+          <span style="width:80px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--white-dim)">9,1% → <span style="color:var(--teal)">10,3%</span></span>
+        </div>
+        <div class="cash-bar-item">
+          <span class="cash-bar-name">VINACAPITAL-VMEEF</span>
+          <div class="cash-bar-track">
+            <div style="position:relative;height:100%">
+              <div style="width:77.7%;background:rgba(255,255,255,0.15);height:100%;position:absolute"></div>
+              <div style="width:100%;background:var(--teal);height:100%;position:absolute;opacity:0.85"></div>
+            </div>
+          </div>
+          <span style="width:80px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--white-dim)">7,3% → <span style="color:var(--teal)">9,4%</span></span>
+        </div>
+        <div class="cash-bar-item">
+          <span class="cash-bar-name">VINACAPITAL-VEOF</span>
+          <div class="cash-bar-track">
+            <div style="position:relative;height:100%">
+              <div style="width:31.6%;background:rgba(255,255,255,0.15);height:100%;position:absolute"></div>
+              <div style="width:100%;background:var(--teal);height:100%;position:absolute;opacity:0.85"></div>
+            </div>
+          </div>
+          <span style="width:80px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--white-dim)">3,0% → <span style="color:var(--teal)">9,5%</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 5: SMART MONEY ─── -->
+<section>
+  <div class="container">
+    <div class="section-label" data-num="05 —">Smart Money Flow & Phân bổ danh mục</div>
+    <h2>Asset Swap 2026 —<br>Large-cap "máy rút tiền", Midcap đích đến</h2>
+
+    <p>Tháng 3/2026 đánh dấu <strong>cuộc đại di cư tài sản</strong> trong danh mục 72 quỹ trong và ngoài nước. Luồng giao dịch cho thấy chiến lược rõ ràng: dùng các blue-chip vốn hóa lớn như VIC, STB, MBB làm "ATM" để tái phân bổ sang nhóm midcap có câu chuyện riêng.</p>
+
+    <div class="chart-row">
+      <div class="chart-wrap">
+        <div class="chart-title">Biểu đồ 10 — Top Mua Ròng tháng 3/2026</div>
+        <div class="chart-subtitle">Triệu cổ phiếu · 72 quỹ trong và ngoài nước (FiinPro-X)</div>
+        <div class="chart-canvas-wrap" style="height:280px">
+          <canvas id="chart-buy-stocks"></canvas>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Biểu đồ 11 — Top Bán Ròng tháng 3/2026</div>
+        <div class="chart-subtitle">Triệu cổ phiếu · Áp lực bán từ ETF cơ cấu + quỹ chủ động</div>
+        <div class="chart-canvas-wrap" style="height:280px">
+          <canvas id="chart-sell-stocks"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="signal-grid">
+      <div class="signal-card green-top">
+        <span class="icon">🏗️</span>
+        <h4>HPG — Vua Thép Trở Lại</h4>
+        <p>38,7 triệu CP mua ròng — dẫn đầu toàn bộ thị trường. Lực cầu từ PYN Elite và Fubon FTSE. Chu kỳ thép phục hồi + hạ tầng công nghiệp.</p>
+      </div>
+      <div class="signal-card green-top">
+        <span class="icon">💼</span>
+        <h4>VCI — Đồng Thuận 39 Quỹ</h4>
+        <p>Institutional consensus mạnh nhất tháng 3. 39 quỹ cùng tham gia mua VCI — tín hiệu sector tài chính phục hồi được định giá hấp dẫn.</p>
+      </div>
+      <div class="signal-card gold-top">
+        <span class="icon">🏭</span>
+        <h4>IDC — Hưởng Lợi FDI</h4>
+        <p>BĐS Khu Công Nghiệp với dòng FDI vào Việt Nam duy trì mạnh. DCDS, DCDE, VMEEF đồng thuận mua vào — câu chuyện dài hạn.</p>
+      </div>
+      <div class="signal-card red-top">
+        <span class="icon">📉</span>
+        <h4>VIC — Bán Ròng Liên Tiếp</h4>
+        <p>Tháng thứ 3 liên tiếp bị bán ròng. Chủ yếu từ ETF cơ cấu: Fubon FTSE VN và VanEck Vietnam ETF thoát hàng không thể tránh.</p>
+      </div>
+      <div class="signal-card red-top">
+        <span class="icon">🏦</span>
+        <h4>STB, MBB — "ATM" Ngân Hàng</h4>
+        <p>PYN Elite Fund giảm tỷ trọng mạnh cả STB và MBB trong tháng. Áp lực bán từ nhóm NH tập trung — rotation sang midcap.</p>
+      </div>
+      <div class="signal-card teal-top">
+        <span class="icon">⚡</span>
+        <h4>VIX, TNG — Midcap Nổi</h4>
+        <p>Tài chính (VIX) và may mặc xuất khẩu (TNG) được mua ròng đáng kể — hưởng lợi chuỗi cung ứng và phục hồi tiêu dùng.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 6: VAI TRÒ KINH TẾ ─── -->
+<section class="bg-alt">
+  <div class="container">
+    <div class="section-label" data-num="06 —">Vai trò Quỹ đầu tư với nền kinh tế</div>
+    <h2>Trụ cột thị trường vốn —<br>Hơn cả kênh sinh lời cá nhân</h2>
+    <div class="two-col">
+      <div>
+        <p>Với tổng NAV hơn <strong>246 nghìn tỷ đồng (~10,3 tỷ USD, tương đương ~2,6% GDP)</strong>, hệ sinh thái quỹ đầu tư Việt Nam đóng vai trò then chốt vượt ra ngoài mục tiêu sinh lợi cá nhân.</p>
+        <p>Dòng tiền rút ròng 14,4K tỷ là <strong>tín hiệu cảnh báo sớm quan trọng</strong> cho hoạch định chính sách: P/E thị trường ~21x tiệm cận ngưỡng nguy hiểm, lãi suất tiết kiệm cạnh tranh leo thang, môi trường đầu tư cần cải thiện để giữ vốn nội địa.</p>
+      </div>
+      <div>
+        <div class="insight teal">
+          <span class="insight-label">Cổng vốn ngoại gián tiếp</span>
+          <p>ETF như VNM, Fubon, Diamond là cửa ngõ chính cho dòng vốn quốc tế vào Việt Nam. Rút ròng ETF ngoại phản ánh <strong>kỳ vọng toàn cầu về EM</strong>, không nhất thiết là vấn đề nội tại. FTSE Russell nâng hạng VN sẽ là game-changer — bơm tự động hàng tỷ USD ETF thụ động.</p>
+        </div>
+        <div class="insight">
+          <span class="insight-label">Ổn định & quản trị</span>
+          <p>52/82 quỹ CP cung cấp lực cầu chuyên nghiệp trong giai đoạn khủng hoảng, giảm biến động thị trường. Quỹ chuyên nghiệp tham dự ĐHCĐ và yêu cầu minh bạch — <strong>áp lực tích cực nâng chuẩn quản trị DN</strong> theo tiêu chuẩn quốc tế.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 7: OUTLOOK Q2 ─── -->
+<section>
+  <div class="container">
+    <div class="section-label" data-num="07 —">Tín hiệu theo dõi & Định hướng Q2/2026</div>
+    <h2>5 Tín Hiệu Định Hướng<br>Q2/2026</h2>
+
+    <div class="chart-wrap" style="margin-bottom:2rem">
+      <div class="chart-title">Biểu đồ 12 — Ma trận Rủi ro — Cơ hội Q2/2026</div>
+      <div class="chart-subtitle">Xác suất tác động vs Mức độ ảnh hưởng lên thị trường quỹ</div>
+      <div class="chart-canvas-wrap" style="height:280px">
+        <canvas id="chart-risk-matrix"></canvas>
+      </div>
+    </div>
+
+    <div class="signal-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px,1fr))">
+      <div class="signal-card red-top">
+        <span class="icon">🏦</span>
+        <h4>Quyết định Fed tháng 5</h4>
+        <p>Cắt lãi suất = kéo dòng vốn quay lại EM. Giữ nguyên = lãi suất tiết kiệm VN tiếp tục cạnh tranh với quỹ TP. Xác suất cắt 25bps: ~35%.</p>
+      </div>
+      <div class="signal-card gold-top">
+        <span class="icon">🏆</span>
+        <h4>FTSE Russell Giữa Kỳ VN</h4>
+        <p>Nâng hạng = game-changer. ETF thụ động toàn cầu tự động bơm tiền vào VN. Trigger lớn nhất cho dòng vốn ngoại bền vững trong 12 tháng tới.</p>
+      </div>
+      <div class="signal-card teal-top">
+        <span class="icon">📊</span>
+        <h4>DCDS Giảm Tiền Mặt từ 15,1%</h4>
+        <p>Tín hiệu "tay to" bắt đầu giải ngân mạnh. Khi quỹ lớn bắt đầu deploy cash, thị trường thường có 2–4 tuần hấp dẫn để theo sau.</p>
+      </div>
+      <div class="signal-card green-top">
+        <span class="icon">📈</span>
+        <h4>Kết quả KD Q1/2026 (Tháng 4)</h4>
+        <p>EPS thực tế vs kỳ vọng sẽ định giá lại thị trường. Nếu kết quả tốt hơn dự báo → catalyst cho rally Q2. Ngành ngân hàng & xuất khẩu là biến số quan trọng nhất.</p>
+      </div>
+      <div class="signal-card red-top">
+        <span class="icon">🌍</span>
+        <h4>Địa Chính Trị Trung Đông</h4>
+        <p>Leo thang = dầu tăng = lạm phát toàn cầu = Fed hawkish = EM rút vốn. Ổn định = risk-on quay trở lại. Biến số bất ngờ nhất, khó dự báo nhất.</p>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      "Tháng 3/2026 không phải là kết thúc — đó là kỳ thi sàng lọc. Smart money đã lặng lẽ mua vào trong lúc đám đông tháo chạy."
+    </div>
+
+    <div class="insight green" style="margin-top:2rem">
+      <span class="insight-label">⚠ Tuyên bố miễn trách</span>
+      <p>Báo cáo này được xây dựng từ dữ liệu FiinPro-X, chỉ nhằm mục đích nghiên cứu và tham khảo. <strong>Không cấu thành lời khuyên đầu tư.</strong> Hiệu suất quá khứ không đảm bảo tương lai. Mọi quyết định đầu tư cần dựa trên tình hình tài chính và khẩu vị rủi ro cá nhân.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-brand">FIINGROUP SENIOR RESEARCH DESK · Q1/2026 · VIETNAM FUND MONITOR · v2.0</div>
+    <p class="footer-disclaimer">
+      Dữ liệu nguồn: FiinPro-X Platform · 81 quỹ Cổ phiếu + 27 quỹ Trái phiếu · NAV tổng >246,000 tỷ đồng · Phạm vi: 01/01 – 31/03/2026.<br>
+      Phân tích & bình luận: Senior Research Desk — FiinGroup Analysis. Tái bản khi được sự chấp thuận bằng văn bản của FiinGroup.<br>
+      © 2026 FiinGroup JSC. All rights reserved. | info@fiingroup.vn | (024) 3562 6962 | fiingroup.vn
+    </p>
+  </div>
+</footer>
+
+<script>
+// ─── GLOBAL CHART DEFAULTS ───
+Chart.defaults.color = '#8a8070';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+
+const COLORS = {
+  gold: '#c9a84c', goldDim: '#9a7a35', goldLight: '#e8c878',
+  red: '#e84040', green: '#2ecc71', teal: '#00b4d8',
+  white: '#f5f0e8', whiteDim: '#c8c0b0', gray: '#8a8070',
+  navy: '#0a1628', navyMid: '#122040',
+};
+
+// ─── CHART 1: Overview Bar ───
+new Chart(document.getElementById('chart-overview-bar'), {
+  type: 'bar',
+  data: {
+    labels: ['Quỹ CP', 'Quỹ TP', 'Quỹ CB', 'VN-Index', 'VN30', 'Tiết kiệm'],
+    datasets: [
+      {
+        label: 'Tháng 3/2026',
+        data: [-7.8, 0.5, -4.2, -11.0, -11.3, 0.5],
+        backgroundColor: [-7.8, 0.5, -4.2, -11.0, -11.3, 0.5].map(v => v >= 0 ? 'rgba(46,204,113,0.75)' : 'rgba(232,64,64,0.75)'),
+        borderRadius: 0,
+      },
+      {
+        label: 'Q1/2026',
+        data: [-1.7, 1.5, -0.7, -6.2, -9.9, 1.4],
+        backgroundColor: [-1.7, 1.5, -0.7, -6.2, -9.9, 1.4].map(v => v >= 0 ? 'rgba(46,204,113,0.35)' : 'rgba(232,64,64,0.35)'),
+        borderWidth: 1,
+        borderColor: [-1.7, 1.5, -0.7, -6.2, -9.9, 1.4].map(v => v >= 0 ? 'rgba(46,204,113,0.8)' : 'rgba(232,64,64,0.8)'),
+        borderRadius: 0,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: COLORS.whiteDim, font: { size: 11 } } } },
+    scales: {
+      x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: COLORS.whiteDim } },
+      y: {
+        grid: { color: 'rgba(255,255,255,0.06)' },
+        ticks: { color: COLORS.whiteDim, callback: v => v + '%' },
+      }
+    }
+  }
+});
+
+// ─── CHART 2: NAV Donut ───
+new Chart(document.getElementById('chart-nav-donut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Quỹ Cổ phiếu (~82%)', 'Quỹ Trái phiếu (~12%)', 'Quỹ Cân bằng (~6%)'],
+    datasets: [{
+      data: [82, 12, 6],
+      backgroundColor: [COLORS.teal, COLORS.gold, 'rgba(255,255,255,0.2)'],
+      borderColor: COLORS.navyMid, borderWidth: 3,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { color: COLORS.whiteDim, font: { size: 11 }, padding: 16 } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}% NAV` } }
+    },
+    cutout: '65%'
+  }
+});
+
+// ─── CHART 3: Quarterly Flow ───
+new Chart(document.getElementById('chart-quarterly-flow'), {
+  type: 'bar',
+  data: {
+    labels: ['Q1/23','Q2/23','Q3/23','Q4/23','Q1/24','Q2/24','Q3/24','Q4/24','Q1/25','Q2/25','Q3/25','Q4/25','Q1/26'],
+    datasets: [
+      {
+        label: 'Quỹ CP',
+        data: [9.5, -11.3, -12.8, 0.0, -4.1, -10.1, -1.1, 0.0, -5.4, 0.0, -4.6, -10.1, -9.8],
+        backgroundColor: 'rgba(201,168,76,0.7)', borderRadius: 0,
+      },
+      {
+        label: 'Quỹ TP',
+        data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.4, 0.0, 0.0, 0.0, -0.8, -4.6, -4.6],
+        backgroundColor: 'rgba(46,204,113,0.5)', borderRadius: 0,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: COLORS.whiteDim, font: { size: 10 } } } },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { color: COLORS.gray, font: { size: 9 } } },
+      y: { stacked: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: COLORS.whiteDim, callback: v => v + 'K' } }
+    }
+  }
+});
+
+// ─── CHART 4: Fund Performance Horizontal Bar ───
+new Chart(document.getElementById('chart-fund-perf'), {
+  type: 'bar',
+  data: {
+    labels: ['VMEEF','VESAF','VEOF','VCBF-BCF','SSI-SCA','VLGF','Diamond ETF','VNM-ETF','Fubon FTSE','E1VFVN30','KIM VN30','VN-Index'],
+    datasets: [
+      {
+        label: 'Q1/2026',
+        data: [6.7, 6.2, 2.6, 0.3, -0.3, -0.9, -4.3, -8.0, -7.2, -9.8, -10.1, -6.2],
+        backgroundColor: [6.7, 6.2, 2.6, 0.3, -0.3, -0.9, -4.3, -8.0, -7.2, -9.8, -10.1, -6.2].map(v =>
+          v > 0 ? 'rgba(46,204,113,0.8)' : v > -5 ? 'rgba(232,64,64,0.5)' : 'rgba(232,64,64,0.85)'
+        ),
+        borderRadius: 0,
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.raw > 0 ? '+' : ''}${ctx.raw}%` } }
+    },
+    scales: {
+      x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: COLORS.whiteDim, callback: v => v + '%' } },
+      y: { grid: { display: false }, ticks: { color: COLORS.whiteDim, font: { size: 11 } } }
+    }
+  }
+});
+
+// ─── CHART 5: Bond Fund Performance ───
+new Chart(document.getElementById('chart-bond-perf'), {
+  type: 'bar',
+  data: {
+    labels: ['VCBF-FIF','LHBF','ABBF','MBBOND','DCBF','VFF','MAFF','LPBF','TCBF','DCIP','CBPF','Tiết kiệm'],
+    datasets: [{
+      label: 'Q1/2026 (%)',
+      data: [3.0, 1.6, 1.7, 1.7, 1.6, 1.6, 1.9, 1.6, 2.1, 1.4, 1.4, 1.4],
+      backgroundColor: d => {
+        const vals = [3.0, 1.6, 1.7, 1.7, 1.6, 1.6, 1.9, 1.6, 2.1, 1.4, 1.4, 1.4];
+        return vals.map(v => v > 1.4 ? 'rgba(0,180,216,0.75)' : 'rgba(232,64,64,0.6)');
+      },
+      borderRadius: 0,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      annotation: {}
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: COLORS.gray, font: { size: 9 }, maxRotation: 45 } },
+      y: {
+        grid: { color: 'rgba(255,255,255,0.05)' },
+        ticks: { color: COLORS.whiteDim, callback: v => v + '%' },
+        min: 0, max: 3.5,
+      }
+    }
+  }
+});
+
+// ─── CHART 6: Balanced Fund Performance ───
+new Chart(document.getElementById('chart-balanced-perf'), {
+  type: 'bar',
+  data: {
+    labels: ['TCFF','VCBF-CB','Tuệ Sáng','UVDIF','Manulife','Manulife ND','ENF','Bản Việt'],
+    datasets: [
+      {
+        label: 'Q1/2026',
+        data: [7.2, 1.3, 0.4, -1.4, -0.5, -1.0, -1.1, -2.2],
+        backgroundColor: [7.2, 1.3, 0.4, -1.4, -0.5, -1.0, -1.1, -2.2].map(v =>
+          v > 0 ? 'rgba(46,204,113,0.75)' : 'rgba(232,64,64,0.65)'
+        ),
+        borderRadius: 0,
+      },
+      {
+        label: 'Tháng 3',
+        data: [0.1, -4.2, -4.1, -3.0, -3.9, -4.5, -6.1, -6.5],
+        backgroundColor: 'rgba(232,64,64,0.25)',
+        borderWidth: 1, borderColor: 'rgba(232,64,64,0.6)',
+        borderRadius: 0,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: COLORS.whiteDim, font: { size: 10 } } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: COLORS.gray, font: { size: 9 } } },
+      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: COLORS.whiteDim, callback: v => v + '%' } }
+    }
+  }
+});
+
+// ─── CHART 7: Monthly Flow Line ───
+new Chart(document.getElementById('chart-monthly-flow'), {
+  type: 'line',
+  data: {
+    labels: ['T4/24','T5/24','T6/24','T7/24','T8/24','T9/24','T10/24','T11/24','T12/24','T1/25','T2/25','T3/25','T4/25','T5/25','T6/25','T7/25','T8/25','T9/25','T10/25','T11/25','T12/25','T1/26','T2/26','T3/26'],
+    datasets: [
+      {
+        label: 'Tổng dòng tiền ròng',
+        data: [-6.8,-3.4,-8.1,-4.2,-2.4,-3.5,1.7,1.9,1.3,0.8,-1.1,-2.0,-5.4,-9.0,-7.0,-5.0,-3.0,-1.0,0.0,-3.4,-4.2,-2.4,-3.5,-5.4],
+        borderColor: COLORS.gold,
+        backgroundColor: 'rgba(201,168,76,0.08)',
+        borderWidth: 2,
+        pointRadius: 3,
+        pointBackgroundColor: COLORS.gold,
+        fill: true,
+        tension: 0.3,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: COLORS.gray, font: { size: 8 }, maxRotation: 45 } },
+      y: {
+        grid: { color: 'rgba(255,255,255,0.06)' },
+        ticks: { color: COLORS.whiteDim, callback: v => v + 'K' }
+      }
+    }
+  }
+});
+
+// ─── CHART 8: Top Flows Bar ───
+new Chart(document.getElementById('chart-top-flows'), {
+  type: 'bar',
+  data: {
+    labels: ['EVESG','DCDS','VCBF-BCF','VMEEF','E1VFVN30','VNM-ETF','Diamond','TCBF','VEIL','Fubon'],
+    datasets: [{
+      label: 'Tháng 3/2026 (tỷ)',
+      data: [348, 197, 122, 111, 109, -1966, -1093, -1524, -674, -365],
+      backgroundColor: [348,197,122,111,109,-1966,-1093,-1524,-674,-365].map(v =>
+        v > 0 ? 'rgba(46,204,113,0.75)' : 'rgba(232,64,64,0.75)'
+      ),
+      borderRadius: 0,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255,255,255,0.05)' },
+        ticks: { color: COLORS.whiteDim, callback: v => (v/1000).toFixed(1) + 'K' }
+      },
+      y: { grid: { display: false }, ticks: { color: COLORS.whiteDim, font: { size: 10 } } }
+    }
+  }
+});
+
+// ─── CHART 9: Buy stocks ───
+new Chart(document.getElementById('chart-buy-stocks'), {
+  type: 'bar',
+  data: {
+    labels: ['HPG','VCI','VIB','IDC','VIX','TNG','MIG','EVF','HDG','EIB'],
+    datasets: [{
+      label: 'Mua ròng (triệu CP)',
+      data: [38.7, 17.1, 3.6, 2.8, 2.7, 1.8, 1.6, 1.2, 1.1, 1.0],
+      backgroundColor: 'rgba(46,204,113,0.7)',
+      borderRadius: 0,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: COLORS.whiteDim, font: { size: 10 } } },
+      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: COLORS.whiteDim } }
+    }
+  }
+});
+
+// ─── CHART 10: Sell stocks ───
+new Chart(document.getElementById('chart-sell-stocks'), {
+  type: 'bar',
+  data: {
+    labels: ['BSR','STB','TCH','VIC','ACB','OCB','SSI','MBB','TCB','TCX'],
+    datasets: [{
+      label: 'Bán ròng (triệu CP)',
+      data: [-22.8, -21.2, -11.9, -10.0, -9.3, -8.5, -8.3, -7.5, -6.5, -6.5],
+      backgroundColor: 'rgba(232,64,64,0.7)',
+      borderRadius: 0,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: COLORS.whiteDim, font: { size: 10 } } },
+      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: COLORS.whiteDim } }
+    }
+  }
+});
+
+// ─── CHART 11: Risk Matrix Bubble ───
+new Chart(document.getElementById('chart-risk-matrix'), {
+  type: 'bubble',
+  data: {
+    datasets: [
+      { label: 'Quyết định Fed', data: [{ x: 6, y: 8, r: 18 }], backgroundColor: 'rgba(232,64,64,0.6)', borderColor: COLORS.red },
+      { label: 'FTSE Nâng hạng VN', data: [{ x: 5, y: 9, r: 22 }], backgroundColor: 'rgba(201,168,76,0.6)', borderColor: COLORS.gold },
+      { label: 'DCDS Giảm cash', data: [{ x: 7, y: 6, r: 14 }], backgroundColor: 'rgba(0,180,216,0.6)', borderColor: COLORS.teal },
+      { label: 'KQ KD Q1 tháng 4', data: [{ x: 7, y: 7, r: 16 }], backgroundColor: 'rgba(46,204,113,0.6)', borderColor: COLORS.green },
+      { label: 'Địa chính trị', data: [{ x: 4, y: 8, r: 20 }], backgroundColor: 'rgba(232,64,64,0.3)', borderColor: 'rgba(232,64,64,0.5)' },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { color: COLORS.whiteDim, font: { size: 10 }, boxWidth: 12, padding: 10 } }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Xác suất xảy ra →', color: COLORS.gray, font: { size: 10 } },
+        min: 2, max: 10,
+        grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: COLORS.gray }
+      },
+      y: {
+        title: { display: true, text: 'Mức độ tác động →', color: COLORS.gray, font: { size: 10 } },
+        min: 4, max: 10,
+        grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: COLORS.gray }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

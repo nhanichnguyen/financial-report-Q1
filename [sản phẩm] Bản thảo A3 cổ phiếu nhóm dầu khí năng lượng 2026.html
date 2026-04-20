@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A3 Strategic Blueprint — Danh Mục Dầu Khí & Năng Lượng 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink:        #0d0d14;
+  --gold:       #c9a84c;
+  --gold-lt:    #faf2df;
+  --gold-mid:   #e8d5a0;
+  --crimson:    #8b1a1a;
+  --crim-lt:    #f9eded;
+  --jade:       #1a5c3a;
+  --jade-lt:    #e8f4ed;
+  --jade-mid:   #c0dece;
+  --slate:      #2c3e50;
+  --slate-lt:   #edf1f5;
+  --silver:     #6b7280;
+  --silver-lt:  #f4f5f6;
+  --paper:      #fdfaf5;
+  --rule:       #ddd8ce;
+  --amber:      #b85c00;
+  --amber-lt:   #fff3e6;
+  --navy:       #1a2a4a;
+  --navy-lt:    #edf2f8;
+  --teal:       #0d7377;
+  --teal-lt:    #e0f7fa;
+  --oil:        #0f1923;
+  --oil-mid:    #16213e;
+  --green-ok:   #155724;
+  --green-lt:   #d4edda;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 13px; }
+body {
+  background: #e8e3d8;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--ink);
+  min-width: 1400px;
+}
+
+/* ── PRINT / PAGE ── */
+@media print {
+  body { background: white; }
+  .blueprint { box-shadow: none; }
+  @page { size: A3 landscape; margin: 0; }
+}
+
+/* ── OUTER WRAPPER ── */
+.page-wrap {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ── BLUEPRINT CARD ── */
+.blueprint {
+  background: #f0ebe0;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  border-radius: 4px;
+  overflow: hidden;
+  animation: fadeIn 0.6s ease;
+}
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── HEADER ── */
+.hdr {
+  background: var(--oil);
+  padding: 18px 24px 14px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.hdr::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--gold);
+}
+.hdr-left h1 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+.hdr-left h1 span { color: var(--gold); }
+.hdr-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--gold-mid);
+  letter-spacing: 0.05em;
+}
+.hdr-meta {
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--silver);
+  line-height: 1.8;
+}
+.hdr-meta strong { color: var(--gold); }
+
+/* ── MAIN GRID: 3 col top, 2+1 middle, 2+1 bottom ── */
+.content {
+  padding: 10px 10px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.row { display: flex; gap: 8px; }
+
+/* ── ZONE BASE ── */
+.zone {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+.zone:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.10); }
+
+/* Zone header */
+.zh {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  background: var(--navy);
+  color: #fff;
+  flex-shrink: 0;
+}
+.zh.teal   { background: var(--teal); }
+.zh.gold   { background: #7a550e; }
+.zh.slate  { background: var(--slate); }
+.zh.jade   { background: var(--jade); }
+.zh.amber  { background: var(--amber); }
+.zh.crim   { background: var(--crimson); }
+
+.zh-num {
+  width: 20px; height: 20px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.zh-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.zb { /* zone body */
+  padding: 10px 12px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── ROW WIDTHS ── */
+/* Top row: 3 zones */
+.row-top .z1 { flex: 38; }
+.row-top .z2 { flex: 32; }
+.row-top .z3 { flex: 22; }
+
+/* Middle row: 2 zones (wide table + narrow recs) */
+.row-mid .z4 { flex: 74; }
+.row-mid .z5 { flex: 26; }
+
+/* Bottom row: plan + follow-up */
+.row-bot .z6 { flex: 74; }
+.row-bot .z7 { flex: 26; }
+
+/* ── TYPOGRAPHY helpers ── */
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+p, li { font-size: 0.78rem; line-height: 1.5; color: var(--slate); }
+strong { font-weight: 600; color: var(--ink); }
+
+.bullet-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.bullet-list li { padding-left: 14px; position: relative; }
+.bullet-list li::before {
+  content: '▸';
+  position: absolute; left: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+.bullet-list li.jade-item::before  { color: var(--jade); }
+.bullet-list li.navy-item::before  { color: var(--navy); }
+.bullet-list li.teal-item::before  { color: var(--teal); }
+
+/* ── ZONE 1 — Bối cảnh ── */
+.z1 .zb { background: var(--navy-lt); }
+
+/* ── ZONE 2 — Tình trạng ── */
+.z2 .zb { background: var(--teal-lt); }
+
+.metrics-strip {
+  display: flex; gap: 6px;
+  margin-bottom: 10px;
+}
+.metric-box {
+  flex: 1;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 8px 6px 6px;
+  text-align: center;
+}
+.metric-box .m-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  display: block;
+}
+.metric-box .m-val.red  { color: var(--crimson); }
+.metric-box .m-val.grn  { color: var(--jade); }
+.metric-box .m-val.amb  { color: var(--amber); }
+.metric-box .m-lbl {
+  font-size: 0.6rem;
+  color: var(--silver);
+  font-family: 'IBM Plex Mono', monospace;
+  display: block;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+.cond-row {
+  display: flex; align-items: flex-start; gap: 7px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.76rem;
+}
+.cond-row:last-child { border-bottom: none; }
+.cond-arrow { font-size: 0.7rem; flex-shrink: 0; margin-top: 1px; }
+.cond-arrow.g { color: var(--jade); }
+.cond-arrow.r { color: var(--crimson); }
+.cond-arrow.b { color: var(--navy); }
+.cond-arrow.t { color: var(--teal); }
+
+/* ── ZONE 3 — Mục tiêu ── */
+.z3 .zb { background: var(--gold-lt); }
+.goal-rows { display: flex; flex-direction: column; gap: 3px; }
+.goal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 5px 8px;
+  font-size: 0.74rem;
+}
+.goal-label { color: var(--slate); }
+.goal-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+.goal-val.grn { color: var(--jade); }
+.goal-val.red { color: var(--crimson); }
+.goal-val.amb { color: var(--amber); }
+.goal-val.nvy { color: var(--navy); }
+
+/* ── ZONE 4 — Phân tích / Table ── */
+.z4 .zb { background: var(--silver-lt); padding: 8px 10px; }
+
+.stock-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.73rem;
+}
+.stock-table thead tr {
+  background: var(--slate);
+  color: #fff;
+}
+.stock-table th {
+  padding: 6px 7px;
+  font-weight: 600;
+  font-size: 0.66rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.15);
+  white-space: nowrap;
+}
+.stock-table th:first-child { text-align: left; }
+.stock-table td {
+  padding: 5.5px 7px;
+  border: 1px solid var(--rule);
+  text-align: center;
+  vertical-align: middle;
+}
+.stock-table td:first-child  { text-align: left; }
+.stock-table td:nth-child(2) { text-align: left; font-size: 0.68rem; color: var(--silver); }
+.stock-table tbody tr:nth-child(odd)  { background: #fff; }
+.stock-table tbody tr:nth-child(even) { background: var(--silver-lt); }
+.stock-table tbody tr:hover { background: var(--navy-lt); }
+
+.ticker { font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 0.76rem; color: var(--ink); }
+.exch-badge {
+  display: inline-block;
+  font-size: 0.55rem;
+  font-family: 'IBM Plex Mono', monospace;
+  padding: 1px 4px;
+  border-radius: 2px;
+  margin-left: 4px;
+  vertical-align: middle;
+  background: var(--navy);
+  color: #fff;
+}
+.exch-badge.hose  { background: var(--jade); }
+.exch-badge.hnx   { background: var(--navy); }
+.exch-badge.upcom { background: var(--amber); color: #fff; }
+.exch-badge.nyse  { background: var(--slate); }
+.exch-badge.tadw  { background: #006c35; }
+
+.rec-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 2px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+  white-space: nowrap;
+}
+.rec-buy   { background: var(--green-lt); color: var(--green-ok); }
+.rec-buy2  { background: #b2dfdb; color: #004d40; }
+.rec-hold  { background: var(--amber-lt); color: var(--amber); }
+.rec-watch { background: #e3f2fd; color: #0d47a1; }
+.rec-neu   { background: var(--silver-lt); color: var(--silver); }
+
+.val-grn { color: var(--jade); font-weight: 600; }
+.val-red { color: var(--crimson); font-weight: 600; }
+.val-amb { color: var(--amber); font-weight: 600; }
+
+.table-note {
+  font-size: 0.62rem;
+  color: var(--silver);
+  font-style: italic;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ── ZONE 5 — Biện pháp đề xuất ── */
+.z5 .zb { background: var(--crim-lt); }
+
+.rec-group { margin-bottom: 9px; }
+.rec-group:last-child { margin-bottom: 0; }
+.rec-group-title {
+  font-size: 0.65rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 9px;
+  border-radius: 2px;
+  margin-bottom: 6px;
+  color: #fff;
+  display: block;
+}
+.bg-jade   { background: var(--jade); }
+.bg-amber  { background: var(--amber); }
+.bg-crim   { background: var(--crimson); }
+
+.rec-item {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  padding: 3px 0;
+  font-size: 0.74rem;
+  color: var(--slate);
+  border-bottom: 1px dashed var(--rule);
+}
+.rec-item:last-child { border-bottom: none; }
+.rec-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.dot-jade  { background: var(--jade); }
+.dot-amber { background: var(--amber); }
+.dot-crim  { background: var(--crimson); }
+
+/* ── ZONE 6 — Kế hoạch ── */
+.z6 .zb { background: var(--jade-lt); padding: 10px 12px; }
+
+.plan-grid { display: flex; gap: 8px; height: 100%; }
+.plan-phase {
+  flex: 1;
+  background: var(--jade);
+  border-radius: 3px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.phase-period {
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 2px;
+  margin-bottom: 7px;
+}
+.phase-name {
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 9px;
+  line-height: 1.3;
+}
+.phase-action {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.4;
+}
+.phase-action .chk {
+  flex-shrink: 0;
+  color: var(--gold);
+  font-size: 0.8rem;
+}
+
+/* ── ZONE 7 — Theo dõi ── */
+.z7 .zb { background: var(--amber-lt); }
+.kpi-rows { display: flex; flex-direction: column; gap: 3px; }
+.kpi-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 4px 8px;
+}
+.kpi-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.kpi-label { flex: 1; font-size: 0.72rem; color: var(--slate); }
+.kpi-freq {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--amber);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── FOOTER DISCLAIMER ── */
+.footer-disc {
+  background: var(--oil);
+  padding: 7px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-disc p {
+  font-size: 0.6rem;
+  color: var(--silver);
+  font-style: italic;
+  color: #888;
+}
+.footer-disc span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ── Divider for segmenting ── */
+.seg-line {
+  height: 1px;
+  background: var(--rule);
+  margin: 8px 0;
+}
+
+/* ── Tooltip hover for table ── */
+.stock-table tbody tr {
+  cursor: default;
+  transition: background 0.15s;
+}
+
+/* ── Responsive scroll ── */
+.table-scroll { overflow-x: auto; }
+
+/* ── Info callout ── */
+.callout {
+  background: rgba(201,168,76,0.12);
+  border-left: 3px solid var(--gold);
+  padding: 5px 10px;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--slate);
+  border-radius: 0 2px 2px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+<div class="blueprint">
+
+  <!-- ── HEADER ── -->
+  <div class="hdr">
+    <div class="hdr-left">
+      <h1>A3 STRATEGIC BLUEPRINT — <span>DANH MỤC DẦU KHÍ &amp; NĂNG LƯỢNG 2026</span></h1>
+      <div class="hdr-sub">Chiến lược đầu tư theo khung A3 &nbsp;|&nbsp; Chuẩn McKinsey / Citadel &nbsp;|&nbsp; Q1–Q2/2026 &nbsp;|&nbsp; Dành cho nhà đầu tư chiến lược</div>
+    </div>
+    <div class="hdr-meta">
+      <div><strong>Phát hành:</strong> 03/04/2026</div>
+      <div><strong>Phân loại:</strong> CONFIDENTIAL</div>
+      <div><strong>Nhà phân tích:</strong> Senior Strategy Desk</div>
+    </div>
+  </div>
+
+  <!-- ── CONTENT ── -->
+  <div class="content">
+
+    <!-- ROW 1: Zones 1, 2, 3 -->
+    <div class="row row-top">
+
+      <!-- ZONE 1: BỐI CẢNH -->
+      <div class="zone z1">
+        <div class="zh">
+          <div class="zh-num">1</div>
+          <div class="zh-title">1. Bối Cảnh (Background)</div>
+        </div>
+        <div class="zb">
+          <ul class="bullet-list">
+            <li>Giá dầu <strong>Brent biến động mạnh</strong> trên 90–100 USD/thùng do căng thẳng <strong>Mỹ–Iran</strong> tại Eo biển Hormuz; nguồn cung toàn cầu bị thắt chặt về cấu trúc — không phải chu kỳ ngắn.</li>
+            <li class="jade-item">Thị trường CK Việt Nam đang trong <strong>lộ trình nâng hạng FTSE Russell Emerging Market</strong> — thu hút dòng vốn ngoại mạnh mẽ; Thông tư 08/2026/TT-BTC tháo gỡ NPF mechanism.</li>
+            <li class="teal-item"><strong>OPEC+</strong> duy trì cắt giảm tự nguyện đến cuối Q2/2026; nhu cầu dầu toàn cầu phục hồi mạnh từ châu Á–Thái Bình Dương (<strong>+2,1 mb/d YoY</strong> theo IEA).</li>
+            <li class="jade-item">Dự án <strong>Lô B–Ô Môn</strong> (Việt Nam) và Block 15-2/17 chính thức khởi động — tạo <strong>backlog công việc lớn</strong> cho PVD, PVS suốt 2026–2030; day rate giàn khoan tăng từ $60.000 lên $90.000+/ngày.</li>
+            <li class="navy-item">Các <strong>Big Oil toàn cầu</strong> (CVX, XOM, COP) tiếp tục <strong>buyback mạnh</strong> và tăng cổ tức nhờ FCF kỷ lục — thu hút dòng vốn phòng thủ dài hạn; S&amp;P Energy Sector tăng +9,6% trong Q1/2026.</li>
+            <li><strong>Xung đột Israel–Palestine</strong> làm tắc nghẽn Biển Đỏ, đẩy chi phí vận tải biển +180–240% — tác động gián tiếp vào lạm phát chi phí đầu vào và biên lợi nhuận nhóm hạ nguồn.</li>
+            <li class="teal-item"><strong>Saudi Aramco</strong> công bố gói đầu tư $40 tỷ vào công nghệ sạch 2026–2030 — tăng cường hình ảnh ESG nhưng cam kết cổ tức $75 tỷ/năm không thay đổi.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ZONE 2: TÌNH TRẠNG HIỆN TẠI -->
+      <div class="zone z2">
+        <div class="zh teal">
+          <div class="zh-num">2</div>
+          <div class="zh-title">2. Tình Trạng Hiện Tại (Current Conditions)</div>
+        </div>
+        <div class="zb">
+          <div class="metrics-strip">
+            <div class="metric-box">
+              <span class="m-val red">$91,4</span>
+              <span class="m-lbl">Brent Crude<br>(USD/thùng) Q1/2026</span>
+            </div>
+            <div class="metric-box">
+              <span class="m-val grn">+9,6%</span>
+              <span class="m-lbl">S&amp;P Energy Sector<br>tăng trong Q1/2026</span>
+            </div>
+            <div class="metric-box">
+              <span class="m-val amb">27x</span>
+              <span class="m-lbl">P/E ngành dầu khí<br>VN hiện tại</span>
+            </div>
+          </div>
+
+          <div class="cond-row">
+            <span class="cond-arrow g">▶</span>
+            <span><strong>PVD, PVS:</strong> Đà tăng mạnh Q1/2026; backlog đơn hàng tăng 40%+ YoY nhờ Lô B. Day rate $88.000/ngày (Jackup SE Asia).</span>
+          </div>
+          <div class="cond-row">
+            <span class="cond-arrow r">▶</span>
+            <span><strong>GAS, PLX</strong> (hạ nguồn): Biên lợi nhuận áp lực khi giá dầu đầu vào vượt 90 USD; cơ chế điều giá bán lẻ không kịp thích ứng.</span>
+          </div>
+          <div class="cond-row">
+            <span class="cond-arrow b">▶</span>
+            <span><strong>CVX, XOM:</strong> FCF kỷ lục $35B+/năm; buyback tích cực; cổ tức tăng liên tiếp 5+ năm — Dividend Aristocrat. P/E trailing 12–14x, hợp lý.</span>
+          </div>
+          <div class="cond-row">
+            <span class="cond-arrow g">▶</span>
+            <span><strong>ConocoPhillips (COP):</strong> Pure-play E&amp;P; ROIC 24% — top-tier toàn ngành; quản lý chi phí xuất sắc; FCF Yield ~9,1%.</span>
+          </div>
+          <div class="cond-row">
+            <span class="cond-arrow t">▶</span>
+            <span><strong>Saudi Aramco (2222.SR):</strong> Vốn hóa >$2 nghìn tỷ; cổ tức $75 tỷ/năm; chi phí khai thác &lt;$3/thùng — lợi thế cấu trúc không ai sánh được.</span>
+          </div>
+          <div class="cond-row">
+            <span class="cond-arrow r">▶</span>
+            <span><strong>PVOil (OIL, UPCOM):</strong> Biên lợi nhuận mỏng &lt;1%; thanh khoản thấp; chờ catalyst thoái vốn nhà nước. Tích lũy thận trọng.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ZONE 3: MỤC TIÊU -->
+      <div class="zone z3">
+        <div class="zh gold">
+          <div class="zh-num">3</div>
+          <div class="zh-title">3. Mục Tiêu (Goals / Targets)</div>
+        </div>
+        <div class="zb">
+          <div class="goal-rows">
+            <div class="goal-row">
+              <span class="goal-label">Tỷ suất lợi nhuận mục tiêu</span>
+              <span class="goal-val grn">18–25%/năm</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Thời gian nắm giữ tối ưu</span>
+              <span class="goal-val nvy">12–18 tháng</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Stop-loss tối đa mỗi lệnh</span>
+              <span class="goal-val red">&lt; −12%</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Tỷ trọng Dầu khí / tổng DM</span>
+              <span class="goal-val amb">20–30%</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Margin tối đa cho phép</span>
+              <span class="goal-val red">&lt; 20% DM</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Số mã tập trung (Việt Nam)</span>
+              <span class="goal-val grn">3–4 mã</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Số mã Blue-chip (Thế giới)</span>
+              <span class="goal-val nvy">2–3 mã</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Ngưỡng cảnh báo giá dầu</span>
+              <span class="goal-val red">&gt; $120/thùng</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">EPS tăng trưởng kỳ vọng VN</span>
+              <span class="goal-val grn">≥ 15%/năm</span>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">FCF Yield tối thiểu (TG)</span>
+              <span class="goal-val grn">&gt; 7%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /row-top -->
+
+    <!-- ROW 2: Zones 4, 5 -->
+    <div class="row row-mid">
+
+      <!-- ZONE 4: PHÂN TÍCH — MA TRẬN CỔ PHIẾU -->
+      <div class="zone z4">
+        <div class="zh slate">
+          <div class="zh-num">4</div>
+          <div class="zh-title">4. Phân Tích (Analysis) — Ma Trận Cổ Phiếu Dầu Khí &amp; Năng Lượng Toàn Cầu</div>
+        </div>
+        <div class="zb">
+          <div class="table-scroll">
+          <table class="stock-table">
+            <thead>
+              <tr>
+                <th style="text-align:left">Mã CP / Sàn</th>
+                <th style="text-align:left">Phân Khúc</th>
+                <th>P/E</th>
+                <th>P/B</th>
+                <th>ROE</th>
+                <th>ROIC</th>
+                <th>FCF Yield</th>
+                <th>Cổ Tức</th>
+                <th>EPS Tăng</th>
+                <th>Breakeven</th>
+                <th>Khuyến Nghị</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="ticker">XOM</span><span class="exch-badge nyse">NYSE</span></td>
+                <td>Blue-chip Tích hợp — Thượng nguồn</td>
+                <td>13,5x</td>
+                <td>2,1x</td>
+                <td class="val-grn">21%</td>
+                <td class="val-grn">19%</td>
+                <td class="val-grn">7,2%</td>
+                <td>3,4%</td>
+                <td>+12%</td>
+                <td>$35/bbl</td>
+                <td><span class="rec-badge rec-buy">MUA TÍCH LŨY</span></td>
+              </tr>
+              <tr>
+                <td><span class="ticker">CVX</span><span class="exch-badge nyse">NYSE</span></td>
+                <td>Blue-chip Tích hợp — Permian</td>
+                <td>11,8x</td>
+                <td>1,9x</td>
+                <td class="val-grn">17%</td>
+                <td class="val-grn">17%</td>
+                <td class="val-grn">8,5%</td>
+                <td>4,1%</td>
+                <td>+14%</td>
+                <td>$35/bbl</td>
+                <td><span class="rec-badge rec-buy">MUA TÍCH LŨY</span></td>
+              </tr>
+              <tr>
+                <td><span class="ticker">COP</span><span class="exch-badge nyse">NYSE</span></td>
+                <td>Blue-chip E&amp;P thuần túy</td>
+                <td>12,2x</td>
+                <td>2,3x</td>
+                <td class="val-grn">24%</td>
+                <td class="val-grn">24%</td>
+                <td class="val-grn">9,1%</td>
+                <td>2,0%+Var</td>
+                <td>+18%</td>
+                <td>$30/bbl</td>
+                <td><span class="rec-badge rec-buy2">MUA MẠNH</span></td>
+              </tr>
+              <tr>
+                <td><span class="ticker">2222.SR</span><span class="exch-badge tadw">TADAWUL</span></td>
+                <td>Siêu Blue-chip — Quốc doanh SA</td>
+                <td>17,1x</td>
+                <td>3,8x</td>
+                <td class="val-grn">30%</td>
+                <td class="val-grn">30%</td>
+                <td>6,0%</td>
+                <td>3,8%+Perf</td>
+                <td>+8%</td>
+                <td>$3/bbl (!)</td>
+                <td><span class="rec-badge rec-hold">NẮM GIỮ/ETF</span></td>
+              </tr>
+              <tr>
+                <td><span class="ticker">PVD</span><span class="exch-badge hose">HOSE</span></td>
+                <td>Thượng nguồn VN — Khoan</td>
+                <td>14,5x</td>
+                <td>1,2x</td>
+                <td>12%</td>
+                <td>10%</td>
+                <td>5,8%</td>
+                <td>1,5%</td>
+                <td>+25%</td>
+                <td>n/a</td>
+                <td><span class="rec-badge rec-buy2">MUA MẠNH</span></td>
+              </tr>
+              <tr>
+                <td><span class="ticker">PVS</span><span class="exch-badge hnx">HNX</span></td>
+                <td>Thượng nguồn VN — EPCI</td>
+                <td>12,8x</td>
+                <td>1,0x</td>
+                <td>10%</td>
+                <td>8%</td>
+                <td>4,9%</td>
+                <td>2,2%</td>
+                <td>+18%</td>
+                <td>n/a</td>
+                <td><span class="rec-badge rec-watch">THEO DÕI</span></td>
+              </tr>
+              <tr>
+                <td><span class="ticker">GAS</span><span class="exch-badge hose">HOSE</span></td>
+                <td>Hạ nguồn VN — Khí thiên nhiên</td>
+                <td>16,0x</td>
+                <td>2,6x</td>
+                <td class="val-grn">18%</td>
+                <td>14%</td>
+                <td>6,3%</td>
+                <td class="val-grn">5,5%</td>
+                <td>+8%</td>
+                <td>n/a</td>
+                <td><span class="rec-badge rec-hold">NẮM GIỮ</span></td>
+              </tr>
+              <tr>
+                <td><span class="ticker">OIL/PVOil</span><span class="exch-badge upcom">UPCOM</span></td>
+                <td>Hạ nguồn VN — Xăng dầu</td>
+                <td>10,5x</td>
+                <td>1,1x</td>
+                <td>9%</td>
+                <td>7%</td>
+                <td>3,2%</td>
+                <td>1,8%</td>
+                <td>+6%</td>
+                <td>n/a</td>
+                <td><span class="rec-badge rec-watch">THEO DÕI</span></td>
+              </tr>
+              <tr>
+                <td><span class="ticker">PLX</span><span class="exch-badge hose">HOSE</span></td>
+                <td>Hạ nguồn VN — Lọc hóa dầu</td>
+                <td>13,2x</td>
+                <td>1,7x</td>
+                <td>11%</td>
+                <td>9%</td>
+                <td>4,1%</td>
+                <td>3,0%</td>
+                <td>+7%</td>
+                <td>n/a</td>
+                <td><span class="rec-badge rec-neu">TRUNG TÍNH</span></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <div class="table-note">
+            * Dữ liệu ước tính Q1/2026. P/E trailing 12T. FCF Yield = FCF/Market Cap. Cổ tức 12T gần nhất. EPS Tăng = dự báo YoY. Breakeven = chi phí hòa vốn khai thác/thùng.<br>
+            ** Saudi Aramco (2222.SR) niêm yết TADAWUL; nhà đầu tư Việt Nam khó tiếp cận trực tiếp — khuyến nghị qua ETF: <strong>VDE (Vanguard Energy)</strong>, <strong>XLE (SPDR Energy)</strong>, <strong>IXC (iShares Global Energy)</strong>.<br>
+            *** Vùng mua PVD: &lt;28.000 VND/CP | Mục tiêu 12T: 38.000–42.000 VND. CVX: vùng mua $140–155, mục tiêu $175. COP: vùng mua $105–118, mục tiêu $145.
+          </div>
+        </div>
+      </div>
+
+      <!-- ZONE 5: BIỆN PHÁP ĐỀ XUẤT -->
+      <div class="zone z5">
+        <div class="zh crim">
+          <div class="zh-num">5</div>
+          <div class="zh-title">5. Biện Pháp Đề Xuất</div>
+        </div>
+        <div class="zb">
+
+          <div class="rec-group">
+            <span class="rec-group-title bg-jade">✅ ƯU TIÊN CAO — HÀNH ĐỘNG NGAY</span>
+            <div class="rec-item">
+              <div class="rec-dot dot-jade"></div>
+              <span><strong>CVX &amp; XOM:</strong> Tích lũy khi về P/E 11–12x; cổ tức bền vững 4%+; FCF Yield >7%. Mua định kỳ (DCA) theo tháng.</span>
+            </div>
+            <div class="rec-item">
+              <div class="rec-dot dot-jade"></div>
+              <span><strong>COP:</strong> ROIC hàng đầu ngành 24%; M&amp;A Permian Basin tạo giá trị dài hạn. Mua vùng $105–118.</span>
+            </div>
+            <div class="rec-item">
+              <div class="rec-dot dot-jade"></div>
+              <span><strong>PVD:</strong> Giá thuê giàn tăng mạnh; backlog Lô B 2026–2028; P/B &lt;1,5x — chiết khấu lớn so với khu vực. Mua &lt;28.000 VND.</span>
+            </div>
+            <div class="rec-item">
+              <div class="rec-dot dot-jade"></div>
+              <span><strong>Áp bộ tiêu chí 4M:</strong> Quản trị (Management), Moat, Margin of Safety, Macro khi ra quyết định từng mã.</span>
+            </div>
+          </div>
+
+          <div class="rec-group">
+            <span class="rec-group-title bg-amber">🔔 THEO DÕI — TÍCH LŨY CÓ ĐIỀU KIỆN</span>
+            <div class="rec-item">
+              <div class="rec-dot dot-amber"></div>
+              <span><strong>PVS:</strong> Hợp đồng EPCI Lạc Đà Vàng là catalyst chính; chờ xác nhận thắng thầu Q2/2026 mới tăng tỷ trọng.</span>
+            </div>
+            <div class="rec-item">
+              <div class="rec-dot dot-amber"></div>
+              <span><strong>Saudi Aramco:</strong> Mua gián tiếp qua ETF XLE, VDE, IXC. Tỷ trọng tối đa 5% danh mục.</span>
+            </div>
+            <div class="rec-item">
+              <div class="rec-dot dot-amber"></div>
+              <span><strong>PVOil (OIL):</strong> Chỉ tích lũy &lt;10.000 VND/CP với tỷ trọng nhỏ &lt;5%; chờ catalyst niêm yết HOSE hoặc thoái vốn.</span>
+            </div>
+          </div>
+
+          <div class="rec-group">
+            <span class="rec-group-title bg-crim">🔴 THẬN TRỌNG — GIẢM TỶ TRỌNG</span>
+            <div class="rec-item">
+              <div class="rec-dot dot-crim"></div>
+              <span><strong>GAS, PLX:</strong> Hạ nguồn chịu áp lực biên lợi nhuận khi dầu &gt;90 USD. Tránh margin. Chỉ nắm giữ nếu đã có vị thế.</span>
+            </div>
+            <div class="rec-item">
+              <div class="rec-dot dot-crim"></div>
+              <span><strong>Tránh toàn bộ margin</strong> cho nhóm hạ nguồn trong Q2/2026; rủi ro biến động giá đầu vào rất cao.</span>
+            </div>
+            <div class="rec-item">
+              <div class="rec-dot dot-crim"></div>
+              <span>Nếu Brent vượt <strong>$120/thùng</strong> → giảm 30% toàn danh mục dầu khí vì rủi ro suy thoái kinh tế toàn cầu sẽ kéo nhu cầu xuống.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /row-mid -->
+
+    <!-- ROW 3: Zones 6, 7 -->
+    <div class="row row-bot">
+
+      <!-- ZONE 6: KẾ HOẠCH -->
+      <div class="zone z6">
+        <div class="zh jade">
+          <div class="zh-num">6</div>
+          <div class="zh-title">6. Kế Hoạch Thực Hiện (Plan) — Lộ Trình Q1–Q3/2026</div>
+        </div>
+        <div class="zb">
+          <div class="plan-grid">
+
+            <div class="plan-phase">
+              <div class="phase-period">T1–T2 / 2026</div>
+              <div class="phase-name">Giai Đoạn 1<br>Khảo Sát &amp; Tích Lũy</div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Thực hiện "Scuttlebutt": xác thực tiến độ thực tế dự án Lô B–Ô Môn qua kênh thực địa Vũng Tàu.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Mua PVD &lt;28.000 VND/CP, PVS &lt;35.000 VND/CP theo từng đợt 30-30-40%.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Tích lũy CVX, XOM trên NYSE khi P/E &lt;12x; dùng lệnh GTC (Good-Till-Cancelled).</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Mua COP theo DCA tháng nếu giá trong vùng $105–118 trên NYSE.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Thiết lập stop-loss tự động cho tất cả vị thế: PVD -12%, CVX -10%, COP -10%.</span>
+              </div>
+            </div>
+
+            <div class="plan-phase">
+              <div class="phase-period">T3 / 2026</div>
+              <div class="phase-name">Giai Đoạn 2<br>Rà Soát &amp; Điều Chỉnh</div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Đọc BCTC năm 2025 của PVD, PVS, GAS: kiểm tra "lá cờ đỏ" — khoản phải thu, hàng tồn kho, tài sản ảo.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Áp bộ tiêu chí 4M: kiểm tra Management thực tế tại AGM 2026; so sánh cam kết vs thực hiện kế hoạch.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Review CVX Q2 earnings: xác nhận FCF Yield và tiến độ thương vụ Hess/Exxon tranh chấp Guyana.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Điều chỉnh tỷ trọng PVD/PVS nếu đã tăng >30%; chuyển một phần sang CVX hoặc COP.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Theo dõi kết quả đánh giá FTSE Russell giữa kỳ (Q3/2026) — là game-changer cho toàn TTCK VN.</span>
+              </div>
+            </div>
+
+            <div class="plan-phase">
+              <div class="phase-period">T4–T6 / 2026</div>
+              <div class="phase-name">Giai Đoạn 3<br>Chốt Lời Chiến Thuật</div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Chốt 30–50% vị thế PVD nếu giá đạt mục tiêu 38.000–42.000 VND; giữ lõi nếu luận điểm còn hiệu lực.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Chuyển một phần lợi nhuận sang COP nếu E&amp;P Việt Nam giảm hấp dẫn hoặc day rate dầu khí đỉnh chu kỳ.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Review toàn danh mục theo quý: đo lường EPS thực tế vs kế hoạch, ROIC, FCF Yield. Loại bỏ "watered earnings".</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Nếu Brent &gt;$120/thùng liên tục 2 tuần → giảm 30% toàn danh mục dầu khí; tăng tỷ trọng tiền mặt lên 35%.</span>
+              </div>
+              <div class="phase-action">
+                <span class="chk">✔</span>
+                <span>Chuẩn bị "danh sách mua" cho pha điều chỉnh tiếp theo: PVD &lt;24.000, CVX &lt;140, COP &lt;100.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ZONE 7: THEO DÕI -->
+      <div class="zone z7">
+        <div class="zh amber">
+          <div class="zh-num">7</div>
+          <div class="zh-title">7. Theo Dõi (Follow-up) — KPI Dashboard</div>
+        </div>
+        <div class="zb">
+          <div class="kpi-rows">
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--crimson)"></div>
+              <span class="kpi-label"><strong>Giá dầu Brent</strong> vs ngưỡng $80–110 (cảnh báo &gt;$120)</span>
+              <span class="kpi-freq">Hàng tuần</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--jade)"></div>
+              <span class="kpi-label"><strong>EPS thực tế PVD / PVS</strong> vs kế hoạch AGM 2026</span>
+              <span class="kpi-freq">Hàng quý</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--jade)"></div>
+              <span class="kpi-label"><strong>ROIC danh mục VN</strong> &gt;12% | Thế giới &gt;18%</span>
+              <span class="kpi-freq">Hàng quý</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--navy)"></div>
+              <span class="kpi-label"><strong>FCF Yield CVX / XOM / COP</strong> — cảnh báo &lt;5%</span>
+              <span class="kpi-freq">Hàng quý</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--crimson)"></div>
+              <span class="kpi-label"><strong>Tỷ lệ margin call</strong> toàn thị trường VN &gt;30% DM</span>
+              <span class="kpi-freq">Hàng tuần</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--amber)"></div>
+              <span class="kpi-label"><strong>Day rate giàn khoan PVD</strong> — cảnh báo &lt;$65.000/ngày</span>
+              <span class="kpi-freq">Tháng</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--amber)"></div>
+              <span class="kpi-label"><strong>Tiến độ Lô B–Ô Môn</strong> — chậm &gt;3 tháng là cờ đỏ</span>
+              <span class="kpi-freq">Tháng</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--teal)"></div>
+              <span class="kpi-label"><strong>Kết quả đánh giá FTSE Russell</strong> giữa kỳ VN</span>
+              <span class="kpi-freq">Q3/2026</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--jade)"></div>
+              <span class="kpi-label"><strong>Backlog PVD / PVS</strong> mới ký — tăng &gt;30% là tín hiệu mua</span>
+              <span class="kpi-freq">Tháng</span>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-dot" style="background:var(--slate)"></div>
+              <span class="kpi-label"><strong>P/E danh mục tổng thể</strong> — cảnh báo &gt;20x</span>
+              <span class="kpi-freq">Hàng quý</span>
+            </div>
+            <div class="kpi-row" style="background:var(--crim-lt); border-color: var(--crimson);">
+              <div class="kpi-dot" style="background:var(--crimson)"></div>
+              <span class="kpi-label" style="color:var(--crimson); font-weight:700">⚠ STOP-LOSS trigger — CẮT LỖ NGAY ≤ −12%</span>
+              <span class="kpi-freq" style="color:var(--crimson)">Hàng ngày</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /row-bot -->
+
+  </div><!-- /content -->
+
+  <!-- FOOTER -->
+  <div class="footer-disc">
+    <p>DISCLAIMER: Tài liệu này chỉ mang tính tham khảo phân tích, không phải lời khuyên đầu tư cá nhân. Mọi quyết định đầu tư cần xem xét tình hình tài chính riêng và tham vấn chuyên gia có chứng chỉ hành nghề. Dữ liệu ước tính Q1/2026.</p>
+    <span>Senior Strategy Desk &nbsp;|&nbsp; A3 Blueprint v2.0 &nbsp;|&nbsp; Q1/2026</span>
+  </div>
+
+</div><!-- /blueprint -->
+</div><!-- /page-wrap -->
+
+</body>
+</html>

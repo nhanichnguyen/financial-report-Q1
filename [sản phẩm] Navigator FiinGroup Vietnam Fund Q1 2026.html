@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vietnam Fund Navigator Q1/2026 — FiinGroup Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --teal: #0a7c60; --teal-l: #e8f5f1; --teal-m: #5ab99e;
+    --gold: #c9933a; --gold-l: #fef6ea; --gold-m: #e8b96d;
+    --red: #c0392b; --red-l: #fdecea;
+    --green: #1a7a4b; --green-l: #e8f5ee;
+    --navy: #1a2940; --navy-m: #2d4060;
+    --gray: #6b7280; --gray-l: #f8f9fa; --gray-xl: #e9ecef;
+    --white: #ffffff; --text: #1a2940; --text-m: #4b5563;
+    --radius: 12px; --shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Be Vietnam Pro', sans-serif; background: #f4f6f8; color: var(--text); line-height: 1.6; }
+
+  /* NAV */
+  .nav { background: var(--white); border-bottom: 1px solid var(--gray-xl); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-logo { width: 32px; height: 32px; background: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .nav-logo svg { width: 18px; height: 18px; fill: white; }
+  .nav-title { font-weight: 600; font-size: 15px; color: var(--text); }
+  .nav-subtitle { font-size: 11px; color: var(--gray); letter-spacing: 0.5px; }
+  .nav-badge { background: var(--teal-l); color: var(--teal); font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--teal-m); }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-m) 60%, #1a4060 100%); color: white; padding: 60px 5% 50px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; border-radius: 50%; background: rgba(10,124,96,0.15); }
+  .hero::after { content: ''; position: absolute; bottom: -60px; left: 20%; width: 250px; height: 250px; border-radius: 50%; background: rgba(201,147,58,0.1); }
+  .hero-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(10,124,96,0.3); border: 1px solid rgba(90,185,158,0.4); color: #5ab99e; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 20px; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #5ab99e; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(28px, 4vw, 50px); font-weight: 400; line-height: 1.15; margin-bottom: 12px; }
+  .hero h1 em { font-style: italic; color: #e8b96d; }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,0.65); max-width: 520px; margin-bottom: 36px; }
+  .hero-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; max-width: 700px; }
+  .kpi { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); padding: 16px 18px; }
+  .kpi-val { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 400; display: block; }
+  .kpi-val.neg { color: #f87171; }
+  .kpi-val.pos { color: #6ee7b7; }
+  .kpi-val.gold { color: #e8b96d; }
+  .kpi-val.teal { color: #5ab99e; }
+  .kpi-label { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* MAIN */
+  .main { max-width: 1100px; margin: 0 auto; padding: 40px 5%; }
+
+  /* SECTION TITLE */
+  .sec-head { margin-bottom: 24px; }
+  .sec-tag { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: var(--teal); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .sec-tag::before { content: ''; width: 20px; height: 2px; background: var(--teal); }
+  .sec-title { font-family: 'Fraunces', serif; font-size: 26px; color: var(--text); }
+  .sec-desc { font-size: 14px; color: var(--text-m); margin-top: 6px; }
+
+  /* PROFILER */
+  .profiler { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 40px; }
+  .profiler-header { background: var(--teal); color: white; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; }
+  .profiler-header h2 { font-size: 16px; font-weight: 500; }
+  .step-dots { display: flex; gap: 6px; }
+  .step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s; }
+  .step-dot.active { background: white; width: 24px; border-radius: 4px; }
+  .profiler-body { padding: 28px; }
+  .profiler-step { display: none; }
+  .profiler-step.active { display: block; }
+  .step-q { font-family: 'Fraunces', serif; font-size: 20px; color: var(--text); margin-bottom: 8px; }
+  .step-hint { font-size: 13px; color: var(--gray); margin-bottom: 22px; }
+  .option-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+  .opt { border: 1.5px solid var(--gray-xl); border-radius: 10px; padding: 14px 16px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 4px; }
+  .opt:hover { border-color: var(--teal-m); background: var(--teal-l); }
+  .opt.selected { border-color: var(--teal); background: var(--teal-l); }
+  .opt-icon { font-size: 20px; margin-bottom: 4px; }
+  .opt-label { font-weight: 500; font-size: 14px; color: var(--text); }
+  .opt-desc { font-size: 12px; color: var(--gray); }
+  .profiler-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--gray-xl); }
+  .btn { padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.2s; font-family: inherit; }
+  .btn-primary { background: var(--teal); color: white; }
+  .btn-primary:hover { background: #087a5e; }
+  .btn-ghost { background: transparent; color: var(--gray); border: 1px solid var(--gray-xl); }
+  .btn-ghost:hover { background: var(--gray-l); }
+  .progress-bar { flex: 1; height: 4px; background: var(--gray-xl); border-radius: 2px; margin: 0 16px; }
+  .progress-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width 0.4s; }
+
+  /* RESULTS */
+  .results-section { display: none; }
+  .results-section.show { display: block; }
+  .result-hero { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; margin-bottom: 24px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .profile-badge { width: 72px; height: 72px; border-radius: 50%; background: var(--teal-l); border: 3px solid var(--teal); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+  .profile-badge .icon { font-size: 24px; }
+  .result-hero-text h3 { font-family: 'Fraunces', serif; font-size: 22px; color: var(--text); }
+  .result-hero-text p { font-size: 13px; color: var(--text-m); margin-top: 4px; max-width: 450px; }
+  .profile-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .ptag { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; }
+  .ptag-teal { background: var(--teal-l); color: var(--teal); border: 1px solid var(--teal-m); }
+  .ptag-gold { background: var(--gold-l); color: var(--gold); border: 1px solid var(--gold-m); }
+  .ptag-green { background: var(--green-l); color: var(--green); }
+
+  /* FUND CARDS */
+  .fund-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .fund-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+  .fund-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+  .fund-card.top-pick { border: 2px solid var(--teal); }
+  .fund-card-header { padding: 16px 18px 12px; border-bottom: 1px solid var(--gray-xl); display: flex; justify-content: space-between; align-items: flex-start; }
+  .fund-name { font-weight: 600; font-size: 14px; color: var(--text); }
+  .fund-type { font-size: 11px; color: var(--gray); margin-top: 2px; }
+  .match-badge { text-align: center; flex-shrink: 0; }
+  .match-pct { font-family: 'Fraunces', serif; font-size: 22px; color: var(--teal); display: block; }
+  .match-label { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+  .top-pick-ribbon { background: var(--teal); color: white; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 12px; text-align: center; }
+  .fund-metrics { padding: 14px 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .metric { text-align: center; }
+  .metric-val { font-weight: 600; font-size: 16px; display: block; }
+  .metric-val.pos { color: var(--green); }
+  .metric-val.neg { color: var(--red); }
+  .metric-val.neutral { color: var(--text); }
+  .metric-lbl { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.3px; }
+  .fund-bar { padding: 0 18px 14px; }
+  .bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray); margin-bottom: 4px; }
+  .bar-track { height: 6px; background: var(--gray-xl); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; background: var(--teal); }
+  .bar-fill.neg { background: var(--red); }
+  .fund-tags { padding: 0 18px 14px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .fund-tag { font-size: 11px; padding: 3px 8px; border-radius: 20px; font-weight: 500; }
+  .fund-tag-g { background: var(--green-l); color: var(--green); }
+  .fund-tag-r { background: var(--red-l); color: var(--red); }
+  .fund-tag-b { background: #e8f0fe; color: #1a4ab0; }
+  .fund-card-footer { padding: 12px 18px; background: var(--gray-l); display: flex; justify-content: space-between; align-items: center; }
+  .fund-nav-txt { font-size: 12px; color: var(--gray); }
+  .fund-cta { font-size: 12px; font-weight: 500; color: var(--teal); cursor: pointer; display: flex; align-items: center; gap: 4px; }
+
+  /* CHART SECTION */
+  .chart-section { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; margin-bottom: 40px; }
+  .chart-tabs { display: flex; gap: 2px; background: var(--gray-l); border-radius: 8px; padding: 3px; margin-bottom: 24px; width: fit-content; }
+  .chart-tab { padding: 7px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--gray); border: none; background: transparent; font-family: inherit; transition: all 0.2s; }
+  .chart-tab.active { background: var(--white); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+
+  /* SMART MONEY */
+  .smart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  @media(max-width:640px) { .smart-grid { grid-template-columns: 1fr; } }
+  .smart-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+  .smart-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+  .smart-card .sub { font-size: 12px; color: var(--gray); margin-bottom: 16px; }
+  .stock-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .stock-ticker { width: 48px; font-size: 12px; font-weight: 700; color: var(--text); flex-shrink: 0; font-family: 'Consolas', 'Courier New', monospace; }
+  .stock-bar-wrap { flex: 1; }
+  .stock-bar-track { height: 8px; background: var(--gray-xl); border-radius: 4px; overflow: hidden; }
+  .stock-bar-fill { height: 100%; border-radius: 4px; }
+  .stock-val { width: 50px; text-align: right; font-size: 12px; font-weight: 500; flex-shrink: 0; }
+  .stock-funds { font-size: 10px; color: var(--gray); margin-top: 2px; }
+  .signal-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-xl); }
+  .signal-item:last-child { border: none; }
+  .signal-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .signal-dot.buy { background: var(--green); }
+  .signal-dot.sell { background: var(--red); }
+  .signal-dot.watch { background: var(--gold); }
+  .signal-text { font-size: 13px; color: var(--text-m); flex: 1; }
+  .signal-text strong { color: var(--text); font-weight: 600; }
+  .signal-meta { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+  /* TIMING GAUGE */
+  .timing-section { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; margin-bottom: 40px; }
+  .timing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  @media(max-width:640px) { .timing-grid { grid-template-columns: 1fr; } }
+  .gauge-wrap { display: flex; flex-direction: column; align-items: center; }
+  .gauge-label { font-size: 13px; color: var(--gray); margin-top: 8px; }
+  .timing-signals { }
+  .ts-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gray-xl); }
+  .ts-item:last-child { border: none; }
+  .ts-name { font-size: 13px; color: var(--text-m); }
+  .ts-status { font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+  .ts-bull { background: var(--green-l); color: var(--green); }
+  .ts-bear { background: var(--red-l); color: var(--red); }
+  .ts-neutral { background: var(--gold-l); color: var(--gold); }
+
+  /* CTA */
+  .cta-section { background: var(--navy); border-radius: var(--radius); padding: 40px; text-align: center; margin-bottom: 40px; position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; top: -80px; left: -80px; width: 300px; height: 300px; border-radius: 50%; background: rgba(10,124,96,0.15); }
+  .cta-section::after { content: ''; position: absolute; bottom: -60px; right: -40px; width: 200px; height: 200px; border-radius: 50%; background: rgba(201,147,58,0.1); }
+  .cta-section h2 { font-family: 'Fraunces', serif; font-size: 30px; color: white; margin-bottom: 10px; position: relative; }
+  .cta-section p { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 24px; position: relative; }
+  .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .cta-btn-primary { background: var(--teal); color: white; padding: 12px 28px; border-radius: 8px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .cta-btn-primary:hover { background: #087a5e; }
+  .cta-btn-outline { background: transparent; color: white; padding: 12px 28px; border-radius: 8px; font-size: 14px; font-weight: 500; border: 1.5px solid rgba(255,255,255,0.3); cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .cta-btn-outline:hover { background: rgba(255,255,255,0.08); }
+
+  /* BOTTOM INFO */
+  .info-strip { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px 24px; margin-bottom: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .info-item { display: flex; gap: 12px; align-items: flex-start; }
+  .info-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--teal-l); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+  .info-text h5 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .info-text p { font-size: 12px; color: var(--gray); }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 20px 5% 40px; font-size: 11px; color: var(--gray); }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.show { display: flex; }
+  .modal { background: white; border-radius: 16px; padding: 28px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; }
+  .modal h3 { font-family: 'Fraunces', serif; font-size: 22px; margin-bottom: 16px; }
+  .modal-close { float: right; cursor: pointer; font-size: 20px; color: var(--gray); background: none; border: none; }
+  .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-xl); font-size: 13px; }
+  .detail-row:last-child { border: none; }
+  .detail-lbl { color: var(--gray); }
+  .detail-val { font-weight: 500; }
+  .detail-val.pos { color: var(--green); }
+  .detail-val.neg { color: var(--red); }
+
+  /* Responsive */
+  @media(max-width:640px) {
+    .hero { padding: 40px 5% 36px; }
+    .hero-kpis { grid-template-columns: repeat(2, 1fr); }
+    .kpi { padding: 12px 14px; }
+    .kpi-val { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <div>
+      <div class="nav-title">FiinGroup — Fund Navigator</div>
+      <div class="nav-subtitle">Q1/2026 · INTELLIGENCE PLATFORM</div>
+    </div>
+  </div>
+  <div class="nav-badge">Live Data · 31/03/2026</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Phân tích Chuyên sâu Q1/2026</div>
+  <h1>Chọn đúng quỹ<br>trong <em>cơn bão</em> thị trường</h1>
+  <p class="hero-sub">108 quỹ đầu tư · 246,000 tỷ NAV · VN-Index giảm −10,95% tháng 3. Smart money đã đi đâu? Tìm ra ngay trong 60 giây.</p>
+  <div class="hero-kpis">
+    <div class="kpi"><span class="kpi-val neg" id="kpi1">0%</span><div class="kpi-label">VN-Index Q1/2026</div></div>
+    <div class="kpi"><span class="kpi-val gold" id="kpi2">0K tỷ</span><div class="kpi-label">Tổng rút ròng Q1</div></div>
+    <div class="kpi"><span class="kpi-val pos" id="kpi3">0%</span><div class="kpi-label">Top quỹ chủ động</div></div>
+    <div class="kpi"><span class="kpi-val teal" id="kpi4">0/82</span><div class="kpi-label">Quỹ vượt VN-Index T3</div></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- PROFILER -->
+  <div id="profiler-wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Bước 1</div>
+      <div class="sec-title">Xác định hồ sơ nhà đầu tư của bạn</div>
+      <div class="sec-desc">3 câu hỏi nhanh để nhận đề xuất quỹ phù hợp nhất với bạn từ dữ liệu Q1/2026</div>
+    </div>
+    <div class="profiler">
+      <div class="profiler-header">
+        <h2 id="step-title">Khẩu vị rủi ro</h2>
+        <div class="step-dots">
+          <div class="step-dot active" id="dot-0"></div>
+          <div class="step-dot" id="dot-1"></div>
+          <div class="step-dot" id="dot-2"></div>
+        </div>
+      </div>
+      <div class="profiler-body">
+        <!-- Step 1 -->
+        <div class="profiler-step active" id="step-0">
+          <div class="step-q">Bạn cảm thấy thế nào khi danh mục giảm 10% trong 1 tháng?</div>
+          <div class="step-hint">Như tháng 3/2026 — VN-Index đã giảm đúng −10,95%</div>
+          <div class="option-grid">
+            <div class="opt" onclick="selectOpt(0,0,this)" data-val="conservative">
+              <span class="opt-icon">😰</span>
+              <span class="opt-label">Rất lo lắng</span>
+              <span class="opt-desc">Muốn bảo toàn vốn là trên hết</span>
+            </div>
+            <div class="opt" onclick="selectOpt(0,1,this)" data-val="moderate">
+              <span class="opt-icon">😐</span>
+              <span class="opt-label">Hơi lo, nhưng chấp nhận được</span>
+              <span class="opt-desc">Chịu được biến động ngắn hạn</span>
+            </div>
+            <div class="opt" onclick="selectOpt(0,2,this)" data-val="aggressive">
+              <span class="opt-icon">😎</span>
+              <span class="opt-label">Không sao, đó là cơ hội</span>
+              <span class="opt-desc">Giảm mạnh = thời điểm mua vào</span>
+            </div>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="profiler-step" id="step-1">
+          <div class="step-q">Bạn dự định đầu tư trong bao lâu?</div>
+          <div class="step-hint">Thời gian đầu tư ảnh hưởng lớn đến lựa chọn quỹ phù hợp</div>
+          <div class="option-grid">
+            <div class="opt" onclick="selectOpt(1,0,this)" data-val="short">
+              <span class="opt-icon">📅</span>
+              <span class="opt-label">Dưới 1 năm</span>
+              <span class="opt-desc">Cần thanh khoản nhanh</span>
+            </div>
+            <div class="opt" onclick="selectOpt(1,1,this)" data-val="medium">
+              <span class="opt-icon">📆</span>
+              <span class="opt-label">1 – 3 năm</span>
+              <span class="opt-desc">Trung hạn, cân bằng</span>
+            </div>
+            <div class="opt" onclick="selectOpt(1,2,this)" data-val="long">
+              <span class="opt-icon">🗓️</span>
+              <span class="opt-label">Trên 3 năm</span>
+              <span class="opt-desc">Tích lũy dài hạn</span>
+            </div>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="profiler-step" id="step-2">
+          <div class="step-q">Mục tiêu đầu tư chính của bạn là gì?</div>
+          <div class="step-hint">Điều này giúp xác định loại quỹ và chiến lược phù hợp nhất</div>
+          <div class="option-grid">
+            <div class="opt" onclick="selectOpt(2,0,this)" data-val="income">
+              <span class="opt-icon">🏦</span>
+              <span class="opt-label">Thu nhập ổn định</span>
+              <span class="opt-desc">Lãi suất đều đặn, ít biến động</span>
+            </div>
+            <div class="opt" onclick="selectOpt(2,1,this)" data-val="balanced">
+              <span class="opt-icon">⚖️</span>
+              <span class="opt-label">Cân bằng rủi ro / lợi nhuận</span>
+              <span class="opt-desc">Hài hoà giữa tăng trưởng và an toàn</span>
+            </div>
+            <div class="opt" onclick="selectOpt(2,2,this)" data-val="growth">
+              <span class="opt-icon">🚀</span>
+              <span class="opt-label">Tăng trưởng tối đa</span>
+              <span class="opt-desc">Sẵn sàng chấp nhận biến động cao</span>
+            </div>
+          </div>
+        </div>
+        <div class="profiler-nav">
+          <button class="btn btn-ghost" id="btn-back" onclick="prevStep()" style="display:none">← Quay lại</button>
+          <div style="display:flex;align-items:center;flex:1;margin-left:8px">
+            <div class="progress-bar"><div class="progress-fill" id="pbar" style="width:33%"></div></div>
+            <span style="font-size:12px;color:var(--gray);margin-left:8px" id="step-counter">1 / 3</span>
+          </div>
+          <button class="btn btn-primary" id="btn-next" onclick="nextStep()">Tiếp theo →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-section" id="results">
+    <div id="result-profile-hero" class="result-hero">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="sec-head" style="margin-top:32px">
+      <div class="sec-tag">Đề xuất cá nhân hóa</div>
+      <div class="sec-title" id="rec-title">Quỹ phù hợp nhất với bạn</div>
+      <div class="sec-desc" id="rec-desc">Dựa trên hồ sơ của bạn và dữ liệu hiệu suất Q1/2026</div>
+    </div>
+    <div class="fund-grid" id="fund-grid"></div>
+
+    <!-- CHARTS -->
+    <div class="chart-section">
+      <div class="sec-head">
+        <div class="sec-tag">Phân tích hiệu suất</div>
+        <div class="sec-title">So sánh trực quan các loại quỹ</div>
+      </div>
+      <div class="chart-tabs">
+        <button class="chart-tab active" onclick="switchChart('perf')">Hiệu suất so sánh</button>
+        <button class="chart-tab" onclick="switchChart('flow')">Dòng tiền ròng</button>
+        <button class="chart-tab" onclick="switchChart('risk')">Rủi ro vs Lợi nhuận</button>
+      </div>
+      <div id="chart-perf-wrap" style="position:relative;height:320px"><canvas id="chartPerf" role="img" aria-label="Biểu đồ hiệu suất so sánh các quỹ Q1/2026">Hiệu suất so sánh quỹ CP, TP, CB, VN-Index Q1 2026</canvas></div>
+      <div id="chart-flow-wrap" style="position:relative;height:320px;display:none"><canvas id="chartFlow" role="img" aria-label="Dòng tiền ròng hàng quý 2023-Q1 2026">Dòng tiền ròng hàng quý từ 2023 đến Q1/2026</canvas></div>
+      <div id="chart-risk-wrap" style="position:relative;height:320px;display:none"><canvas id="chartRisk" role="img" aria-label="Biểu đồ scatter rủi ro vs lợi nhuận các quỹ tiêu biểu">Phân tán rủi ro và lợi nhuận 1 năm của các quỹ tiêu biểu</canvas></div>
+    </div>
+
+    <!-- SMART MONEY -->
+    <div class="sec-head">
+      <div class="sec-tag">Smart Money Signals</div>
+      <div class="sec-title">Dòng tiền thông minh tháng 3/2026</div>
+      <div class="sec-desc">72 quỹ trong và ngoài nước đang mua / bán gì?</div>
+    </div>
+    <div class="smart-grid">
+      <div class="smart-card">
+        <h4>🟢 Top mua ròng — Midcap nổi lên</h4>
+        <div class="sub">Triệu cổ phiếu · 72 quỹ tháng 3/2026</div>
+        <div id="buy-stocks"></div>
+      </div>
+      <div class="smart-card">
+        <h4>🔴 Top bán ròng — Large-cap bị rút</h4>
+        <div class="sub">Cơ cấu ETF + quỹ chủ động giảm tỷ trọng</div>
+        <div id="sell-stocks"></div>
+      </div>
+      <div class="smart-card">
+        <h4>📊 Tín hiệu dòng tiền nội địa</h4>
+        <div class="sub">Phân tích theo loại quỹ tháng 3/2026</div>
+        <div id="flow-signals"></div>
+      </div>
+      <div class="smart-card">
+        <h4>💰 Tỷ trọng tiền mặt "Nạp đạn"</h4>
+        <div class="sub">T2 → T3/2026 · Các quỹ lớn tích lũy tiền</div>
+        <div id="cash-signals"></div>
+      </div>
+    </div>
+
+    <!-- MARKET TIMING -->
+    <div class="timing-section">
+      <div class="sec-head">
+        <div class="sec-tag">Market Intelligence</div>
+        <div class="sec-title">Thị trường đang ở đâu? Nên vào hay chờ?</div>
+        <div class="sec-desc">6 tín hiệu theo dõi Q2/2026 để đưa ra quyết định</div>
+      </div>
+      <div class="timing-grid">
+        <div class="gauge-wrap">
+          <div style="position:relative;height:220px;width:100%">
+            <canvas id="chartGauge" role="img" aria-label="Đồng hồ thị trường cho thấy trạng thái Thận trọng nhưng lạc quan">Trạng thái thị trường: Thận trọng nhưng có cơ hội — điểm 58/100</canvas>
+          </div>
+          <div class="gauge-label">Chỉ số Thị trường Q2/2026</div>
+          <div style="font-family:'Fraunces',serif;font-size:28px;color:var(--teal);text-align:center;margin-top:4px">58 / 100</div>
+          <div style="font-size:12px;color:var(--gray);text-align:center">Thận trọng — nhưng có cơ hội</div>
+        </div>
+        <div class="timing-signals">
+          <div class="ts-item">
+            <span class="ts-name">🏦 Quyết định Fed tháng 5</span>
+            <span class="ts-status ts-neutral">Theo dõi</span>
+          </div>
+          <div class="ts-item">
+            <span class="ts-name">🏆 FTSE Russell nâng hạng VN</span>
+            <span class="ts-status ts-bull">Tích cực</span>
+          </div>
+          <div class="ts-item">
+            <span class="ts-name">📉 DCDS giảm tiền mặt từ 15,1%</span>
+            <span class="ts-status ts-bull">Tín hiệu mua</span>
+          </div>
+          <div class="ts-item">
+            <span class="ts-name">📈 Kết quả KD Q1 (tháng 4/2026)</span>
+            <span class="ts-status ts-neutral">Quan sát</span>
+          </div>
+          <div class="ts-item">
+            <span class="ts-name">🌍 Địa chính trị Trung Đông</span>
+            <span class="ts-status ts-bear">Rủi ro</span>
+          </div>
+          <div class="ts-item">
+            <span class="ts-name">💹 VN-Index P/E ~ 21x</span>
+            <span class="ts-status ts-neutral">Trung bình</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY 3 FUNDS -->
+    <div class="info-strip">
+      <div class="info-item">
+        <div class="info-icon">📊</div>
+        <div class="info-text">
+          <h5>Dữ liệu FiinPro-X</h5>
+          <p>108 quỹ · 246K tỷ NAV · Cập nhật 31/03/2026</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🧠</div>
+        <div class="info-text">
+          <h5>Phân tích độc lập</h5>
+          <p>FiinGroup Senior Research · Không thiên vị</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">⚡</div>
+        <div class="info-text">
+          <h5>Cập nhật hàng tháng</h5>
+          <p>Báo cáo định kỳ · Tháng 4/2026 sắp ra</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🔒</div>
+        <div class="info-text">
+          <h5>Chỉ để tham khảo</h5>
+          <p>Không phải khuyến nghị đầu tư cụ thể</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2>Sẵn sàng hành động?</h2>
+      <p>Chuyên viên FiinGroup sẵn sàng phân tích danh mục và đề xuất chiến lược cụ thể cho bạn</p>
+      <div class="cta-buttons">
+        <button class="cta-btn-primary" onclick="alert('Chức năng đặt lịch tư vấn sẽ được kết nối với hệ thống CRM')">📞 Đặt lịch tư vấn miễn phí</button>
+        <button class="cta-btn-outline" onclick="window.print()">📄 Tải báo cáo đầy đủ</button>
+        <button class="cta-btn-outline" onclick="resetProfiler()">🔄 Làm lại profiling</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<footer>
+  FiinGroup Fund Navigator · Q1/2026 · Dữ liệu: FiinPro-X Platform · 81 quỹ CP + 27 quỹ TP · NAV >246,000 tỷ đồng<br>
+  © 2026 FiinGroup JSC · Chỉ dành cho mục đích tham khảo · Không phải khuyến nghị đầu tư
+</footer>
+
+<script>
+// ── DATA ──
+const funds = {
+  conservative: [
+    { id:'vcbf-fif', name:'Quỹ TP VCBF (VCBF-FIF)', type:'Quỹ Trái phiếu', nav:611, match:96, q1:3.0, t3:0.7, y1:6.5, cagr3:7.5, risk:'Thấp', tags:['income','bond','vcbf'], riskScore:2, flowQ1:-26, highlight:true, desc:'Quỹ TP dẫn đầu Q1/2026 với +3,0% — vượt lãi suất tiết kiệm Big 4. Phân bổ linh hoạt TP doanh nghiệp lãi cao.', strengths:['Hiệu suất cao nhất nhóm TP Q1','Vượt lãi tiết kiệm 0,16%/Q','CAGR 3 năm 7,5%/năm'], risks:['NAV nhỏ (611 tỷ) — thanh khoản vừa','Phí quản lý ~0,75%/năm'] },
+    { id:'abbf', name:'Quỹ TP An Bình (ABBF)', type:'Quỹ Trái phiếu', nav:1136, match:88, q1:1.7, t3:0.6, y1:6.4, cagr3:6.3, risk:'Thấp', tags:['income','bond','abbf'], riskScore:2, flowQ1:-105, highlight:false, desc:'Hiệu suất ổn định nhiều tháng liên tiếp. Tín hiệu vào ròng tháng 3 (+56 tỷ) — hiếm trong bối cảnh rút ròng toàn ngành.', strengths:['Vào ròng tháng 3 (+56 tỷ) — tín hiệu dương','Hiệu suất ổn định 0,5-0,6%/tháng','NAV 1,136 tỷ — thanh khoản tốt'], risks:['Lãi suất tiết kiệm cạnh tranh ngày càng cao','CAGR 3 năm 6,3% — ở mức trung bình'] },
+    { id:'tcff', name:'Quỹ Cân bằng Techcom (TCFF)', type:'Quỹ Cân bằng', nav:null, match:82, q1:7.2, t3:0.1, y1:null, cagr3:null, risk:'Trung bình', tags:['balanced','flexible'], riskScore:5, flowQ1:-18.3, highlight:false, desc:'Quỹ CB duy nhất dương tháng 3 (+0,1%). Q1 đạt +7,2% — dẫn đầu toàn bộ nhóm CB. Chiến lược phân bổ linh hoạt, tỷ trọng CP thấp khi thị trường rủi ro.', strengths:['Duy nhất dương tháng 3 trong nhóm CB','Q1/2026 +7,2% — vượt trội xa so với peers','Chiến lược phòng thủ hiệu quả'], risks:['Rút ròng liên tiếp dù hiệu suất tốt','Chiến lược linh hoạt khó dự đoán'] }
+  ],
+  moderate: [
+    { id:'vcbf-bcf', name:'VCBF-BCF', type:'Quỹ Cổ phiếu — Chủ động', nav:1521, match:94, q1:0.3, t3:-7.2, y1:25.5, cagr3:20.4, risk:'Cao', tags:['equity','active'], riskScore:7, flowQ1:264, highlight:true, desc:'Lợi nhuận 1 năm +25,5% — cao nhất nhóm quỹ mở. CAGR 3 năm +20,4%/năm. Vào ròng +264 tỷ Q1 — nhà đầu tư tổ chức tin tưởng.', strengths:['Top hiệu suất 1 năm: +25,5%','CAGR 3 năm +20,4%/năm vượt thị trường','Vào ròng +264 tỷ Q1/2026 — dòng tiền tốt'], risks:['Q1/2026 gần bằng 0 (biến động cao)','Rủi ro cao — phù hợp nắm dài hạn'] },
+    { id:'ssi-sca', name:'SSI-SCA', type:'Quỹ Cổ phiếu — Chủ động', nav:1364, match:87, q1:-0.3, t3:-7.1, y1:13.0, cagr3:22.4, risk:'Cao', tags:['equity','active','ssi'], riskScore:7, flowQ1:100, highlight:false, desc:'CAGR 3 năm cao nhất nhóm quỹ mở: +22,4%/năm. Vào ròng +100 tỷ Q1. Quản lý bởi SSI Asset Management — uy tín lâu năm.', strengths:['CAGR 3 năm +22,4%/năm — cao nhất nhóm','Vào ròng liên tiếp — tín hiệu niềm tin','Brand SSI — công ty chứng khoán số 1 VN'], risks:['Q1/2026 nhẹ âm (−0,3%)', 'Lợi nhuận 1 năm +13% — thấp hơn peers'] },
+    { id:'vlgf', name:'VLGF (VinaCapital)', type:'Quỹ Cổ phiếu — Chủ động', nav:4802, match:80, q1:-0.9, t3:-8.0, y1:11.1, cagr3:16.7, risk:'Cao', tags:['equity','large'], riskScore:7, flowQ1:-167, highlight:false, desc:'NAV lớn nhất nhóm quỹ chủ động (4,802 tỷ). Thanh khoản cao. Danh mục đa dạng — phù hợp tích lũy dài hạn.', strengths:['NAV lớn nhất — thanh khoản tốt nhất','Quản lý chuyên nghiệp VinaCapital','Phù hợp đầu tư định kỳ SIP dài hạn'], risks:['Q1/2026: −0,9% — underperform peers','Giảm tiền mặt — đang giải ngân mạnh'] }
+  ],
+  aggressive: [
+    { id:'vmeef', name:'VINACAPITAL-VMEEF', type:'Quỹ Cổ phiếu — Chủ động', nav:2395, match:98, q1:6.7, t3:-6.5, y1:18.0, cagr3:null, risk:'Cao', tags:['equity','top','vinacapital'], riskScore:8, flowQ1:113, highlight:true, desc:'Quỹ CP dẫn đầu Q1/2026: +6,7% — alpha +12,9 điểm so với VN-Index. Chiến lược tập trung BVH, REE — phòng thủ thắng tháng 3.', strengths:['Số 1 Q1/2026: +6,7% (+12,9 vs VN-Index)','Lợi nhuận 1 năm: +18,0%','Vào ròng +113 tỷ Q1 — dòng tiền dương'], risks:['Tháng 3 vẫn âm (−6,5%) dù top peers','Lịch sử ngắn (chưa đủ 3 năm)'] },
+    { id:'vesaf', name:'VINACAPITAL-VESAF', type:'Quỹ Cổ phiếu — Chủ động', nav:2529, match:95, q1:6.2, t3:-5.9, y1:17.3, cagr3:19.2, risk:'Cao', tags:['equity','active','vinacapital'], riskScore:8, flowQ1:-12, highlight:false, desc:'Số 2 Q1/2026: +6,2%. CAGR 3 năm +19,2%/năm. Lịch sử track record dài nhất nhóm VinaCapital. Phân bổ BVH, REE thắng tháng 3.', strengths:['CAGR 3 năm: +19,2%/năm — bền vững','Q1/2026: +6,2% — top 2 toàn thị trường','Tháng 3 giảm ít nhất: −5,9% vs −11% benchmark'], risks:['Phí quản lý ~1,5%/năm — cao hơn ETF','Không phù hợp ngắn hạn < 1 năm'] },
+    { id:'pyn', name:'PYN Elite Fund', type:'Quỹ Đóng Ngoại', nav:null, match:78, q1:-6.6, t3:-11.1, y1:null, cagr3:null, risk:'Rất cao', tags:['closed','foreign','high-risk'], riskScore:9, flowQ1:null, highlight:false, desc:'Quỹ đóng nước ngoài (Phần Lan). Danh mục tập trung — high conviction, high volatility. Giảm mạnh STB, MBB trong tháng 3 → rotation cơ cấu.', strengths:['Danh mục tập trung → alpha cao khi đúng','Độc lập hoàn toàn vs benchmark','Mua ròng mạnh HPG tháng 3'], risks:['Không thể mua/bán trực tiếp (quỹ đóng)','Biến động rất cao — không phù hợp tất cả'] }
+  ]
+};
+
+const profiles = {
+  conservative: { icon:'🏦', title:'Nhà Đầu Tư Thận Trọng', color:'teal', desc:'Bạn ưu tiên bảo toàn vốn và thu nhập ổn định. Trong Q1/2026, nhóm quỹ TP và CB phòng thủ là lựa chọn phù hợp nhất.', tags:['Bảo toàn vốn','Thu nhập ổn định','Rủi ro thấp'] },
+  moderate: { icon:'⚖️', title:'Nhà Đầu Tư Cân Bằng', color:'gold', desc:'Bạn muốn tăng trưởng nhưng vẫn kiểm soát được rủi ro. Quỹ chủ động track record dài là lựa chọn tối ưu cho profile này.', tags:['Cân bằng rủi ro','Tăng trưởng trung bình','1-3 năm'] },
+  aggressive: { icon:'🚀', title:'Nhà Đầu Tư Tăng Trưởng', color:'green', desc:'Bạn sẵn sàng chấp nhận biến động cao để đổi lấy alpha tối đa. Smart money đã chứng minh quỹ chủ động vượt trội trong Q1/2026.', tags:['Tối đa hoá alpha','Dài hạn > 3 năm','Chấp nhận biến động'] }
+};
+
+// ── STATE ──
+let currentStep = 0;
+let answers = [null, null, null];
+let chartPerf, chartFlow, chartRisk, chartGauge;
+
+// ── PROFILER ──
+function selectOpt(stepIdx, optIdx, el) {
+  document.querySelectorAll(`#step-${stepIdx} .opt`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[stepIdx] = el.dataset.val;
+}
+
+function nextStep() {
+  if (answers[currentStep] === null) { alert('Vui lòng chọn một đáp án!'); return; }
+  if (currentStep < 2) {
+    document.getElementById(`step-${currentStep}`).classList.remove('active');
+    currentStep++;
+    document.getElementById(`step-${currentStep}`).classList.add('active');
+    updateProfilerUI();
+  } else {
+    showResults();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    document.getElementById(`step-${currentStep}`).classList.remove('active');
+    currentStep--;
+    document.getElementById(`step-${currentStep}`).classList.add('active');
+    updateProfilerUI();
+  }
+}
+
+function updateProfilerUI() {
+  const titles = ['Khẩu vị rủi ro', 'Thời gian đầu tư', 'Mục tiêu đầu tư'];
+  document.getElementById('step-title').textContent = titles[currentStep];
+  document.getElementById('btn-back').style.display = currentStep > 0 ? 'block' : 'none';
+  document.getElementById('btn-next').textContent = currentStep === 2 ? '🎯 Xem kết quả' : 'Tiếp theo →';
+  document.getElementById('step-counter').textContent = `${currentStep+1} / 3`;
+  document.getElementById('pbar').style.width = `${((currentStep+1)/3*100).toFixed(0)}%`;
+  for (let i=0;i<3;i++) {
+    const d = document.getElementById(`dot-${i}`);
+    d.classList.toggle('active', i === currentStep);
+  }
+}
+
+function getProfile() {
+  const risk = answers[0], horizon = answers[1], goal = answers[2];
+  if (goal === 'income' || risk === 'conservative') return 'conservative';
+  if (goal === 'growth' || risk === 'aggressive') return 'aggressive';
+  return 'moderate';
+}
+
+function showResults() {
+  const profile = getProfile();
+  const p = profiles[profile];
+  document.getElementById('profiler-wrap').style.display = 'none';
+  document.getElementById('results').classList.add('show');
+
+  // Profile hero
+  const ph = document.getElementById('result-profile-hero');
+  ph.innerHTML = `
+    <div class="profile-badge"><span class="icon">${p.icon}</span></div>
+    <div class="result-hero-text">
+      <h3>Hồ sơ: ${p.title}</h3>
+      <p>${p.desc}</p>
+      <div class="profile-tags">${p.tags.map(t=>`<span class="ptag ptag-teal">${t}</span>`).join('')}</div>
+    </div>
+    <div style="margin-left:auto;text-align:center;padding:16px 20px;background:var(--teal-l);border-radius:12px;border:1px solid var(--teal-m)">
+      <div style="font-family:'Fraunces',serif;font-size:36px;color:var(--teal)">${funds[profile].length}</div>
+      <div style="font-size:12px;color:var(--gray)">quỹ phù hợp<br>cho bạn</div>
+    </div>`;
+
+  // Fund cards
+  const grid = document.getElementById('fund-grid');
+  grid.innerHTML = funds[profile].map(f => `
+    <div class="fund-card ${f.highlight?'top-pick':''}" onclick="openModal('${f.id}','${profile}')">
+      ${f.highlight ? '<div class="top-pick-ribbon">⭐ Đề xuất hàng đầu</div>' : ''}
+      <div class="fund-card-header">
+        <div><div class="fund-name">${f.name}</div><div class="fund-type">${f.type}</div></div>
+        <div class="match-badge"><span class="match-pct">${f.match}%</span><div class="match-label">phù hợp</div></div>
+      </div>
+      <div class="fund-metrics">
+        <div class="metric"><span class="metric-val ${f.q1>=0?'pos':'neg'}">${f.q1>=0?'+':''}${f.q1}%</span><span class="metric-lbl">Q1/2026</span></div>
+        <div class="metric"><span class="metric-val ${f.t3>=0?'pos':'neg'}">${f.t3>=0?'+':''}${f.t3}%</span><span class="metric-lbl">T3/2026</span></div>
+        <div class="metric"><span class="metric-val ${f.y1&&f.y1>=0?'pos':'neutral'}">${f.y1?'+'+f.y1+'%':'—'}</span><span class="metric-lbl">1 năm</span></div>
+      </div>
+      <div class="fund-bar">
+        <div class="bar-label"><span>Q1 vs VN-Index (−6,2%)</span><span style="color:${f.q1>=0?'var(--green)':'var(--red)'};">${f.q1>=0?'+':''}${(f.q1-(-6.2)).toFixed(1)}%</span></div>
+        <div class="bar-track"><div class="bar-fill ${f.q1<0?'neg':''}" style="width:${Math.min(100,Math.abs(f.q1)/12*100).toFixed(0)}%"></div></div>
+      </div>
+      <div class="fund-tags">
+        <span class="fund-tag fund-tag-b">NAV: ${f.nav?f.nav.toLocaleString()+' tỷ':'N/A'}</span>
+        <span class="fund-tag ${f.riskScore<=4?'fund-tag-g':f.riskScore<=7?'fund-tag-b':'fund-tag-r'}">Rủi ro: ${f.risk}</span>
+        ${f.cagr3?`<span class="fund-tag fund-tag-g">CAGR 3Y: +${f.cagr3}%</span>`:''}
+      </div>
+      <div class="fund-card-footer">
+        <span class="fund-nav-txt">Dòng tiền Q1: <strong style="color:${f.flowQ1&&f.flowQ1>=0?'var(--green)':'var(--red)'}">${f.flowQ1?((f.flowQ1>=0?'+':'')+f.flowQ1+' tỷ'):'N/A'}</strong></span>
+        <span class="fund-cta">Chi tiết <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </div>`).join('');
+
+  initCharts();
+  renderSmartMoney();
+  renderGauge();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function resetProfiler() {
+  currentStep = 0; answers = [null,null,null];
+  document.getElementById('profiler-wrap').style.display = 'block';
+  document.getElementById('results').classList.remove('show');
+  document.querySelectorAll('.profiler-step').forEach((s,i) => s.classList.toggle('active', i===0));
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+  updateProfilerUI();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── CHARTS ──
+function initCharts() {
+  if (chartPerf) chartPerf.destroy();
+  if (chartFlow) chartFlow.destroy();
+  if (chartRisk) chartRisk.destroy();
+
+  // Chart 1 — Performance
+  chartPerf = new Chart(document.getElementById('chartPerf'), {
+    type: 'bar',
+    data: {
+      labels: ['VMEEF','VESAF','VEOF','VCBF-BCF','SSI-SCA','VLGF','Diamond ETF','VNM-ETF','Fubon FTSE','E1VFVN30','KIM VN30','VN-Index'],
+      datasets: [
+        { label:'Q1/2026', data:[6.7,6.2,2.6,0.3,-0.3,-0.9,-4.3,-8.0,-7.2,-9.8,-10.1,-6.2], backgroundColor:(ctx)=>ctx.parsed.y>=0?'#1a7a4b':'#c0392b', borderRadius:3 },
+        { label:'Tháng 3/2026', data:[-6.5,-5.9,-6.9,-7.2,-7.1,-8.0,-9.8,-9.8,-11.7,-11.1,-11.3,-11.0], backgroundColor:'rgba(192,57,43,0.2)', borderWidth:1, borderColor:'rgba(192,57,43,0.6)', borderRadius:3 }
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{ticks:{font:{size:10},maxRotation:30,color:'#6b7280'},grid:{display:false}},y:{ticks:{callback:v=>v+'%',font:{size:10},color:'#6b7280'},grid:{color:'rgba(0,0,0,0.05)'}}}}
+  });
+
+  // Chart 2 — Quarterly flows
+  chartFlow = new Chart(document.getElementById('chartFlow'), {
+    type: 'bar',
+    data: {
+      labels: ['Q1/23','Q2/23','Q3/23','Q4/23','Q1/24','Q2/24','Q3/24','Q4/24','Q1/25','Q2/25','Q3/25','Q4/25','Q1/26'],
+      datasets: [
+        { label:'Quỹ CP',  data:[9.5,-11.3,-12.8,0,-4.1,-10.1,-1.1,0,-5.4,0,-4.6,-10.1,-9.8], backgroundColor:'#c9933a', stack:'s' },
+        { label:'Quỹ TP', data:[0,0,0,0,0,0,5.4,0,0,0,-0.8,-4.6,-4.6], backgroundColor:'#1a7a4b', stack:'s' }
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{font:{size:11},color:'#6b7280'}}}, scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:10},color:'#6b7280'}},y:{stacked:true,ticks:{callback:v=>v+'K',font:{size:10},color:'#6b7280'},grid:{color:'rgba(0,0,0,0.05)'}}}}
+  });
+
+  // Chart 3 — Risk / Return scatter
+  chartRisk = new Chart(document.getElementById('chartRisk'), {
+    type: 'bubble',
+    data: {
+      datasets: [
+        { label:'Quỹ Chủ động Top', data:[{x:6,y:17.5,r:16},{x:5.5,y:19,r:14}], backgroundColor:'rgba(26,122,75,0.7)', borderColor:'#1a7a4b' },
+        { label:'Quỹ CP Chủ động Khác', data:[{x:7,y:11,r:10},{x:7.5,y:13,r:10},{x:8,y:25,r:12}], backgroundColor:'rgba(26,122,75,0.3)', borderColor:'#1a7a4b' },
+        { label:'ETF Nội', data:[{x:9,y:16,r:15}], backgroundColor:'rgba(192,57,43,0.5)', borderColor:'#c0392b' },
+        { label:'ETF Ngoại', data:[{x:10,y:42,r:18},{x:9.5,y:40,r:17}], backgroundColor:'rgba(192,57,43,0.3)', borderColor:'#c0392b' },
+        { label:'Quỹ TP / CB', data:[{x:2,y:6.5,r:10},{x:3,y:7,r:8}], backgroundColor:'rgba(10,124,96,0.5)', borderColor:'#0a7c60' },
+        { label:'Tiết kiệm Big 4', data:[{x:0,y:5.9,r:12}], backgroundColor:'rgba(107,114,128,0.6)', borderColor:'#6b7280' },
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{size:11},color:'#6b7280'}}},
+      scales:{
+        x:{title:{display:true,text:'Biến động (tương đối)',font:{size:11},color:'#6b7280'},min:0,max:12,ticks:{color:'#6b7280',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}},
+        y:{title:{display:true,text:'Lợi nhuận 1 năm (%)',font:{size:11},color:'#6b7280'},min:0,max:55,ticks:{callback:v=>v+'%',color:'#6b7280',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}}
+      }
+    }
+  });
+}
+
+function switchChart(type) {
+  document.querySelectorAll('.chart-tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('chart-perf-wrap').style.display = type==='perf'?'block':'none';
+  document.getElementById('chart-flow-wrap').style.display = type==='flow'?'block':'none';
+  document.getElementById('chart-risk-wrap').style.display = type==='risk'?'block':'none';
+}
+
+// ── SMART MONEY ──
+function renderSmartMoney() {
+  const buy = [{t:'HPG',v:38.7,c:'#1a7a4b',f:'PYN Elite, Fubon FTSE'},{t:'VCI',v:17.1,c:'#1a7a4b',f:'39 quỹ đồng thuận'},{t:'VIB',v:3.6,c:'#1a7a4b',f:'Tài chính hưởng lợi'},{t:'IDC',v:2.8,c:'#1a7a4b',f:'BĐS KCN - FDI'},{t:'VIX',v:2.7,c:'#1a7a4b',f:'Dịch vụ tài chính'}];
+  document.getElementById('buy-stocks').innerHTML = buy.map(s=>`
+    <div class="stock-row"><span class="stock-ticker">${s.t}</span>
+    <div class="stock-bar-wrap"><div class="stock-bar-track"><div class="stock-bar-fill" style="width:${(s.v/40*100).toFixed(0)}%;background:${s.c}"></div></div>
+    <div class="stock-funds">${s.f}</div></div>
+    <span class="stock-val" style="color:${s.c}">${s.v}M</span></div>`).join('');
+
+  const sell = [{t:'BSR',v:22.8,c:'#c0392b',f:'Fubon, DCDS, EVESG'},{t:'STB',v:21.2,c:'#c0392b',f:'PYN Elite giảm mạnh'},{t:'TCH',v:11.9,c:'#c0392b',f:'Cơ cấu ETF'},{t:'VIC',v:10.0,c:'#c0392b',f:'T3 liên tiếp bị bán'},{t:'ACB',v:9.3,c:'#c0392b',f:'Ngân hàng rotation'}];
+  document.getElementById('sell-stocks').innerHTML = sell.map(s=>`
+    <div class="stock-row"><span class="stock-ticker">${s.t}</span>
+    <div class="stock-bar-wrap"><div class="stock-bar-track"><div class="stock-bar-fill" style="width:${(s.v/25*100).toFixed(0)}%;background:${s.c}"></div></div>
+    <div class="stock-funds">${s.f}</div></div>
+    <span class="stock-val" style="color:${s.c}">${s.v}M</span></div>`).join('');
+
+  document.getElementById('flow-signals').innerHTML = [
+    {color:'buy',text:'<strong>Quỹ mở nội địa</strong> vào ròng +0,9K tỷ tháng 3',sub:'Tín hiệu đảo chiều đầu tiên sau nhiều tháng'},
+    {color:'sell',text:'<strong>ETF ngoại</strong> rút ròng kỷ lục −1,97K tỷ',sub:'VanEck Vietnam ETF — mức cao nhất lịch sử'},
+    {color:'sell',text:'<strong>VEIL quỹ đóng</strong> rút ròng −7,3K tỷ cả Q1',sub:'Áp lực thoái vốn từ nhà đầu tư tổ chức nước ngoài'},
+    {color:'watch',text:'<strong>E1VFVN30</strong> vào ròng +109 tỷ tháng 3',sub:'Tín hiệu nhà đầu tư nội "buy the dip" VN30'},
+    {color:'buy',text:'<strong>DCDS & EVESG</strong> hút ròng 2 tháng liên tiếp',sub:'Niềm tin vào quỹ chủ động được khôi phục'}
+  ].map(s=>`<div class="signal-item"><div class="signal-dot ${s.color}"></div><div><div class="signal-text">${s.text}</div><div class="signal-meta">${s.sub}</div></div></div>`).join('');
+
+  document.getElementById('cash-signals').innerHTML = [
+    {f:'VFMVSF',prev:9.0,curr:12.5},{f:'DCDS',prev:11.2,curr:15.1},{f:'VESAF',prev:9.1,curr:10.3},{f:'VMEEF',prev:7.3,curr:9.4},{f:'VEOF',prev:3.0,curr:9.5}
+  ].map(c=>`
+    <div class="stock-row"><span class="stock-ticker" style="font-size:11px">${c.f}</span>
+    <div class="stock-bar-wrap"><div class="stock-bar-track"><div class="stock-bar-fill" style="width:${(c.curr/20*100).toFixed(0)}%;background:#0a7c60"></div></div>
+    <div class="stock-funds">${c.prev}% → ${c.curr}%</div></div>
+    <span class="stock-val" style="color:#0a7c60">+${(c.curr-c.prev).toFixed(1)}%</span></div>`).join('');
+}
+
+// ── GAUGE ──
+function renderGauge() {
+  if (chartGauge) chartGauge.destroy();
+  chartGauge = new Chart(document.getElementById('chartGauge'), {
+    type: 'doughnut',
+    data: {
+      datasets: [{
+        data: [58, 42],
+        backgroundColor: ['#0a7c60', '#e9ecef'],
+        borderWidth: 0,
+        circumference: 180,
+        rotation: 270
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '75%',
+      plugins: { legend: { display: false }, tooltip: { enabled: false } }
+    }
+  });
+}
+
+// ── MODAL ──
+function openModal(id, profile) {
+  const fund = funds[profile].find(f=>f.id===id);
+  if (!fund) return;
+  const m = document.getElementById('modal-content');
+  m.innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>${fund.name}</h3>
+    <p style="font-size:13px;color:var(--text-m);margin-bottom:16px">${fund.desc}</p>
+    <div style="margin-bottom:16px">
+      ${fund.strengths.map(s=>`<div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px"><span style="color:var(--green)">✓</span><span>${s}</span></div>`).join('')}
+      ${fund.risks.map(r=>`<div style="display:flex;gap:8px;margin-bottom:6px;font-size:13px"><span style="color:var(--red)">!</span><span style="color:var(--text-m)">${r}</span></div>`).join('')}
+    </div>
+    <div style="background:var(--gray-l);border-radius:10px;padding:16px">
+      <div class="detail-row"><span class="detail-lbl">Q1/2026</span><span class="detail-val ${fund.q1>=0?'pos':'neg'}">${fund.q1>=0?'+':''}${fund.q1}%</span></div>
+      <div class="detail-row"><span class="detail-lbl">Tháng 3/2026</span><span class="detail-val ${fund.t3>=0?'pos':'neg'}">${fund.t3>=0?'+':''}${fund.t3}%</span></div>
+      ${fund.y1?`<div class="detail-row"><span class="detail-lbl">Lợi nhuận 1 năm</span><span class="detail-val pos">+${fund.y1}%</span></div>`:''}
+      ${fund.cagr3?`<div class="detail-row"><span class="detail-lbl">CAGR 3 năm</span><span class="detail-val pos">+${fund.cagr3}%/năm</span></div>`:''}
+      ${fund.nav?`<div class="detail-row"><span class="detail-lbl">NAV (31/3/2026)</span><span class="detail-val neutral">${fund.nav.toLocaleString()} tỷ</span></div>`:''}
+      ${fund.flowQ1!==null&&fund.flowQ1!==undefined?`<div class="detail-row"><span class="detail-lbl">Dòng tiền Q1</span><span class="detail-val ${fund.flowQ1>=0?'pos':'neg'}">${fund.flowQ1>=0?'+':''}${fund.flowQ1} tỷ</span></div>`:''}
+    </div>
+    <button onclick="closeModal()" class="btn btn-primary" style="width:100%;margin-top:16px">Đóng</button>`;
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+function closeModal(e) {
+  if (!e || e.target===document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('show');
+  }
+}
+
+// ── COUNTER ANIMATION ──
+function animateCounter(el, target, suffix, isNeg, duration) {
+  let start = 0; const step = target / (duration / 16);
+  const timer = setInterval(()=>{
+    start = Math.min(start + step, target);
+    el.textContent = (isNeg?'-':'') + start.toFixed(1) + suffix;
+    if (start >= target) clearInterval(timer);
+  }, 16);
+}
+
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{ animateCounter(document.getElementById('kpi1'), 6.2, '%', true, 800); }, 200);
+  setTimeout(()=>{ animateCounter(document.getElementById('kpi2'), 14.4, 'K tỷ', false, 1000); }, 400);
+  setTimeout(()=>{ animateCounter(document.getElementById('kpi3'), 6.7, '%', false, 800); }, 600);
+  setTimeout(()=>{
+    let n=0; const el=document.getElementById('kpi4');
+    const t=setInterval(()=>{ n=Math.min(n+1,52); el.textContent=n+'/82'; if(n>=52)clearInterval(t); },30);
+  }, 800);
+});
+</script>
+</body>
+</html>

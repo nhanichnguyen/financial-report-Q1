@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rồng Vươn Mình — Biên Niên Sử Thị Trường Tài Chính Việt Nam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink:     #0e0e12;
+  --paper:   #f7f4ee;
+  --warm:    #ede9e0;
+  --gold:    #b8892e;
+  --gold-lt: #f5edd5;
+  --red-vn:  #da2032;
+  --red-lt:  #fcecea;
+  --sage:    #3d5a47;
+  --sage-lt: #eaf2ec;
+  --slate:   #2d3a4a;
+  --silver:  #7a8394;
+  --rule:    #d8d2c6;
+  --cap:     #1a1a22;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.75;
+  font-size: 17px;
+  overflow-x: hidden;
+}
+
+/* ── COVER ────────────────────────────────────────────────────────────────── */
+.cover {
+  position: relative;
+  min-height: 100vh;
+  background: var(--cap);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+/* Animated background — stripes symbolizing a ticker tape / candlestick chart */
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.cover-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 39px,
+      rgba(184,137,46,0.06) 39px,
+      rgba(184,137,46,0.06) 40px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 59px,
+      rgba(255,255,255,0.025) 59px,
+      rgba(255,255,255,0.025) 60px
+    );
+}
+/* Diagonal rising line — symbol of the bull market */
+.cover-bg::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -5%;
+  width: 70%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: rotate(-15deg);
+  transform-origin: left center;
+  animation: scanline 6s ease-in-out infinite;
+  opacity: 0.5;
+}
+@keyframes scanline {
+  0%, 100% { opacity: 0.3; transform: rotate(-15deg) translateY(0); }
+  50% { opacity: 0.7; transform: rotate(-15deg) translateY(-40px); }
+}
+
+/* Rising candles silhouette */
+.candles {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  opacity: 0.06;
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  padding-right: 40px;
+}
+.candle {
+  flex: 1;
+  background: #b8892e;
+  border-radius: 2px 2px 0 0;
+  animation: candleGrow 3s ease-out forwards;
+  transform-origin: bottom;
+}
+@keyframes candleGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.star-flag {
+  position: absolute;
+  top: 50px;
+  left: 60px;
+  width: 56px;
+  height: 56px;
+  opacity: 0.9;
+}
+.star-flag svg { width: 100%; height: 100%; }
+
+.cover-inner {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  padding: 80px 64px;
+}
+.cover-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(184,137,46,0.5);
+  display: inline-block;
+  padding: 5px 12px;
+  margin-bottom: 32px;
+}
+.cover h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 7vw, 88px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 16px;
+}
+.cover h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.cover h1 .accent {
+  display: block;
+  color: var(--red-vn);
+  font-style: italic;
+}
+.cover-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2vw, 22px);
+  font-style: italic;
+  color: rgba(255,255,255,0.55);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+.cover-meta {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 24px;
+}
+.meta-item { font-size: 12px; }
+.meta-lbl { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 3px; }
+.meta-val { color: rgba(255,255,255,0.7); font-weight: 500; }
+
+.cover-scroll {
+  position: absolute;
+  bottom: 32px;
+  right: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+.cover-scroll span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, rgba(184,137,46,0.7), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* ── MAIN ────────────────────────────────────────────────────────────────── */
+main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 28px 120px;
+}
+
+/* ── SECTION ────────────────────────────────────────────────────────────── */
+.section {
+  padding: 80px 0 48px;
+  border-top: 1px solid var(--rule);
+  animation: fadeUp 0.6s ease both;
+}
+.section:first-child { border-top: none; padding-top: 72px; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.eyebrow::after { content:''; flex:1; height:1px; background:var(--gold-lt); max-width:50px; }
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 28px;
+  color: var(--ink);
+}
+h2 em { font-style: italic; color: var(--red-vn); }
+h2 .gold-em { color: var(--gold); }
+
+h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 48px;
+  margin-bottom: 14px;
+  color: var(--slate);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--gold-lt);
+}
+
+p {
+  margin-bottom: 22px;
+  color: #1c1c28;
+  font-size: 17px;
+  line-height: 1.8;
+}
+p strong { font-weight: 600; color: var(--ink); }
+p em { font-style: italic; color: var(--slate); }
+
+/* ── LEDE / INTRO ─────────────────────────────────────────────────────── */
+.lede {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3vw, 26px);
+  line-height: 1.65;
+  color: var(--slate);
+  font-style: italic;
+  border-left: 4px solid var(--gold);
+  padding: 20px 28px;
+  margin: 32px 0 40px;
+  background: linear-gradient(to right, rgba(184,137,46,0.07), transparent);
+}
+
+/* ── PULL QUOTE ───────────────────────────────────────────────────────── */
+.pull-quote {
+  margin: 48px -40px;
+  padding: 40px 48px;
+  background: var(--cap);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.pull-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -20px;
+  left: 28px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 160px;
+  color: rgba(184,137,46,0.15);
+  line-height: 1;
+  pointer-events: none;
+}
+.pull-quote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-style: italic;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.6;
+  margin: 0 0 14px;
+  position: relative;
+  z-index: 1;
+}
+.pull-quote cite {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* ── TIMELINE ─────────────────────────────────────────────────────────── */
+.timeline {
+  margin: 40px 0;
+  position: relative;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--red-vn), var(--gold), var(--sage));
+}
+.tl-item {
+  margin-bottom: 32px;
+  position: relative;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--paper);
+  box-shadow: 0 0 0 2px var(--gold);
+}
+.tl-year {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.tl-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.tl-body {
+  font-size: 15px;
+  color: var(--silver);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── STAT BLOCK ───────────────────────────────────────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 40px 0;
+}
+.stat-box {
+  background: var(--paper);
+  padding: 24px 20px;
+  position: relative;
+}
+.stat-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.stat-box.red::before  { background: var(--red-vn); }
+.stat-box.gold::before { background: var(--gold); }
+.stat-box.sage::before { background: var(--sage); }
+.stat-box.slate::before{ background: var(--slate); }
+
+.stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-val.red  { color: var(--red-vn); }
+.stat-val.gold { color: var(--gold); }
+.stat-val.sage { color: var(--sage); }
+.stat-val.slate{ color: var(--slate); }
+.stat-lbl { font-size: 12px; color: var(--silver); line-height: 1.4; }
+
+/* ── COMPARE TABLE ────────────────────────────────────────────────────── */
+.compare-wrap { overflow-x: auto; margin: 36px 0; }
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.compare-table thead tr { background: var(--cap); color: #fff; }
+.compare-table th {
+  padding: 12px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--gold);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-weight: 500;
+}
+.compare-table td {
+  padding: 12px 16px;
+  border: 1px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.5;
+  color: var(--slate);
+}
+.compare-table tbody tr:nth-child(odd) { background: rgba(0,0,0,0.015); }
+.compare-table tbody tr:hover { background: var(--gold-lt); }
+.compare-table td:first-child { font-weight: 600; color: var(--ink); }
+.compare-table td.highlight {
+  background: rgba(218,32,50,0.06);
+  color: var(--red-vn);
+  font-weight: 600;
+}
+.compare-table td.gold-cell {
+  background: rgba(184,137,46,0.08);
+  color: #7a5c0e;
+  font-weight: 600;
+}
+
+/* ── INFO BOX ─────────────────────────────────────────────────────────── */
+.info-box {
+  padding: 28px 32px;
+  margin: 36px 0;
+  border-left: 4px solid var(--gold);
+  background: var(--gold-lt);
+  border-radius: 0 4px 4px 0;
+}
+.info-box.red-box { border-color: var(--red-vn); background: var(--red-lt); }
+.info-box.sage-box { border-color: var(--sage); background: var(--sage-lt); }
+.info-box .box-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.info-box.red-box .box-title { color: var(--red-vn); }
+.info-box.sage-box .box-title { color: var(--sage); }
+.info-box p { margin-bottom: 10px; font-size: 15px; color: var(--slate); }
+.info-box p:last-child { margin-bottom: 0; }
+
+/* ── ORNAMENT ─────────────────────────────────────────────────────────── */
+.ornament {
+  text-align: center;
+  color: var(--gold);
+  letter-spacing: 0.4em;
+  margin: 48px 0;
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+/* ── FULL-WIDTH BANNER ────────────────────────────────────────────────── */
+.banner {
+  background: var(--red-vn);
+  color: #fff;
+  padding: 56px 64px;
+  margin: 64px -40px;
+  position: relative;
+  overflow: hidden;
+}
+.banner::after {
+  content: '★';
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 180px;
+  color: rgba(255,255,255,0.07);
+  line-height: 1;
+}
+.banner h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.banner p {
+  color: rgba(255,255,255,0.8);
+  font-size: 16px;
+  max-width: 580px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0;
+}
+
+/* ── GOLD BANNER ─────────────────────────────────────────────────────── */
+.gold-banner {
+  background: linear-gradient(135deg, #1a160a 0%, #2d2410 100%);
+  border: 1px solid rgba(184,137,46,0.4);
+  padding: 48px 56px;
+  margin: 56px 0;
+  position: relative;
+  overflow: hidden;
+}
+.gold-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(184,137,46,0.12), transparent 60%);
+}
+.gold-banner h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 14px;
+  border: none;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+.gold-banner p {
+  color: rgba(255,255,255,0.75);
+  font-size: 16px;
+  line-height: 1.75;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 12px;
+}
+.gold-banner p:last-child { margin-bottom: 0; }
+
+/* ── CHECKLIST ────────────────────────────────────────────────────────── */
+.checklist { margin: 32px 0; list-style: none; }
+.checklist li {
+  padding: 10px 0 10px 28px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 16px;
+  position: relative;
+  color: var(--slate);
+  line-height: 1.55;
+}
+.checklist li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 12px;
+  top: 13px;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li strong { color: var(--ink); }
+
+/* ── FOOTER ──────────────────────────────────────────────────────────── */
+footer {
+  background: var(--cap);
+  color: rgba(255,255,255,0.4);
+  padding: 48px 64px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+footer strong { color: rgba(255,255,255,0.65); }
+.footer-inner { max-width: 780px; margin: 0 auto; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .cover-inner { padding: 48px 28px; }
+  main { padding: 0 20px 80px; }
+  .pull-quote { margin: 40px -20px; padding: 32px 24px; }
+  .banner { margin: 48px -20px; padding: 40px 24px; }
+  .gold-banner { padding: 36px 28px; }
+  footer { padding: 40px 28px; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── COVER ─────────────────────────────────────────────────────────────── -->
+<div class="cover">
+  <div class="cover-bg">
+    <div class="candles">
+      <div class="candle" style="height:18%;animation-delay:0.1s"></div>
+      <div class="candle" style="height:28%;animation-delay:0.2s"></div>
+      <div class="candle" style="height:22%;animation-delay:0.3s"></div>
+      <div class="candle" style="height:35%;animation-delay:0.4s"></div>
+      <div class="candle" style="height:30%;animation-delay:0.5s"></div>
+      <div class="candle" style="height:45%;animation-delay:0.6s"></div>
+      <div class="candle" style="height:38%;animation-delay:0.7s"></div>
+      <div class="candle" style="height:55%;animation-delay:0.8s"></div>
+      <div class="candle" style="height:48%;animation-delay:0.9s"></div>
+      <div class="candle" style="height:62%;animation-delay:1.0s"></div>
+      <div class="candle" style="height:55%;animation-delay:1.1s"></div>
+      <div class="candle" style="height:70%;animation-delay:1.2s"></div>
+      <div class="candle" style="height:65%;animation-delay:1.3s"></div>
+      <div class="candle" style="height:80%;animation-delay:1.4s"></div>
+    </div>
+  </div>
+
+  <div class="star-flag" aria-label="Ngôi sao vàng Việt Nam">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="48" fill="#da2032" opacity="0.3" stroke="rgba(218,32,50,0.4)" stroke-width="1"/>
+      <polygon points="50,15 58.5,38.5 84,38.5 63.5,53.5 71,77 50,62 29,77 36.5,53.5 16,38.5 41.5,38.5"
+               fill="#b8892e"/>
+    </svg>
+  </div>
+
+  <div class="cover-inner">
+    <span class="cover-tag">Biên Niên Sử &nbsp;·&nbsp; Đặc San Tài Chính 2026</span>
+
+    <h1>
+      Rồng<br>
+      <em>Vươn</em>
+      <span class="accent">Mình</span>
+    </h1>
+
+    <p class="cover-sub">
+      Hành trình 25 năm từ sàn chứng khoán sơ khai giữa lòng Sài Gòn
+      đến khát vọng trở thành Trung tâm Tài chính Châu Á của một dân tộc
+      không bao giờ chịu đứng yên.
+    </p>
+
+    <div class="cover-meta">
+      <div class="meta-item">
+        <span class="meta-lbl">Tác giả</span>
+        <span class="meta-val">Ban Nghiên Cứu Chiến Lược</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-lbl">Phát hành</span>
+        <span class="meta-val">Quý 2 · 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-lbl">Phạm vi</span>
+        <span class="meta-val">1986 — 2030</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-lbl">Loại</span>
+        <span class="meta-val">Đặc San Nghiên Cứu</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-scroll">
+    <div class="scroll-line"></div>
+    <span>Cuộn xuống</span>
+  </div>
+</div>
+
+
+<main>
+
+<!-- ── CHƯƠNG MỞ ─────────────────────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Lời mở đầu</p>
+  <h2>Mỗi Bước Đi Là Một Trang Lịch Sử — <em>Và Chúng Ta Đang Viết Trang Đẹp Nhất</em></h2>
+
+  <p class="lede">
+    Có những khoảnh khắc mà lịch sử không được ghi bằng mực trên giấy, mà được ghi bằng
+    nhịp tim của hàng triệu con người. Thị trường chứng khoán Việt Nam — từ ngày đầu tiên
+    chiếc chuông khai sàn vang lên tại số 45 Bến Chương Dương cho đến hôm nay — là câu chuyện
+    như thế.
+  </p>
+
+  <p>
+    Bài viết này không phải là một báo cáo tài chính. Không có những bảng số liệu lạnh lùng,
+    không có những đường kẻ chỉ lên chỉ xuống vô hồn. Đây là <strong>biên niên sử của một
+    dân tộc học cách tin vào chính mình</strong> — tin vào sức mạnh của đồng vốn nội sinh,
+    tin vào trí tuệ của những doanh nhân dám nghĩ dám làm, và tin vào một tương lai mà ở đó,
+    cái tên "Việt Nam" được xướng lên trên các sàn giao dịch lớn nhất thế giới không phải
+    với sự e dè, mà với sự kính nể.
+  </p>
+
+  <p>
+    Chúng ta đang sống trong một thời đại mà mỗi buổi sáng thức dậy, tấm bản đồ tài chính
+    thế giới lại được vẽ lại. Những đế chế tài chính cũ đang chật vật giữ ngôi vị. Và giữa
+    làn sóng dịch chuyển vĩ đại đó, <strong>Việt Nam — đất nước hình chữ S, dải đất mang
+    hình con rồng uốn lượn bên bờ biển Thái Bình Dương</strong> — đang nhẹ nhàng nhưng kiên
+    định bước vào bàn tiệc lớn của tài chính toàn cầu.
+  </p>
+</section>
+
+
+<!-- ── PHẦN I: LỊCH SỬ ──────────────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Phần I · Nguồn cội</p>
+  <h2>Từ Sàn Giao Dịch Nhỏ Giữa Lòng Sài Gòn — <em>Đến Giấc Mơ Đại Dương</em></h2>
+
+  <p>
+    Ngày 28 tháng 7 năm 2000. Trung tâm Giao dịch Chứng khoán TP.HCM — tiền thân của Sở
+    Giao dịch Chứng khoán TP.HCM (HOSE) ngày nay — chính thức đi vào hoạt động. Chỉ hai
+    mã cổ phiếu. Chỉ vài chục nhà đầu tư. Chỉ vài tỷ đồng giao dịch mỗi ngày.
+  </p>
+
+  <p>
+    Nhưng trong cái buổi sáng tháng Bảy ấy, có điều gì đó thiêng liêng hơn những con số đã
+    xảy ra. Lần đầu tiên trong lịch sử, người dân Việt Nam được phép trở thành <em>đồng chủ</em>
+    của một doanh nghiệp đại chúng. Lần đầu tiên, giá trị của mồ hôi và công sức được
+    định giá bằng cơ chế thị trường, không phải bằng mệnh lệnh hành chính. Tiếng chuông
+    khai sàn đó — dù nhỏ bé — là một <strong>tiếng sét lịch sử</strong>, đánh dấu Việt Nam
+    bước qua ngưỡng cửa của kinh tế thị trường hiện đại.
+  </p>
+
+  <div class="stats-row">
+    <div class="stat-box red">
+      <div class="stat-val red">2</div>
+      <div class="stat-lbl">Mã cổ phiếu niêm yết ngày đầu khai sàn (2000)</div>
+    </div>
+    <div class="stat-box gold">
+      <div class="stat-val gold">1.700+</div>
+      <div class="stat-lbl">Doanh nghiệp niêm yết trên 3 sàn (2025)</div>
+    </div>
+    <div class="stat-box sage">
+      <div class="stat-val sage">11 triệu</div>
+      <div class="stat-lbl">Tài khoản nhà đầu tư, 90% thanh khoản nội địa</div>
+    </div>
+    <div class="stat-box slate">
+      <div class="stat-val slate">1.711</div>
+      <div class="stat-lbl">Điểm — Đỉnh lịch sử VN-Index tháng 9/2025</div>
+    </div>
+  </div>
+
+  <p>
+    Hãy thử tưởng tượng: một đứa trẻ sinh ra vào ngày khai trương sàn giao dịch năm 2000
+    giờ đây đã là một thanh niên 26 tuổi đầy nhiệt huyết. Và thị trường chứng khoán Việt
+    Nam cũng vậy — không còn là đứa trẻ chập chững học đi nữa. Nó đã trưởng thành,
+    đã vấp ngã và đứng dậy, đã khóc và đã cười, đã sợ hãi và đã dũng cảm.
+  </p>
+
+  <h3>Hành Trình Qua Những Ngã Tư Lịch Sử</h3>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">2000 — Khai sinh</div>
+      <div class="tl-title">Tiếng Chuông Đầu Tiên</div>
+      <p class="tl-body">TTGDCK TP.HCM mở cửa với 2 mã REE và SAM. Không ai biết rằng hạt giống nhỏ bé này sẽ lớn thành cây cổ thụ. Nhưng người Việt Nam — vốn đã quen vun trồng trên đất khô cằn — tin vào hạt giống đó.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2001</div>
+      <div class="tl-title">HASTC Ra Đời — Câu Chuyện Phía Bắc Bắt Đầu</div>
+      <p class="tl-body">Hà Nội góp mặt. Trung tâm Giao dịch Chứng khoán Hà Nội thành lập, mang lại dáng vóc "hai đầu tàu" cho thị trường — Bắc và Nam cùng chạy song song, thúc đẩy nhau tiến về phía trước.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2006–2007</div>
+      <div class="tl-title">Cơn Sóng Thần Đầu Tiên — Đỉnh 1.170 Điểm</div>
+      <p class="tl-body">VN-Index phi nước đại, chạm 1.170 điểm vào tháng 3/2007. Cả đất nước ngây ngất với từ "chứng khoán". Hàng quán, cà phê, ngõ hẻm đều bàn tán về cổ phiếu. Đó là lần đầu tiên Việt Nam nếm trải cảm giác phấn khích tập thể của một thị trường bò tót.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2008–2009</div>
+      <div class="tl-title">Bài Học Xương Máu — Thị Trường Dạy Điều Không Ai Muốn Học</div>
+      <p class="tl-body">Khủng hoảng tài chính toàn cầu ập đến. VN-Index mất hơn 70% giá trị. Hàng nghìn nhà đầu tư trắng tay. Nhưng những người bước ra khỏi giai đoạn đó — nếu may mắn còn sống sót — đã học được bài học quý nhất: thị trường không chỉ là nơi kiếm tiền, đó là trường đời khắc nghiệt nhất.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2010–2019</div>
+      <div class="tl-title">Thập Kỷ Xây Nền — Im Lặng Mà Kiên Cường</div>
+      <p class="tl-body">Mười năm tích lũy bình lặng. Luật Chứng khoán sửa đổi, các công ty quản lý quỹ chuyên nghiệp xuất hiện, FDI đổ vào, tầng lớp trung lưu lớn dần. Thị trường không ầm ĩ, nhưng âm thầm mạnh lên từng ngày như gốc cây thẳm sâu trong lòng đất.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2020–2021</div>
+      <div class="tl-title">Đại Dịch Và Điều Kỳ Diệu F0</div>
+      <p class="tl-body">Cả thế giới lockdown. VN-Index lại... tăng. Hàng triệu người Việt lần đầu mở tài khoản chứng khoán. Những "F0" — nhà đầu tư mới toanh — ùa vào thị trường như con sóng triều cường. Thanh khoản bùng nổ, các phiên giao dịch vượt cả tỷ đô. Đây là thời điểm thị trường Việt Nam bước ra khỏi bóng tối của sự "nhỏ lẻ".</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2022–2023</div>
+      <div class="tl-title">Cơn Lốc Thanh Lọc — Khi Thị Trường Bắt Đầu Trưởng Thành</div>
+      <p class="tl-body">Các vụ bắt giữ, vi phạm thao túng thị trường bị phơi bày. Đau đớn, nhưng cần thiết. Thị trường chứng khoán Việt Nam phải trả giá để lớn lên — giống như một đứa trẻ phải đau mới học được bài học về ranh giới.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2025</div>
+      <div class="tl-title">Tháng 4 — Đáy Và Bình Minh</div>
+      <p class="tl-body">Từ đáy tháng 4/2025, thị trường bứt phá mạnh mẽ. VN-Index chinh phục đỉnh lịch sử 1.711 điểm vào tháng 9. Không chỉ là con số — đó là lời tuyên ngôn của một thị trường đã thoát khỏi trạng thái "phụ thuộc tâm lý" để bước vào kỷ nguyên của nền tảng cơ bản.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2026</div>
+      <div class="tl-title">Điểm Uốn — Kỷ Nguyên Mới Bắt Đầu</div>
+      <p class="tl-body">Hệ thống KRX đi vào vận hành. CCP thanh toán bù trừ trung tâm hoạt động. Thông tư 03/2025 và Nghị định 245/2025 dọn sạch con đường cho nâng hạng. Đây không còn là chuẩn bị nữa — đây là thực thi.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p>
+      Mỗi lần thị trường sụt giảm, người ta nói "chứng khoán Việt Nam xong rồi".
+      Và mỗi lần như vậy, những người tin vào đất nước này lại được chứng minh là đúng.
+      Đó không phải may mắn. Đó là bản lĩnh của một dân tộc không bao giờ khuất phục.
+    </p>
+    <cite>— Tinh thần thị trường chứng khoán Việt Nam, 25 năm nhìn lại</cite>
+  </div>
+</section>
+
+
+<!-- ── PHẦN II: CỬA SỔ VÀNG ─────────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Phần II · Thời Khắc</p>
+  <h2>"Cửa Sổ Vàng" — <em>Ba Đến Năm Năm Mà Lịch Sử Sẽ Nhắc Mãi</em></h2>
+
+  <p>
+    Trong đời một nhà đầu tư, có những khoảnh khắc hiếm hoi mà nếu bỏ lỡ, ta sẽ mang theo
+    sự tiếc nuối suốt phần còn lại của cuộc đời. Những khoảnh khắc như khi Amazon còn là
+    cửa hàng sách trực tuyến nhỏ bé. Khi Samsung chỉ là một công ty xuất khẩu cá khô ở
+    Busan. Khi Kose đứng ở 500 điểm và ai cũng bảo Hàn Quốc không đáng đầu tư.
+  </p>
+
+  <p>
+    <strong>Và bây giờ là Việt Nam, năm 2026.</strong>
+  </p>
+
+  <p>
+    Đây là sự hội tụ của những yếu tố mà các nhà kinh tế học gọi là <em>"The Perfect Storm"</em>
+    — nhưng không phải cơn bão hủy diệt, mà là cơn bão tạo ra vàng. Sự dịch chuyển chuỗi
+    cung ứng toàn cầu hậu COVID và thuế quan Trump đang đổ dồn đơn hàng về Việt Nam. Nới
+    lỏng tiền tệ toàn cầu đang tìm kiếm lợi suất ở các thị trường mới nổi. Và nội lực Việt
+    Nam — sau một thập kỷ tích lũy âm thầm — đang sẵn sàng bứt phá.
+  </p>
+
+  <div class="info-box">
+    <div class="box-title">Tại sao P/E 12 lần lại "rẻ" một cách phi thường?</div>
+    <p>
+      Thị trường đang định giá VN-Index ở mức P/E dự phóng chỉ 12 lần — thấp hơn đáng kể
+      so với trung bình lịch sử 14 lần. Nhưng điều này xảy ra không phải vì tương lai ảm đạm.
+    </p>
+    <p>
+      Mà vì <strong>"chữ E" đang nở rộ</strong>: lợi nhuận doanh nghiệp toàn thị trường
+      được dự báo tăng 15,5% trong năm 2026, riêng nhóm ngân hàng tăng 17%,
+      vật liệu cơ bản tăng tới 25%. Khi mẫu số lớn mà tử số chưa kịp điều chỉnh,
+      P/E tự nhiên "rẻ" đi — đó chính là cơ hội định giá lại (re-rating) mà thị trường
+      sẽ thực hiện trong khoảng 2–3 năm tới.
+    </p>
+  </div>
+
+  <h3>GDP Hai Chữ Số — Giấc Mơ Hay Sự Thật?</h3>
+
+  <p>
+    Năm 2026 là năm đầu tiên của chu kỳ 5 năm 2026–2030 với mục tiêu GDP "hai con số"
+    (10%+). Đây là mục tiêu tham vọng nhất trong lịch sử kinh tế Việt Nam hiện đại.
+    Nhiều người hoài nghi. Nhưng những người từng chứng kiến Việt Nam vượt qua khủng
+    hoảng 1997, vượt qua đại dịch 2020–2021, vượt qua cú sốc địa chính trị 2022–2025 —
+    họ biết rằng khi người Việt Nam quyết tâm, thì không có gì là bất khả.
+  </p>
+
+  <p>
+    Hạ tầng 310–320 tỷ USD đang được đổ xuống. Tuyến metro Hà Nội và TP.HCM đang nối
+    những mạch máu đô thị. Cao tốc Bắc–Nam đang dần thành hình. Sân bay Long Thành —
+    cánh cửa hàng không hiện đại nhất Đông Nam Á — đang chờ ngày cất cánh.
+    <strong>Những con số không phải là ước mơ. Đó là bê-tông, là thép, là mồ hôi thực sự.</strong>
+  </p>
+</section>
+
+
+<!-- ── PHẦN III: FTSE ────────────────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Phần III · Bước Ngoặt</p>
+  <h2>Khi <em>FTSE Russell</em> Gõ Cửa — Lần Đầu Tiên Trong Lịch Sử</h2>
+
+  <p>
+    Tháng 9 năm 2026. Ngày mà hàng triệu nhà đầu tư Việt Nam đã chờ đợi suốt nhiều năm —
+    ngày mà cái tên "VN-Index" sẽ chính thức xuất hiện trong rổ chỉ số Thị trường Mới nổi
+    của FTSE Russell, ngồi cùng mâm với Mexico, Brazil, Nam Phi, Indonesia.
+  </p>
+
+  <p>
+    Nghe có vẻ kỹ thuật. Nhưng hãy để tôi nói cho bạn nghe ý nghĩa thực sự của sự kiện này.
+  </p>
+
+  <p>
+    Khi một quỹ đầu tư lớn như Vanguard, BlackRock, hay những tên tuổi khổng lồ đang quản
+    lý hàng chục nghìn tỷ đô la tài sản nhìn vào một quốc gia — họ không chỉ nhìn vào
+    số liệu GDP. Họ nhìn vào thể chế. Nhìn vào pháp quyền. Nhìn vào sự minh bạch. Nhìn
+    vào câu hỏi: <em>"Đất nước này có đáng tin để gửi tiền của người về hưu ở Kansas,
+    của những góa phụ ở Tokyo, của những giáo viên ở London không?"</em>
+  </p>
+
+  <p>
+    Và khi FTSE Russell nói "có" — đó là <strong>một dấu ấn tín nhiệm quốc gia</strong>
+    không thể mua bằng quảng cáo. Không thể ép buộc bằng quyền lực. Chỉ có thể đạt được
+    bằng cải cách thực chất, kiên trì và liêm chính.
+  </p>
+
+  <div class="banner">
+    <h2>1,6 Tỷ USD Từ Quỹ ETF Chỉ Là Bề Nổi</h2>
+    <p>
+      Câu chuyện thực sự không nằm ở 1,6 tỷ USD từ các quỹ chỉ số thụ động.
+      Câu chuyện thực sự nằm ở các quỹ chủ động — những người quản lý tiền thông minh
+      nhất thế giới — đang chuẩn bị chốt Việt Nam vào danh mục chiến lược dài hạn của họ.
+      Và những dòng tiền đó, theo lịch sử, thường gấp 3–5 lần dòng tiền thụ động.
+    </p>
+  </div>
+
+  <h3>Những Cải Cách Thầm Lặng Mà Quyết Định Tất Cả</h3>
+
+  <p>
+    Đằng sau ngày tháng 9/2026 rực rỡ đó là những đêm thức khuya, những cuộc tranh luận
+    nảy lửa trong các phòng họp, những lần sửa thông tư, những lần dự thảo nghị định
+    bị trả về chỉnh sửa. Đây là hành trình của những người làm chính sách Việt Nam đã
+    vật lộn để hiểu và đáp ứng từng tiêu chí khắt khe của FTSE Russell:
+  </p>
+
+  <ul class="checklist">
+    <li><strong>Thông tư 03/2025:</strong> Gỡ bỏ rào cản hợp pháp hóa lãnh sự, đơn giản hóa thủ tục cho nhà đầu tư nước ngoài — điều mà nhiều quỹ ngoại đã chờ đợi suốt 15 năm qua.</li>
+    <li><strong>Nghị định 245/2025:</strong> Cải cách cấu trúc thị trường, không cho phép quy định FOL thấp hơn mức pháp luật cho phép — tháo gỡ nút thắt cuối cùng về sở hữu ngoại.</li>
+    <li><strong>Hệ thống KRX &amp; CCP:</strong> Mô hình thanh toán không cần ký quỹ trước (non-prefunding) — giải quyết điểm cản lớn nhất mà FTSE đã ghi vào danh sách yêu cầu suốt nhiều năm.</li>
+    <li><strong>Thông tư 08/2026/TT-BTC:</strong> Cơ chế Global Brokerage, cho phép đặt lệnh qua tổ chức môi giới quốc tế trước khi chuyển vào công ty chứng khoán trong nước.</li>
+    <li><strong>Minh bạch hóa thông tin:</strong> Báo cáo tài chính song ngữ Anh-Việt, cơ sở dữ liệu doanh nghiệp được số hóa và chuẩn hóa theo tiêu chuẩn IFRS.</li>
+  </ul>
+
+  <p>
+    Mỗi cải cách đó không chỉ là kỹ thuật. Mỗi cải cách là lời nói với thế giới:
+    <em>"Chúng tôi nghiêm túc. Chúng tôi sẵn sàng. Và chúng tôi xứng đáng với lòng tin của bạn."</em>
+  </p>
+
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Tiêu chí</th>
+          <th>Việt Nam (2026)</th>
+          <th>Singapore</th>
+          <th>Hàn Quốc</th>
+          <th>Trung Quốc (Thượng Hải)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tăng trưởng GDP</td>
+          <td class="highlight">8,5–10% — Bứt phá</td>
+          <td>2–3% — Bão hòa</td>
+          <td>2–3% — Ổn định</td>
+          <td>4–5% — Phục hồi chậm</td>
+        </tr>
+        <tr>
+          <td>Định giá thị trường (P/E)</td>
+          <td class="highlight">12x — Rẻ lịch sử</td>
+          <td>14–16x</td>
+          <td>10–12x</td>
+          <td>12–14x</td>
+        </tr>
+        <tr>
+          <td>FDI tăng trưởng</td>
+          <td class="highlight">Kỷ lục — chuỗi cung ứng dịch chuyển</td>
+          <td>Ổn định</td>
+          <td>Cao — chip điện tử</td>
+          <td>Giảm — rủi ro địa chính trị</td>
+        </tr>
+        <tr>
+          <td>Cải cách thể chế</td>
+          <td class="highlight">Đột phá mạnh mẽ — KRX, CCP, FOL</td>
+          <td>Hoàn thiện</td>
+          <td>Cải cách quản trị mạnh 2024–2025</td>
+          <td>Chặt chẽ, ổn định</td>
+        </tr>
+        <tr>
+          <td>Tầng lớp trung lưu</td>
+          <td class="gold-cell">Bùng nổ — 30%+ dân số 2026</td>
+          <td>80%+ dân số</td>
+          <td>70%+ dân số</td>
+          <td>40–45% dân số</td>
+        </tr>
+        <tr>
+          <td>Dân số trẻ (&lt;35 tuổi)</td>
+          <td class="highlight">56% — Lợi thế nhân khẩu học</td>
+          <td>35%</td>
+          <td>38%</td>
+          <td>42%</td>
+        </tr>
+        <tr>
+          <td>Trạng thái nâng hạng FTSE</td>
+          <td class="highlight">Emerging Market — tháng 9/2026</td>
+          <td>Developed Market</td>
+          <td>Developed Market</td>
+          <td>Emerging Market (đã có)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ── PHẦN IV: ĐÀ NẴNG ─────────────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Phần IV · Khát Vọng</p>
+  <h2>Đà Nẵng — Nơi <em>Giấc Mơ Rồng Bay</em> Được Xây Bằng Bê-Tông và Ý Chí</h2>
+
+  <p>
+    Có một câu chuyện mà ít người để ý. Trong khi cả thế giới đổ về Singapore để thiết lập
+    văn phòng khu vực châu Á, hay đến Hồng Kông để tiếp cận thị trường Trung Quốc — một
+    quyết định thầm lặng nhưng có tầm nhìn lịch sử đã được ban hành tại Hà Nội:
+    <strong>Thành lập Trung tâm Tài chính Quốc tế tại Đà Nẵng.</strong>
+  </p>
+
+  <p>
+    Không phải TP.HCM — vốn đã quá tải và quá đắt đỏ. Không phải Hà Nội — vốn là trung
+    tâm chính trị-hành chính. Mà là Đà Nẵng — thành phố trẻ trung, năng động, nơi biển
+    cả gặp núi non, nơi con người đã quen với sự cởi mở và đổi mới. Sự lựa chọn này
+    không phải ngẫu nhiên. Đây là <strong>một quyết định chiến lược thiên tài</strong>.
+  </p>
+
+  <div class="gold-banner">
+    <h3>Financial Hub Đà Nẵng — Khi Việt Nam Dám Mơ Ngang Tầm Singapore</h3>
+    <p>
+      Đà Nẵng nằm ở trung điểm của con đường hàng hải từ Đông Bắc Á xuống Đông Nam Á.
+      Trong bán kính 4 giờ bay là 2,5 tỷ người tiêu dùng — bằng toàn bộ GDP của Mỹ và châu Âu
+      cộng lại. Đây là "địa lợi" mà không thành phố nào ở Đông Nam Á, kể cả Singapore, có được
+      với chi phí vận hành thấp hơn đến 60–70%.
+    </p>
+    <p>
+      Nhưng quan trọng hơn vị trí địa lý là quyết tâm chính trị. Nghị quyết số 136/2024/QH15
+      của Quốc hội đã trao cho Đà Nẵng những cơ chế đặc biệt chưa từng có: ưu đãi thuế cạnh
+      tranh với Singapore, framework pháp lý riêng cho tài sản số (Digital Assets) theo
+      Nghị quyết 5/2025, và quyền thu hút định chế tài chính quốc tế theo tiêu chuẩn IOSCO.
+    </p>
+    <p>
+      Đây không phải là thêm một khu kinh tế nữa. <strong>Đây là khát vọng định vị lại
+      Việt Nam trên bản đồ tài chính toàn cầu.</strong>
+    </p>
+  </div>
+
+  <h3>Ba Trụ Cột Của Financial Hub — "Thiên Thời, Địa Lợi, Nhân Hòa"</h3>
+
+  <p>
+    <strong>Thiên Thời:</strong> Sự phân mảnh thương mại toàn cầu đang tạo ra nhu cầu
+    cấp bách về một trung tâm tài chính "trung lập" — không phụ thuộc vào Trung Quốc
+    hay Mỹ, không mang rủi ro địa chính trị như Hồng Kông. Việt Nam — với chính sách
+    ngoại giao "bốn không" và quan hệ đối tác chiến lược toàn diện với cả Washington
+    lẫn Bắc Kinh — là ứng viên hoàn hảo.
+  </p>
+
+  <p>
+    <strong>Địa Lợi:</strong> Đà Nẵng có sân bay quốc tế, cảng biển nước sâu, chi phí
+    sinh hoạt chỉ bằng 25–30% Singapore, nguồn nhân lực CNTT-TT trẻ và đông đảo, cùng
+    hệ thống cáp quang ngầm biển kết nối trực tiếp với Tokyo, Singapore và Sydney.
+    Và điều đặc biệt nhất: <em>chất lượng sống đẳng cấp thế giới với chi phí
+    không đẳng cấp thế giới</em>.
+  </p>
+
+  <p>
+    <strong>Nhân Hòa:</strong> 11 triệu tài khoản chứng khoán. Thế hệ "Gen Z tài chính"
+    — những người 20–30 tuổi đã quen với app đầu tư, đã biết phân tích cơ bản, đã
+    không còn sợ hãi trước biến động thị trường. Đây là lực lượng dân số nhà đầu tư
+    hùng hậu nhất mà Việt Nam từng có, chiếm 90% thanh khoản và tạo độ sâu thị trường
+    chưa từng có trong lịch sử.
+  </p>
+
+  <div class="info-box sage-box">
+    <div class="box-title">Thí Điểm Tài Sản Số — Vũ Khí Cạnh Tranh Bí Mật</div>
+    <p>
+      Điểm khác biệt lớn nhất của Đà Nẵng Financial Hub so với Singapore hay Thượng Hải
+      là sự dũng cảm trong lĩnh vực tài sản số (Digital Assets). Nghị quyết 5/2025 cho
+      phép thí điểm thị trường tài sản mã hóa có kiểm soát — một điều mà Singapore đã làm
+      được và mang lại vị thế "crypto hub" trong những năm 2020–2023.
+    </p>
+    <p>
+      Việt Nam không đi sau — Việt Nam đang đi đúng thời điểm, khi làn sóng Web3 và
+      tài sản số đang được thể chế hóa trên toàn cầu. Đây là cơ hội để Financial Hub
+      Đà Nẵng định vị mình là "cầu nối tài chính truyền thống — tài chính số" của
+      khu vực Đông Nam Á.
+    </p>
+  </div>
+</section>
+
+<div class="ornament">— ✦ —</div>
+
+<!-- ── PHẦN V: SO SÁNH KHU VỰC ───────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Phần V · Bản Đồ Quyền Lực</p>
+  <h2>Nhìn Ra Khu Vực — <em>Và Hiểu Rằng Việt Nam Không Hề Nhỏ Bé</em></h2>
+
+  <p>
+    Người ta hay nói Việt Nam "nhỏ bé" khi đặt bên cạnh Nhật Bản, Hàn Quốc hay Singapore.
+    Nhưng hãy để những con số nói thay:
+  </p>
+
+  <p>
+    <strong>Nhật Bản</strong> — nền kinh tế lớn thứ 3 thế giới — đang vật lộn với dân số
+    già hóa nhanh, nợ công gấp 2,5 lần GDP, và một thập kỷ tăng trưởng gần bằng không.
+    Nikkei có thể đang ở đỉnh lịch sử, nhưng câu chuyện tăng trưởng cơ bản đang mờ dần.
+  </p>
+
+  <p>
+    <strong>Hàn Quốc</strong> — "Phép màu sông Hàn" — đang nỗ lực cải cách quản trị
+    để xóa bỏ "Korea Discount", nhưng dân số đang co lại và tốc độ tăng trưởng đang
+    hội tụ về mức 2–3%/năm. KOSPI tăng 71,2% năm 2025 là kết quả của cải cách quản trị,
+    không phải tăng trưởng nội sinh.
+  </p>
+
+  <p>
+    <strong>Singapore</strong> — trung tâm tài chính hàng đầu Đông Nam Á — có GDP bình
+    quân đầu người cao nhất châu Á, nhưng đang ở trạng thái bão hòa với tốc độ tăng
+    trưởng 2–3%/năm. Singapore là người kể câu chuyện "đã xây xong". Còn Việt Nam đang
+    kể câu chuyện <em>"đang xây và tốt nhất còn ở phía trước"</em>.
+  </p>
+
+  <p>
+    <strong>Trung Quốc</strong> — con rồng khổng lồ — đang gánh trên lưng cuộc khủng hoảng
+    bất động sản chưa có hồi kết, rủi ro địa chính trị ngày càng lớn và xu hướng "de-risking"
+    của dòng vốn phương Tây. Ironically, chính sự bất ổn của Trung Quốc là một trong những
+    lý do lớn nhất đưa dòng vốn chảy về Việt Nam.
+  </p>
+
+  <p>
+    Và Việt Nam? <strong>Việt Nam có 100 triệu dân, 56% dưới 35 tuổi, tốc độ tăng trưởng
+    8–10%, định giá thị trường thấp nhất khu vực, và đang được nâng hạng lên Emerging Market.
+    Trong tài chính, người ta gọi đây là "asymmetric risk-reward" — rủi ro thấp nhưng
+    tiềm năng lợi nhuận cực kỳ cao.</strong>
+  </p>
+
+  <div class="pull-quote">
+    <p>
+      Khi BlackRock quyết định đặt Việt Nam cùng mâm với Mexico, Indonesia, hay Nam Phi
+      trong danh mục Emerging Market của họ — đó không phải là phiếu bầu cho quá khứ.
+      Đó là niềm tin vào những gì Việt Nam sẽ là, không phải những gì Việt Nam đã là.
+    </p>
+    <cite>— Phân tích dòng vốn tổ chức toàn cầu, 2026</cite>
+  </div>
+</section>
+
+
+<!-- ── PHẦN VI: DOANH NGHIỆP ─────────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Phần VI · Những Ngọn Lửa Dẫn Đường</p>
+  <h2>Doanh Nghiệp Việt Nam — <em>Những Câu Chuyện Làm Người Ta Tin Lại Vào Con Người</em></h2>
+
+  <p>
+    Đằng sau những biểu đồ nến và bảng điện tử lạnh lùng, là những câu chuyện về con người.
+    Về những doanh nhân đã dám mơ khi cả thế giới chưa biết Việt Nam ở đâu. Những doanh
+    nghiệp đó, ngày hôm nay, đang gánh trên vai không chỉ lợi nhuận của cổ đông, mà còn
+    là thanh danh của một quốc gia.
+  </p>
+
+  <p>
+    <strong>FPT</strong> — từ một công ty phần mềm nhỏ ở Hà Nội năm 1988, nay đã là tập
+    đoàn công nghệ với hàng chục nghìn kỹ sư tài năng làm việc cho các hợp đồng khổng lồ
+    từ Nhật Bản, Mỹ, và châu Âu. Backlog chip-making của FPT đang ở mức kỷ lục. Khi thế
+    giới bàn về làn sóng AI, FPT đang ở ngay trung tâm của câu chuyện đó — không phải
+    với tư cách người xem, mà là người chơi.
+  </p>
+
+  <p>
+    <strong>Hòa Phát</strong> — từ xưởng sắt thép nhỏ đến tập đoàn thép lớn nhất Đông
+    Nam Á. Dung Quất 2 vừa hoàn thành là niềm tự hào dân tộc: lần đầu tiên Việt Nam có
+    tổ hợp công nghiệp thép hiện đại đủ sức cạnh tranh với các "ông lớn" thế giới.
+  </p>
+
+  <p>
+    <strong>Vietcombank</strong> — biểu tượng của hệ thống ngân hàng Việt Nam, một định
+    chế tài chính đã vượt qua nhiều cuộc khủng hoảng để trở thành ngân hàng có chất
+    lượng tài sản tốt nhất khu vực Đông Nam Á theo xếp hạng độc lập. Khi khối ngoại
+    quay lại, VCB sẽ là cổ phiếu đầu tiên nằm trong giỏ hàng của họ.
+  </p>
+
+  <p>
+    Đây không chỉ là "Top Picks". Đây là <strong>những đại diện của tinh thần Việt Nam</strong>
+    — kiên trì, thích nghi, và luôn hướng về phía trước dù con đường có gập ghềnh đến đâu.
+  </p>
+
+  <div class="info-box">
+    <div class="box-title">Doanh Nghiệp Việt Nam Năm 2026 — Điểm Nhấn Chiến Lược</div>
+    <p><strong>FPT (HOSE):</strong> Hệ sinh thái Công nghệ + Giáo dục không thể sao chép. ROE &gt;25%, backlog AI/chip-making kỷ lục, hành trình vươn ra thế giới đang tăng tốc.</p>
+    <p><strong>HPG (HOSE):</strong> Dung Quất 2 đóng góp toàn bộ doanh thu từ 2026, EPS tăng trưởng 29,4%. Hưởng lợi kép: đầu tư công kỷ lục nội địa + xuất khẩu phục hồi.</p>
+    <p><strong>VCB (HOSE):</strong> "Anh cả" hệ thống — CASA cao nhất ngành, chất lượng tài sản vượt trội, cổ phiếu đầu tiên khối ngoại muốn tăng room khi nâng hạng.</p>
+    <p><strong>MWG (HOSE):</strong> Bách Hóa Xanh đang bước vào giai đoạn sinh lời — một trong những câu chuyện turnaround đẹp nhất thập kỷ của bán lẻ Việt Nam.</p>
+    <p><strong>PC1 (HOSE):</strong> Quy hoạch Điện VIII tạo backlog khổng lồ cho hạ tầng năng lượng. Việt Nam đang điện hóa nền kinh tế với tốc độ chưa từng có.</p>
+    <p><strong>PVD (HOSE):</strong> Ngày rate giàn khoan duy trì đỉnh, Lô B–Ô Môn tạo workload đến 2030. Upstream dầu khí hưởng lợi kép từ giá và khối lượng.</p>
+  </div>
+</section>
+
+
+<!-- ── PHẦN VII: TƯƠNG LAI ────────────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Phần VII · Tầm Nhìn 2030</p>
+  <h2>Năm 2030 — <em>Khi Chúng Ta Nhìn Lại Và Mỉm Cười</em></h2>
+
+  <p>
+    Hãy thử tưởng tượng bạn đang đứng vào tháng 1 năm 2030, nhìn lại những gì đã xảy ra
+    trong 4 năm vừa qua. VN-Index đã vượt qua mốc 2.500 điểm — hay xa hơn thế. Trung tâm
+    tài chính Đà Nẵng đang là địa điểm họp của những hội nghị tài chính quốc tế lớn nhất
+    châu Á. Tên các doanh nghiệp Việt Nam xuất hiện thường xuyên trên Bloomberg và Reuters.
+  </p>
+
+  <p>
+    Lúc đó, bạn sẽ nhớ lại năm 2026. Nhớ lại những ngày tháng ngồi trước bảng điện tử
+    với câu hỏi: <em>"Có nên mua không? Có muộn quá không?"</em>
+  </p>
+
+  <p>
+    Lịch sử luôn dạy chúng ta một bài học duy nhất: <strong>những người sợ hãi nhất
+    trước cơ hội thường là những người hối tiếc nhất sau này.</strong> Không ai mua
+    Samsung ở đáy Hàn Quốc 1997 mà không sợ. Không ai mua Apple năm 2001 sau khi
+    dot-com vỡ mà không run. Nhưng những người đó đã thay đổi cuộc đời mình.
+  </p>
+
+  <p>
+    Điều khác biệt không phải là sự can đảm bất chấp lý trí. Điều khác biệt là
+    <strong>sự hiểu biết đủ sâu để nhìn thấy giá trị khi người khác chỉ thấy rủi ro</strong>.
+    Và đó chính xác là điều bạn đang làm khi đọc bài viết này.
+  </p>
+
+  <div class="gold-banner">
+    <h3>Checklist Nhà Đầu Tư Chiến Lược — Kỷ Nguyên Bứt Phá 2026</h3>
+    <p>
+      <strong>Tư duy đúng trước:</strong> Đây không phải "thời điểm mua để lướt sóng".
+      Đây là "thời điểm xây dựng danh mục cho 5–10 năm tới". Tư duy đó thay đổi tất cả.
+    </p>
+    <p>
+      <strong>Chọn mặt gửi vàng:</strong> Năm 2026 không còn là "nước lên thuyền lên".
+      Sự phân hóa sẽ sâu sắc. Backlog thực chất và dòng tiền kinh doanh là thước đo
+      duy nhất đáng tin cậy — không phải kế hoạch hào nhoáng tại AGM.
+    </p>
+    <p>
+      <strong>Đón sóng nâng hạng có trọng điểm:</strong> Các cổ phiếu vốn hóa lớn
+      như VCB, VIC, HPG, MSN, SSI, VNM sẽ là điểm đến đầu tiên của dòng vốn ETF.
+      Đây không phải gợi ý mua vào bất kỳ giá nào — mà là nhận diện đúng nhóm
+      hưởng lợi cấu trúc.
+    </p>
+    <p>
+      <strong>Theo dõi Financial Hub Đà Nẵng:</strong> Mỗi thông báo, mỗi định chế
+      quốc tế đặt trụ sở, mỗi chính sách mới về Digital Assets — đều là chất xúc tác
+      cho cả hệ sinh thái tài chính Việt Nam.
+    </p>
+  </div>
+</section>
+
+
+<!-- ── KẾT LUẬN ───────────────────────────────────────────────────────────── -->
+<section class="section">
+  <p class="eyebrow">Kết</p>
+  <h2>Trang Mới Đã Lật — <em>Hãy Là Người Viết Lên Đó</em></h2>
+
+  <p>
+    Câu chuyện của thị trường chứng khoán Việt Nam không phải là câu chuyện về những
+    con số trên màn hình. Đó là câu chuyện về <strong>niềm tin</strong> — niềm tin của
+    những doanh nhân đầu tiên dám niêm yết cổ phiếu trong buổi bình minh của thế kỷ 21.
+    Niềm tin của những nhà đầu tư đã không bỏ cuộc sau năm 2008, sau năm 2022. Niềm tin
+    của những nhà làm chính sách đã kiên trì cải cách từng bước, từng bước, cho đến ngày
+    FTSE Russell gật đầu.
+  </p>
+
+  <p>
+    Và niềm tin đó, hôm nay, đang được đền đáp xứng đáng.
+  </p>
+
+  <p>
+    Khi nhìn lại hành trình 25 năm — từ hai mã cổ phiếu REE và SAM đến hơn 1.700 doanh
+    nghiệp niêm yết; từ vài chục nhà đầu tư tò mò đến 11 triệu tài khoản; từ thanh khoản
+    vài chục tỷ đồng đến những phiên giao dịch vượt 1 tỷ đô la — tôi chỉ cảm thấy một
+    điều duy nhất: <strong>tự hào.</strong>
+  </p>
+
+  <p>
+    Tự hào không phải vì những con số đó. Mà tự hào vì đằng sau mỗi con số, có một
+    người Việt Nam nào đó — có thể là một bà mẹ ở Hải Phòng mua cổ phiếu để để dành
+    cho con học đại học, có thể là một chàng trai trẻ ở Cần Thơ lần đầu mở tài khoản
+    với vài triệu đồng tiết kiệm — đang tin rằng tương lai của đất nước này xứng đáng
+    để đặt cược.
+  </p>
+
+  <p>
+    Và với Financial Hub Đà Nẵng đang thành hình, với FTSE Russell sắp gõ chuông nâng
+    hạng, với những doanh nghiệp Việt Nam đang ngày càng xuất hiện trên bản đồ tài chính
+    toàn cầu — <strong>niềm tin đó không bao giờ là sai</strong>.
+  </p>
+
+  <div class="pull-quote">
+    <p>
+      Việt Nam đang không chỉ hội nhập vào trục tài chính châu Á.
+      Việt Nam đang bắt đầu định hình trục đó.
+      Và chúng ta — những người đang sống trong khoảnh khắc lịch sử này —
+      là những người may mắn nhất thế giới.
+    </p>
+    <cite>— Khép lại Biên niên sử, mở ra Kỷ nguyên mới · 2026</cite>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p><strong>Rồng Vươn Mình — Biên Niên Sử Thị Trường Tài Chính Việt Nam</strong></p>
+    <p style="margin-top:14px;">
+      Tài liệu được biên soạn bởi Ban Nghiên Cứu Chiến Lược, dựa trên các nguồn:
+      SSI Research "Khởi đầu của khát vọng" 2026 · VNDirect Strategy Report Q1/2026 ·
+      FTSE Russell Index Methodology · Bloomberg Intelligence · World Bank Vietnam
+      Economic Update 2025–2026 · Nghị quyết Quốc hội số 136/2024/QH15.
+    </p>
+    <p style="margin-top:14px;opacity:0.65;">
+      <strong>Tuyên bố miễn trách nhiệm:</strong> Bài viết này mang tính nghiên cứu và
+      chia sẻ tầm nhìn chiến lược. Không cấu thành lời khuyên đầu tư cụ thể. Mọi quyết
+      định đầu tư cần dựa trên tình hình tài chính cá nhân, khẩu vị rủi ro và tham vấn
+      với chuyên gia có chứng chỉ hành nghề. Quá khứ không đảm bảo kết quả tương lai.
+    </p>
+    <p style="margin-top:20px;opacity:0.4;font-size:11px;">
+      © 2026 · Ban Nghiên Cứu Chiến Lược · Lưu hành nội bộ
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

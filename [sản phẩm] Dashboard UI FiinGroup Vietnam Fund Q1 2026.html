@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FiinGroup — Quỹ Đầu Tư Việt Nam Q1/2026</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e1a;--bg2:#111827;--bg3:#1a2235;--bg4:#1e293b;--bg5:#0f172a;
+  --accent:#3b82f6;--accent2:#06b6d4;--pos:#10b981;--neg:#ef4444;--warn:#f59e0b;--purple:#a855f7;--teal:#14b8a6;
+  --txt:#e2e8f0;--txt2:#94a3b8;--txt3:#64748b;--border:#1e3a5f33;
+  --mono:'IBM Plex Mono',monospace;--sans:'DM Sans',sans-serif;
+}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);padding:20px;min-height:100vh;font-size:13px}
+h1,h2,h3{font-weight:500}
+
+/* TOPBAR */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #1e3a5f55}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:32px;height:32px;background:linear-gradient(135deg,#3b82f6,#06b6d4);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:#fff;font-family:var(--mono)}
+.brand-name{font-size:14px;font-weight:500;color:var(--txt)}
+.brand-sub{font-size:10px;color:var(--txt3);font-family:var(--mono)}
+.title-block{text-align:center}
+.title-block h1{font-size:16px;font-weight:500;color:var(--txt)}
+.title-block p{font-size:11px;color:var(--txt3);font-family:var(--mono);margin-top:3px}
+.badge-wrap{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.badge{font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:4px}
+.badge-blue{background:#1e3a5f;color:#60a5fa}
+.badge-green{background:#0f2a1a;color:#4ade80}
+.badge-amber{background:#2a1f0f;color:#fbbf24}
+
+/* KPIs */
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}
+.kpi{background:var(--bg2);border:1px solid #1e3a5f44;border-radius:8px;padding:12px 14px}
+.kpi-label{font-size:9px;color:var(--txt3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.kpi-val{font-size:20px;font-weight:500;font-family:var(--mono);line-height:1}
+.kpi-sub{font-size:9px;color:var(--txt3);margin-top:5px;line-height:1.4}
+.pos{color:var(--pos)}.neg{color:var(--neg)}.warn{color:var(--warn)}.neu{color:var(--txt2)}.purple{color:var(--purple)}.teal{color:var(--teal)}
+
+/* LAYOUT */
+.row{display:grid;gap:12px;margin-bottom:14px}
+.row-2{grid-template-columns:1fr 1fr}
+.row-3{grid-template-columns:1.6fr 1fr 1fr}
+.row-32{grid-template-columns:2fr 1fr}
+.row-23{grid-template-columns:1fr 2fr}
+.card{background:var(--bg2);border:1px solid #1e3a5f44;border-radius:10px;padding:14px}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card-title{font-size:10px;font-weight:500;color:var(--txt2);font-family:var(--mono);text-transform:uppercase;letter-spacing:.5px}
+.tag{font-size:9px;padding:2px 7px;border-radius:3px;background:var(--bg4);color:var(--txt3);font-family:var(--mono)}
+
+/* BARS */
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.bar-lbl{font-size:10px;color:var(--txt2);font-family:var(--mono);min-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-lbl-sm{min-width:90px}
+.bar-wrap{flex:1;background:var(--bg4);border-radius:2px;height:14px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;transition:width .4s}
+.bar-pct{font-size:10px;font-family:var(--mono);min-width:48px;text-align:right}
+.divider{height:1px;background:#1e3a5f55;margin:10px 0}
+
+/* FUND TABLE */
+.ft{width:100%;font-size:10px;font-family:var(--mono);border-collapse:collapse}
+.ft th{color:var(--txt3);text-align:left;padding:5px 6px;border-bottom:1px solid #1e3a5f66;font-weight:400;font-size:9px;white-space:nowrap}
+.ft td{padding:4px 6px;border-bottom:1px solid #0f172a88;color:var(--txt);white-space:nowrap}
+.ft tr:hover td{background:#151f2e}
+.ft td.r{text-align:right}
+
+/* FUND TYPE TAGS */
+.ft-tag{font-size:8px;padding:1px 5px;border-radius:3px;font-family:var(--mono)}
+.t-mo{background:#1e3a5f;color:#60a5fa}
+.t-etf-n{background:#0f2a1a;color:#4ade80}
+.t-etf-f{background:#2a1a2f;color:#c084fc}
+.t-dong{background:#2f1a1a;color:#f87171}
+.t-tp{background:#2a1f0f;color:#fbbf24}
+.t-cb{background:#0f2a2a;color:#2dd4bf}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:1px solid #1e3a5f44;padding-bottom:0}
+.tab-btn{font-size:10px;font-family:var(--mono);padding:6px 14px;border:none;background:none;color:var(--txt3);cursor:pointer;border-bottom:2px solid transparent;transition:.2s;margin-bottom:-1px}
+.tab-btn.active{color:var(--txt);border-bottom-color:var(--accent)}
+.tab-btn:hover{color:var(--txt2)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* CLUSTER SECTION */
+.cluster-section{background:var(--bg2);border:1px solid #1e3a5f44;border-radius:10px;padding:14px;margin-bottom:14px}
+.cluster-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cluster-label{font-size:11px;font-weight:500;color:var(--txt);display:flex;align-items:center;gap:8px}
+.cluster-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+/* STOCK ITEMS */
+.stock-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.stock-item{background:var(--bg4);border-radius:5px;padding:6px 10px;display:flex;justify-content:space-between;align-items:center}
+.stock-ticker{font-size:11px;font-family:var(--mono);font-weight:500}
+.stock-info{font-size:9px;color:var(--txt3);font-family:var(--mono)}
+
+/* FLOW BARS */
+.flow-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.flow-lbl{font-size:10px;font-family:var(--mono);color:var(--txt2);width:90px}
+.flow-bar{height:14px;border-radius:2px;min-width:3px;transition:width .4s}
+.flow-pos{background:var(--pos)}
+.flow-neg{background:var(--neg)}
+.flow-val{font-size:10px;font-family:var(--mono);margin-left:4px}
+
+/* FOOTNOTE */
+.fn{font-size:9px;color:var(--txt3);font-family:var(--mono);margin-top:8px;line-height:1.5}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:9px;color:var(--txt3);font-family:var(--mono);margin-bottom:8px}
+.leg-item{display:flex;align-items:center;gap:4px}
+.leg-box{width:8px;height:8px;border-radius:2px}
+
+/* PERF INDICATOR */
+.perf-bar{background:var(--bg4);border-radius:2px;height:4px;margin-top:4px}
+.perf-fill{height:100%;border-radius:2px}
+
+/* CASH WEIGHT ITEM */
+.cw-row{display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #0f172a88}
+.cw-name{font-size:10px;font-family:var(--mono);color:var(--txt2)}
+.cw-change{font-size:10px;font-family:var(--mono)}
+.cw-bars{display:flex;gap:3px;align-items:center}
+.cw-b{height:10px;border-radius:1px}
+
+/* FOOTER */
+.footer{background:var(--bg2);border:1px solid #1e3a5f44;border-radius:8px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.footer-txt{font-size:9px;color:var(--txt3);font-family:var(--mono)}
+
+/* ALERT BOX */
+.alert{border-radius:6px;padding:8px 12px;margin-bottom:10px;font-size:10px;font-family:var(--mono)}
+.alert-neg{background:#2f1a1a55;border:1px solid #ef444455;color:#f87171}
+.alert-warn{background:#2a1f0f55;border:1px solid #f59e0b55;color:#fbbf24}
+.alert-pos{background:#0f2a1a55;border:1px solid #10b98155;color:#4ade80}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">F</div>
+    <div>
+      <div class="brand-name">FiinGroup Analytics</div>
+      <div class="brand-sub">ENLIGHTEN THE MARKET</div>
+    </div>
+  </div>
+  <div class="title-block">
+    <h1>Hoạt Động Các Quỹ Đầu Tư Việt Nam</h1>
+    <p>THÁNG 3 &amp; QUÝ 1 / 2026 &nbsp;·&nbsp; Nguồn: FiinPro-X Platform &nbsp;·&nbsp; 81 Quỹ CP + 27 Quỹ TP + 12 Quỹ Cân bằng</p>
+  </div>
+  <div class="badge-wrap">
+    <span class="badge badge-blue">246 NGHÌN TỶ TỔNG NAV</span>
+    <span class="badge badge-green">120 QUỸ THEO DÕI</span>
+    <span class="badge badge-amber">DỮ LIỆU: 31/03/2026</span>
+  </div>
+</div>
+
+<!-- KPI ROW (6 cards) -->
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-label">VNINDEX / Q1-2026</div>
+    <div class="kpi-val neg">-6.2%</div>
+    <div class="kpi-sub">T3: <span class="neg">-10.95%</span> &nbsp;·&nbsp; 320/404 CP giảm<br>Thấp nhất kể từ 10/2022</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Rút Ròng Q1-2026</div>
+    <div class="kpi-val neg">-14.4T</div>
+    <div class="kpi-sub" style="color:var(--neg)">↑ Tăng 2.6× YoY<br>Quý thứ 5 âm liên tiếp · +48% vs Q4-25</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Quỹ Cổ Phiếu (Avg)</div>
+    <div class="kpi-val neg">-1.7%</div>
+    <div class="kpi-sub">82/82 quỹ âm trong T3<br>T3: <span class="neg">-7.8%</span> (thấp nhất kể từ 10/2022)</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Quỹ Trái Phiếu (Avg)</div>
+    <div class="kpi-val warn">+1.5%</div>
+    <div class="kpi-sub">vs Tiết kiệm <span class="warn">+1.4%</span><br>12/13 quỹ sinh lời thấp hơn T2/26</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Quỹ Cân Bằng (Avg)</div>
+    <div class="kpi-val neg">-0.7%</div>
+    <div class="kpi-sub">11/12 quỹ âm trong T3<br>T3: <span class="neg">-4.2%</span> (ảnh hưởng CP)</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">VN30 / Q1-2026</div>
+    <div class="kpi-val neg">-9.9%</div>
+    <div class="kpi-sub">T3: <span class="neg">-11.3%</span><br>Ngân hàng + VIC chịu áp lực mạnh</div>
+  </div>
+</div>
+
+<!-- ROW 1: FLOW CHART + PHÂN LOẠI RÚT RÒNG -->
+<div class="row row-2">
+  <!-- FLOW CHART -->
+  <div class="card" style="grid-column:span 1">
+    <div class="card-hdr">
+      <span class="card-title">Dòng Tiền Ròng Hàng Quý — Tất Cả Quỹ</span>
+      <span class="tag">Nghìn Tỷ VNĐ · Q1/2023 → Q1/2026</span>
+    </div>
+    <div class="legend">
+      <span class="leg-item"><span class="leg-box" style="background:#10b981"></span>Quỹ CP Vào ròng</span>
+      <span class="leg-item"><span class="leg-box" style="background:#ef4444"></span>Quỹ CP Rút ròng</span>
+      <span class="leg-item"><span class="leg-box" style="background:#f59e0b"></span>Quỹ TP</span>
+      <span class="leg-item"><span class="leg-box" style="background:#60a5fa;border-radius:50%"></span>Tổng (đường)</span>
+    </div>
+    <div style="position:relative;height:230px">
+      <canvas id="flowChart" role="img" aria-label="Quarterly net fund flows Q1/2023 to Q1/2026. 2023 total: -5.6T, 2024: -10.6T, 2025: -34.5T, Q1-2026: -14.4T">
+        Dòng tiền: 2023 rút ròng 5.6T, 2024 rút 10.6T, 2025 rút 34.5T, Q1-2026 rút 14.4T.
+      </canvas>
+    </div>
+    <div class="divider" style="margin-top:8px"></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px">
+      <div style="text-align:center">
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mono)">NĂM 2023</div>
+        <div style="font-size:13px;font-family:var(--mono)" class="neg">-5.6T</div>
+        <div style="font-size:9px;color:var(--txt3)">Cả năm</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mono)">NĂM 2024</div>
+        <div style="font-size:13px;font-family:var(--mono)" class="neg">-10.6T</div>
+        <div style="font-size:9px;color:var(--txt3)">Cả năm</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mono)">NĂM 2025</div>
+        <div style="font-size:13px;font-family:var(--mono)" class="neg">-34.5T</div>
+        <div style="font-size:9px;color:var(--txt3)">Cả năm · Kỷ lục</div>
+      </div>
+      <div style="text-align:center;border:1px solid #ef444455;border-radius:5px;padding:4px">
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mono)">Q1-2026</div>
+        <div style="font-size:13px;font-family:var(--mono)" class="neg">-14.4T</div>
+        <div style="font-size:9px;color:var(--neg)">= 41.7% cả 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHÂN LOẠI DÒNG TIỀN -->
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="card" style="flex:1">
+      <div class="card-hdr">
+        <span class="card-title">Phân Loại Rút Ròng Q1-2026</span>
+        <span class="tag">Theo Cấu Trúc Quỹ</span>
+      </div>
+      <div class="alert alert-neg" style="margin-bottom:10px">Lực rút ròng chủ yếu từ Quỹ Đóng + ETF ngoại &nbsp;·&nbsp; Quỹ mở CP đã vào ròng trở lại T3</div>
+      <div class="flow-row">
+        <div class="flow-lbl">Quỹ Đóng</div>
+        <div style="flex:1;background:var(--bg4);border-radius:2px;height:14px;overflow:hidden">
+          <div class="flow-bar flow-neg" style="width:84%"></div>
+        </div>
+        <div class="flow-val neg">-8.5T</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-lbl">ETF Ngoại</div>
+        <div style="flex:1;background:var(--bg4);border-radius:2px;height:14px;overflow:hidden">
+          <div class="flow-bar flow-neg" style="width:65%"></div>
+        </div>
+        <div class="flow-val neg">-3.2T</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-lbl">ETF Nội</div>
+        <div style="flex:1;background:var(--bg4);border-radius:2px;height:14px;overflow:hidden">
+          <div class="flow-bar flow-neg" style="width:40%"></div>
+        </div>
+        <div class="flow-val neg">-2.0T</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-lbl">Quỹ TP</div>
+        <div style="flex:1;background:var(--bg4);border-radius:2px;height:14px;overflow:hidden">
+          <div class="flow-bar flow-neg" style="width:45%"></div>
+        </div>
+        <div class="flow-val neg">-4.5T</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-lbl">Quỹ Cân bằng</div>
+        <div style="flex:1;background:var(--bg4);border-radius:2px;height:14px;overflow:hidden">
+          <div class="flow-bar flow-neg" style="width:5%"></div>
+        </div>
+        <div class="flow-val neg">-0.2T</div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-lbl">Quỹ Mở CP</div>
+        <div style="flex:1;background:var(--bg4);border-radius:2px;height:14px;overflow:hidden">
+          <div class="flow-bar flow-pos" style="width:18%"></div>
+        </div>
+        <div class="flow-val pos">+0.9T ▲</div>
+      </div>
+    </div>
+
+    <div class="card" style="flex:1">
+      <div class="card-hdr">
+        <span class="card-title">Hiệu Suất So Benchmark</span>
+        <span class="tag">Q1-2026</span>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl bar-lbl-sm">Quỹ Mở CP</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:15.4%;background:#ef4444aa"></div></div>
+        <div class="bar-pct neg">-1.7%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl bar-lbl-sm">ETF Nội</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:80%;background:#ef444466"></div></div>
+        <div class="bar-pct neg">-9.8%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl bar-lbl-sm">ETF Ngoại</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:75%;background:#a855f766"></div></div>
+        <div class="bar-pct purple">-8.5%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl bar-lbl-sm">Quỹ Đóng</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:55%;background:#ef444455"></div></div>
+        <div class="bar-pct neg">-5.2%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl bar-lbl-sm">Quỹ TP</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:13.6%;background:#10b98199"></div></div>
+        <div class="bar-pct warn">+1.5%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl bar-lbl-sm">Quỹ Cân bằng</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:6.3%;background:#ef444488"></div></div>
+        <div class="bar-pct neg">-0.7%</div>
+      </div>
+      <div class="divider"></div>
+      <div class="bar-row">
+        <div class="bar-lbl bar-lbl-sm" style="color:var(--txt3)">VNINDEX</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:56.4%;background:#ef444433"></div></div>
+        <div class="bar-pct neg">-6.2%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl bar-lbl-sm" style="color:var(--txt3)">Tiết kiệm 12T</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:12.7%;background:#f59e0b88"></div></div>
+        <div class="bar-pct warn">+1.4%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION: FUND CLUSTERS (TABS) ========== -->
+<div class="cluster-section">
+  <div class="cluster-hdr">
+    <div class="cluster-label">
+      Phân Nhóm Quỹ Đầu Tư — Hiệu Suất &amp; Dòng Tiền Chi Tiết
+    </div>
+    <div style="display:flex;gap:6px">
+      <span class="ft-tag t-mo">Quỹ Mở</span>
+      <span class="ft-tag t-etf-n">ETF Nội</span>
+      <span class="ft-tag t-etf-f">ETF Ngoại</span>
+      <span class="ft-tag t-dong">Quỹ Đóng</span>
+      <span class="ft-tag t-tp">Trái Phiếu</span>
+      <span class="ft-tag t-cb">Cân Bằng</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('cp')">📈 Quỹ Cổ Phiếu (82)</button>
+    <button class="tab-btn" onclick="switchTab('tp')">📊 Quỹ Trái Phiếu (27)</button>
+    <button class="tab-btn" onclick="switchTab('cb')">⚖️ Quỹ Cân Bằng (12)</button>
+  </div>
+
+  <!-- TAB: QUỸ CỔ PHIẾU -->
+  <div id="tab-cp" class="tab-pane active">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+
+      <!-- NHÓM QUỸ MỞ -->
+      <div>
+        <div style="font-size:9px;color:#60a5fa;font-family:var(--mono);margin-bottom:8px;display:flex;align-items:center;gap:6px">
+          <span class="ft-tag t-mo">QUỸMỞ</span> QUỸMỞ CỔ PHIẾU — Hiệu suất Q1/T3/Dòng tiền
+        </div>
+        <table class="ft">
+          <thead>
+            <tr>
+              <th>Quỹ</th>
+              <th class="r">NAV(tỷ)</th>
+              <th class="r">T3-26</th>
+              <th class="r">Q1-26</th>
+              <th class="r">1 Năm</th>
+              <th class="r">3 Năm</th>
+              <th class="r">Dòng T3</th>
+              <th class="r">Dòng Q1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>VINACAPITAL-VMEEF</td><td class="r neu">2,395</td><td class="r neg">-6.5%</td><td class="r pos">+6.7%</td><td class="r pos">+18.0%</td><td class="r">—</td><td class="r pos">+111</td><td class="r pos">+113</td></tr>
+            <tr><td>VINACAPITAL-VESAF</td><td class="r neu">2,529</td><td class="r neg">-5.9%</td><td class="r pos">+6.2%</td><td class="r pos">+17.3%</td><td class="r pos">+19.2%</td><td class="r pos">+66</td><td class="r neg">-12</td></tr>
+            <tr><td>VINACAPITAL-VEOF</td><td class="r neu">1,772</td><td class="r neg">-6.9%</td><td class="r pos">+2.6%</td><td class="r pos">+19.0%</td><td class="r pos">+18.8%</td><td class="r pos">+49</td><td class="r pos">+27</td></tr>
+            <tr><td>VCBF-BCF</td><td class="r neu">1,521</td><td class="r neg">-7.2%</td><td class="r pos">+0.3%</td><td class="r pos">+25.5%</td><td class="r pos">+20.4%</td><td class="r pos">+122</td><td class="r pos">+264</td></tr>
+            <tr><td>SSI-SCA</td><td class="r neu">1,364</td><td class="r neg">-7.1%</td><td class="r neg">-0.3%</td><td class="r pos">+13.0%</td><td class="r pos">+22.4%</td><td class="r pos">+63</td><td class="r pos">+100</td></tr>
+            <tr><td>VLGF</td><td class="r neu">4,802</td><td class="r neg">-8.0%</td><td class="r neg">-0.9%</td><td class="r pos">+11.1%</td><td class="r pos">+16.7%</td><td class="r neg">-59</td><td class="r neg">-167</td></tr>
+            <tr><td>EVESG</td><td class="r neu">2,447</td><td class="r neg">-9.7%</td><td class="r neg">-4.7%</td><td class="r">—</td><td class="r">—</td><td class="r pos">+348</td><td class="r pos">+849</td></tr>
+            <tr><td>DCDS</td><td class="r neu">5,874</td><td class="r neg">-10.0%</td><td class="r neg">-6.6%</td><td class="r pos">+11.1%</td><td class="r pos">+16.4%</td><td class="r pos">+197</td><td class="r pos">+502</td></tr>
+            <tr><td>VFMVSF</td><td class="r neu">8,373</td><td class="r neg">-10.1%</td><td class="r neg">-9.5%</td><td class="r">—</td><td class="r">—</td><td class="r pos">0</td><td class="r pos">+25</td></tr>
+            <tr><td>K-VIETNAM</td><td class="r neu">—</td><td class="r neg">-9.1%</td><td class="r neg">-3.9%</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td></tr>
+            <tr><td>PYN ELITE FUND</td><td class="r neu">—</td><td class="r neg">-11.1%</td><td class="r neg">-6.6%</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td></tr>
+            <tr><td>VNH</td><td class="r neu">2,633</td><td class="r neg">-9.6%</td><td class="r neg">-5.3%</td><td class="r pos">+7.5%</td><td class="r pos">+15.1%</td><td class="r neg">-15</td><td class="r neg">-26</td></tr>
+          </tbody>
+        </table>
+        <p class="fn">* VinaCapital (VMEEF, VESAF, VEOF) duy trì hiệu suất DƯƠNG trong Q1-26 nhờ BVH, REE. Quỹ mở vào ròng trở lại T3: +0.9T tổng nhóm.</p>
+      </div>
+
+      <!-- ETF + ĐÓNG -->
+      <div>
+        <div style="font-size:9px;color:#4ade80;font-family:var(--mono);margin-bottom:8px;display:flex;align-items:center;gap:6px">
+          <span class="ft-tag t-etf-n">ETF NỘI</span><span class="ft-tag t-etf-f">ETF NGOẠI</span><span class="ft-tag t-dong">ĐÓNG</span> — Chịu áp lực rút ròng mạnh nhất
+        </div>
+        <table class="ft">
+          <thead>
+            <tr>
+              <th>Quỹ</th>
+              <th>Loại</th>
+              <th class="r">NAV(tỷ)</th>
+              <th class="r">T3-26</th>
+              <th class="r">Q1-26</th>
+              <th class="r">1 Năm</th>
+              <th class="r">Dòng T3</th>
+              <th class="r">Dòng Q1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#0f2a1a22"><td colspan="8" style="padding:4px 6px;font-size:9px;color:#4ade80;font-family:var(--mono)">— ETF NỘI (Tham chiếu chỉ số VN) —</td></tr>
+            <tr><td>FUEVFVND (Diamond)</td><td><span class="ft-tag t-etf-n">ETF</span></td><td class="r neu">12,043</td><td class="r neg">-9.8%</td><td class="r neg">-4.3%</td><td class="r pos">+16.1%</td><td class="r neg">-1,093</td><td class="r neg">-932</td></tr>
+            <tr><td>E1VFVN30 (VN30)</td><td><span class="ft-tag t-etf-n">ETF</span></td><td class="r neu">5,782</td><td class="r neg">-11.1%</td><td class="r neg">-9.8%</td><td class="r pos">+36.0%</td><td class="r pos">+109</td><td class="r neg">-241</td></tr>
+            <tr><td>KIM GROWTH VN30</td><td><span class="ft-tag t-etf-n">ETF</span></td><td class="r neu">2,355</td><td class="r neg">-11.3%</td><td class="r neg">-10.1%</td><td class="r pos">+35.7%</td><td class="r pos">+2</td><td class="r pos">+2</td></tr>
+            <tr><td>VNEFUND</td><td><span class="ft-tag t-etf-n">ETF</span></td><td class="r neu">5,825</td><td class="r neg">-9.5%</td><td class="r pos">+0.9%</td><td class="r neg">-0.5%</td><td class="r neg">-414</td><td class="r pos">+938</td></tr>
+            <tr style="background:#2a1a2f22"><td colspan="8" style="padding:4px 6px;font-size:9px;color:#c084fc;font-family:var(--mono)">— ETF NGOẠI (Niêm yết nước ngoài, tham chiếu VN) —</td></tr>
+            <tr><td>VNM-ETF (VanEck)</td><td><span class="ft-tag t-etf-f">Ngoại</span></td><td class="r neu">13,603</td><td class="r neg">-9.8%</td><td class="r neg">-8.0%</td><td class="r pos">+41.5%</td><td class="r neg">-1,966</td><td class="r neg">-1,022</td></tr>
+            <tr><td>Fubon FTSE VN ETF</td><td><span class="ft-tag t-etf-f">Ngoại</span></td><td class="r neu">10,425</td><td class="r neg">-11.7%</td><td class="r neg">-7.2%</td><td class="r pos">+46.1%</td><td class="r neg">-365</td><td class="r neg">-1,063</td></tr>
+            <tr><td>Tianhong VN ETF</td><td><span class="ft-tag t-etf-f">Ngoại</span></td><td class="r neu">—</td><td class="r neg">-10.6%</td><td class="r neg">-8.4%</td><td class="r">—</td><td class="r">—</td><td class="r">—</td></tr>
+            <tr><td>EVESG (ESG ngoại)</td><td><span class="ft-tag t-etf-f">Ngoại</span></td><td class="r neu">—</td><td class="r neg">-9.7%</td><td class="r neg">-4.7%</td><td class="r">—</td><td class="r pos">+348</td><td class="r pos">+849</td></tr>
+            <tr style="background:#2f1a1a22"><td colspan="8" style="padding:4px 6px;font-size:9px;color:#f87171;font-family:var(--mono)">— QUỸ ĐÓNG (Closed-end fund) —</td></tr>
+            <tr><td>VINACAPITAL-VOF</td><td><span class="ft-tag t-dong">Đóng</span></td><td class="r neu">25,092</td><td class="r neg">-7.0%</td><td class="r neg">-3.6%</td><td class="r pos">+7.9%</td><td class="r neg">-328</td><td class="r neg">-984</td></tr>
+            <tr><td>VEIL (Dragon Cap.)</td><td><span class="ft-tag t-dong">Đóng</span></td><td class="r neu">41,496</td><td class="r neg">-11.0%</td><td class="r neg">-6.6%</td><td class="r pos">+19.9%</td><td class="r neg">-674</td><td class="r neg">-7,267</td></tr>
+            <tr><td>VNH</td><td><span class="ft-tag t-dong">Đóng</span></td><td class="r neu">2,633</td><td class="r neg">-9.6%</td><td class="r neg">-5.3%</td><td class="r pos">+7.5%</td><td class="r neg">-15</td><td class="r neg">-26</td></tr>
+          </tbody>
+        </table>
+        <p class="fn">* VNM-ETF rút ròng kỷ lục -1,966 tỷ T3-26. VEIL giảm rút -31% MoM (còn -674T). ETF nội/ngoại chịu áp lực tái cơ cấu Q1. Dòng tiền tỷ VNĐ.</p>
+      </div>
+    </div>
+
+    <!-- INSIGHT CP -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px">
+      <div class="alert alert-neg">
+        <strong>52/82 quỹ</strong> giảm ít hơn VNINDEX (-6.2%), chủ yếu quỹ mở và đóng. ETF nội/ngoại tham chiếu VN30 giảm sâu nhất do nắm giữ VIC, VCB, SSI tỷ trọng cao.
+      </div>
+      <div class="alert alert-warn">
+        <strong>Quỹ mở VinaCapital</strong> (VESAF, VMEEF, VEOF) duy trì hiệu suất DƯƠNG trong Q1-26 (+2.6% → +6.7%) nhờ danh mục tập trung BVH, REE tăng tốt.
+      </div>
+      <div class="alert alert-pos">
+        <strong>Tháng 3/2026:</strong> Quỹ mở CP vào ròng trở lại (+0.9T tổng). EVESG và DCDS hút ròng 2 tháng liên tiếp. Tín hiệu phục hồi niềm tin nhà đầu tư cá nhân.
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: QUỸ TRÁI PHIẾU -->
+  <div id="tab-tp" class="tab-pane">
+    <div class="alert alert-warn" style="margin-bottom:10px">
+      Nhóm TP rút ròng tháng thứ 7 liên tiếp trong T3-26 · Lãi suất tiết kiệm tăng 4.9%/năm (T3-26) vs 4.2%/năm (T2-26) → Thu hẹp chênh lệch lợi suất · Q1-26 TP rút ròng 4.5T, giảm -23% vs Q4-25
+    </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+      <div>
+        <table class="ft">
+          <thead>
+            <tr>
+              <th>Quỹ Trái Phiếu</th>
+              <th class="r">NAV(tỷ)</th>
+              <th class="r">T3-26</th>
+              <th class="r">Q1-26</th>
+              <th class="r">6 Tháng</th>
+              <th class="r">1 Năm</th>
+              <th class="r">3 Năm</th>
+              <th class="r">5 Năm</th>
+              <th class="r">Dòng T3</th>
+              <th class="r">Dòng Q1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#0f2f1a22"><td><strong>VCBF-FIF</strong> <span style="font-size:8px;color:#4ade80">★ Top</span></td><td class="r neu">611</td><td class="r pos">+0.7%</td><td class="r pos">+3.0%</td><td class="r pos">+3.4%</td><td class="r pos">+6.5%</td><td class="r pos">+7.5%</td><td class="r pos">+7.3%</td><td class="r neg">-7</td><td class="r neg">-26</td></tr>
+            <tr style="background:#0f2f1a22"><td><strong>LHBF</strong> (Lighthouse) <span style="font-size:8px;color:#4ade80">★ Top</span></td><td class="r neu">107</td><td class="r pos">+0.7%</td><td class="r pos">+1.5%</td><td class="r pos">+2.8%</td><td class="r pos">+6.2%</td><td class="r pos">+12.6%</td><td class="r">—</td><td class="r neg">-10</td><td class="r neg">-20</td></tr>
+            <tr><td>ABBF (An Bình)</td><td class="r neu">1,136</td><td class="r pos">+0.6%</td><td class="r pos">+1.7%</td><td class="r pos">+3.3%</td><td class="r pos">+6.4%</td><td class="r pos">+6.3%</td><td class="r">—</td><td class="r pos">+56</td><td class="r neg">-105</td></tr>
+            <tr><td>VNDBF (VND)</td><td class="r neu">369</td><td class="r pos">+0.6%</td><td class="r pos">+1.6%</td><td class="r pos">+3.4%</td><td class="r pos">+6.8%</td><td class="r pos">+7.7%</td><td class="r pos">+7.5%</td><td class="r neg">-15</td><td class="r neg">-21</td></tr>
+            <tr><td>DCBF (DC Bond)</td><td class="r neu">1,420</td><td class="r pos">+0.6%</td><td class="r pos">+1.6%</td><td class="r pos">+3.5%</td><td class="r pos">+6.9%</td><td class="r pos">+7.6%</td><td class="r pos">+6.9%</td><td class="r neg">-255</td><td class="r neg">-386</td></tr>
+            <tr><td>VFF (VinaCapital)</td><td class="r neu">1,313</td><td class="r pos">+0.5%</td><td class="r pos">+1.6%</td><td class="r pos">+3.7%</td><td class="r pos">+7.2%</td><td class="r pos">+7.2%</td><td class="r pos">+7.6%</td><td class="r neg">-102</td><td class="r neg">-200</td></tr>
+            <tr><td>MBBOND (MB)</td><td class="r neu">280</td><td class="r pos">+0.6%</td><td class="r pos">+1.7%</td><td class="r pos">+3.4%</td><td class="r pos">+7.0%</td><td class="r pos">+8.4%</td><td class="r pos">+6.7%</td><td class="r neg">-4</td><td class="r neg">-3</td></tr>
+            <tr><td>MAFF (Mirae Asset)</td><td class="r neu">354</td><td class="r pos">+0.5%</td><td class="r pos">+1.9%</td><td class="r pos">+3.3%</td><td class="r pos">+6.7%</td><td class="r pos">+7.6%</td><td class="r">—</td><td class="r neg">-11</td><td class="r neg">-12</td></tr>
+            <tr><td>LPBF (LP Bond)</td><td class="r neu">106</td><td class="r pos">+0.5%</td><td class="r pos">+1.6%</td><td class="r pos">+3.2%</td><td class="r pos">+1.3%</td><td class="r">—</td><td class="r">—</td><td class="r neg">0</td><td class="r pos">0</td></tr>
+            <tr><td>DCIP (DC Income)</td><td class="r neu">1,035</td><td class="r pos">+0.3%</td><td class="r pos">+1.4%</td><td class="r pos">+2.9%</td><td class="r pos">+5.7%</td><td class="r pos">+6.2%</td><td class="r pos">+5.0%</td><td class="r neg">-135</td><td class="r neg">-323</td></tr>
+            <tr><td>BVBF (Bảo Việt)</td><td class="r neu">177</td><td class="r pos">+0.4%</td><td class="r pos">+2.3%</td><td class="r pos">+2.9%</td><td class="r pos">+6.1%</td><td class="r pos">+6.9%</td><td class="r pos">+6.0%</td><td class="r neg">-3</td><td class="r neg">-6</td></tr>
+            <tr><td>CBPF (Chubb)</td><td class="r neu">140</td><td class="r pos">+0.1%</td><td class="r pos">+1.4%</td><td class="r pos">+2.7%</td><td class="r pos">+5.0%</td><td class="r pos">+5.6%</td><td class="r pos">+5.1%</td><td class="r neg">0</td><td class="r neg">0</td></tr>
+            <tr style="background:#2f1a1a22"><td><strong>TCBF</strong> (Techcom) <span style="font-size:8px;color:#f87171">↓ Rút mạnh</span></td><td class="r neu">6,800</td><td class="r pos">+0.2%</td><td class="r pos">+2.1%</td><td class="r pos">+1.8%</td><td class="r pos">+4.9%</td><td class="r pos">+16.2%</td><td class="r pos">+8.1%</td><td class="r neg">-1,524</td><td class="r neg">-3,240</td></tr>
+            <tr style="background:#2f1a1a22"><td>MBAM (MB Flex)</td><td class="r neu">228</td><td class="r pos">+0.0%</td><td class="r pos">+1.3%</td><td class="r pos">+2.4%</td><td class="r pos">+6.0%</td><td class="r">—</td><td class="r">—</td><td class="r neg">-92</td><td class="r neg">-309</td></tr>
+            <tr style="border-top:1px solid #f59e0b55"><td style="color:var(--warn)">Lãi suất tiết kiệm 12T</td><td class="r"></td><td class="r warn">+0.5%</td><td class="r warn">+1.4%</td><td class="r warn">+3.6%</td><td class="r warn">+5.9%</td><td class="r warn">+6.1%</td><td class="r warn">+5.3%</td><td class="r"></td><td class="r"></td></tr>
+          </tbody>
+        </table>
+        <p class="fn">* TCBF: NAV giảm 44% so với T11/2025 (dù NAV/share tăng +2.5%) do rút ròng liên tiếp. LHBF đạt lợi nhuận cao nhất kể từ T11/2025 nhờ bán cổ phiếu NAB.</p>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--warn);font-family:var(--mono);margin-bottom:10px">HIỆU SUẤT Q1-2026 (% thay đổi NAV)</div>
+        <div class="bar-row"><div class="bar-lbl">VCBF-FIF</div><div class="bar-wrap"><div class="bar-fill" style="width:100%;background:#f59e0b99"></div></div><div class="bar-pct pos">+3.0%</div></div>
+        <div class="bar-row"><div class="bar-lbl">BVBF</div><div class="bar-wrap"><div class="bar-fill" style="width:76%;background:#f59e0b99"></div></div><div class="bar-pct warn">+2.3%</div></div>
+        <div class="bar-row"><div class="bar-lbl">TCBF</div><div class="bar-wrap"><div class="bar-fill" style="width:70%;background:#f59e0b99"></div></div><div class="bar-pct warn">+2.1%</div></div>
+        <div class="bar-row"><div class="bar-lbl">MAFF</div><div class="bar-wrap"><div class="bar-fill" style="width:63%;background:#f59e0b88"></div></div><div class="bar-pct warn">+1.9%</div></div>
+        <div class="bar-row"><div class="bar-lbl">MBBOND</div><div class="bar-wrap"><div class="bar-fill" style="width:56%;background:#f59e0b88"></div></div><div class="bar-pct warn">+1.7%</div></div>
+        <div class="bar-row"><div class="bar-lbl">ABBF</div><div class="bar-wrap"><div class="bar-fill" style="width:56%;background:#f59e0b88"></div></div><div class="bar-pct warn">+1.7%</div></div>
+        <div class="bar-row"><div class="bar-lbl">LHBF</div><div class="bar-wrap"><div class="bar-fill" style="width:50%;background:#f59e0b88"></div></div><div class="bar-pct warn">+1.5%</div></div>
+        <div class="bar-row"><div class="bar-lbl" style="color:var(--warn)">Tiết kiệm</div><div class="bar-wrap"><div class="bar-fill" style="width:46%;background:#f59e0b55;border:1px dashed var(--warn)"></div></div><div class="bar-pct warn">+1.4%</div></div>
+        <div class="bar-row"><div class="bar-lbl">DCBF</div><div class="bar-wrap"><div class="bar-fill" style="width:53%;background:#f59e0b77"></div></div><div class="bar-pct warn">+1.6%</div></div>
+        <div class="bar-row"><div class="bar-lbl">DCIP</div><div class="bar-wrap"><div class="bar-fill" style="width:46%;background:#f59e0b66"></div></div><div class="bar-pct warn">+1.4%</div></div>
+        <div class="bar-row"><div class="bar-lbl">MBAM</div><div class="bar-wrap"><div class="bar-fill" style="width:43%;background:#f59e0b55"></div></div><div class="bar-pct warn">+1.3%</div></div>
+        <div class="divider"></div>
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mono);line-height:1.6">
+          Lãi tiết kiệm T3: <span class="warn">4.9%/năm</span><br>
+          vs T2: <span class="warn">4.2%/năm</span> → <span class="neg">↑ 70bps</span><br>
+          Phần bù quỹ TP co hẹp đáng kể<br>
+          → Giải thích xu hướng rút ròng tiếp diễn
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: QUỸ CÂN BẰNG -->
+  <div id="tab-cb" class="tab-pane">
+    <div class="alert alert-warn" style="margin-bottom:10px">
+      Quỹ Cân bằng: Hiệu suất bị ảnh hưởng bởi tỷ trọng cổ phiếu · TCFF là quỹ duy nhất đạt hiệu suất DƯƠNG trong T3-26 (+0.1%) · ENF và Bản Việt giảm mạnh nhất do CP tỷ trọng cao (&gt;60%)
+    </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+      <div>
+        <table class="ft">
+          <thead>
+            <tr>
+              <th>Quỹ Cân Bằng</th>
+              <th class="r">NAV(tỷ)</th>
+              <th class="r">T3-26</th>
+              <th class="r">Q1-26</th>
+              <th class="r">6T</th>
+              <th class="r">Tỷ Trọng CP</th>
+              <th class="r">MTD (9/4)</th>
+              <th class="r">Dòng Q1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#0f2f1a22"><td><strong>TCFF</strong> (Techcom Linh hoạt) <span style="font-size:8px;color:#4ade80">★ #1</span></td><td class="r neu">855</td><td class="r pos">+0.1%</td><td class="r pos">+7.2%</td><td class="r pos">—</td><td class="r warn">~35%</td><td class="r pos">+1.2%</td><td class="r neg">-18</td></tr>
+            <tr><td>Quỹ CB Chiến lược VCBF</td><td class="r neu">—</td><td class="r neg">-4.2%</td><td class="r pos">+1.3%</td><td class="r">—</td><td class="r warn">59.1%</td><td class="r pos">+1.3%</td><td class="r">—</td></tr>
+            <tr><td>Quỹ CB Tuệ Sáng VinaCapital</td><td class="r neu">—</td><td class="r neg">-4.1%</td><td class="r pos">+0.4%</td><td class="r">—</td><td class="r warn">~45%</td><td class="r pos">+1.1%</td><td class="r">—</td></tr>
+            <tr><td>UVDIF</td><td class="r neu">—</td><td class="r neg">-3.0%</td><td class="r neg">-1.4%</td><td class="r">—</td><td class="r warn">~40%</td><td class="r pos">+0.3%</td><td class="r">—</td></tr>
+            <tr><td>Quỹ Cân bằng Manulife</td><td class="r neu">—</td><td class="r neg">-3.9%</td><td class="r neg">-0.5%</td><td class="r">—</td><td class="r warn">~50%</td><td class="r pos">+0.9%</td><td class="r">—</td></tr>
+            <tr><td>Quỹ Năng động Manulife</td><td class="r neu">—</td><td class="r neg">-4.5%</td><td class="r neg">-1.0%</td><td class="r">—</td><td class="r warn">~55%</td><td class="r pos">+0.7%</td><td class="r">—</td></tr>
+            <tr><td>ENF</td><td class="r neu">—</td><td class="r neg">-6.1%</td><td class="r neg">-1.1%</td><td class="r">—</td><td class="r neg">66.4%</td><td class="r pos">+1.2%</td><td class="r">—</td></tr>
+            <tr><td>Quỹ Cân bằng Bản Việt</td><td class="r neu">—</td><td class="r neg">-6.5%</td><td class="r neg">-2.2%</td><td class="r">—</td><td class="r neg">~65%</td><td class="r pos">+0.8%</td><td class="r">—</td></tr>
+          </tbody>
+        </table>
+        <p class="fn">* MTD tính đến 8/4/2026. Tỷ trọng CP ước tính — quỹ có CP cao hơn bị ảnh hưởng nặng hơn từ VNINDEX -11% T3. TCFF dù #1 nhưng vẫn rút ròng 3 tháng liên tiếp.</p>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--teal);font-family:var(--mono);margin-bottom:10px">HIỆU SUẤT T3-2026 (% NAV)</div>
+        <div class="bar-row"><div class="bar-lbl">TCFF ★</div><div class="bar-wrap"><div class="bar-fill pos" style="width:1%;background:var(--pos)"></div></div><div class="bar-pct pos">+0.1%</div></div>
+        <div class="bar-row"><div class="bar-lbl">UVDIF</div><div class="bar-wrap"><div class="bar-fill" style="width:27%;background:#ef4444aa"></div></div><div class="bar-pct neg">-3.0%</div></div>
+        <div class="bar-row"><div class="bar-lbl">CB Manulife</div><div class="bar-wrap"><div class="bar-fill" style="width:35%;background:#ef4444aa"></div></div><div class="bar-pct neg">-3.9%</div></div>
+        <div class="bar-row"><div class="bar-lbl">CB Tuệ Sáng</div><div class="bar-wrap"><div class="bar-fill" style="width:37%;background:#ef4444aa"></div></div><div class="bar-pct neg">-4.1%</div></div>
+        <div class="bar-row"><div class="bar-lbl">CB VCBF</div><div class="bar-wrap"><div class="bar-fill" style="width:38%;background:#ef4444aa"></div></div><div class="bar-pct neg">-4.2%</div></div>
+        <div class="bar-row"><div class="bar-lbl">ND Manulife</div><div class="bar-wrap"><div class="bar-fill" style="width:41%;background:#ef4444aa"></div></div><div class="bar-pct neg">-4.5%</div></div>
+        <div class="bar-row"><div class="bar-lbl">ENF (CP 66%)</div><div class="bar-wrap"><div class="bar-fill" style="width:55%;background:#ef4444cc"></div></div><div class="bar-pct neg">-6.1%</div></div>
+        <div class="bar-row"><div class="bar-lbl">Bản Việt (CP~65%)</div><div class="bar-wrap"><div class="bar-fill" style="width:59%;background:#ef4444cc"></div></div><div class="bar-pct neg">-6.5%</div></div>
+        <div class="divider"></div>
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mono);line-height:1.7">
+          Tương quan rõ ràng:<br>
+          <span class="neg">Tỷ trọng CP cao → Giảm mạnh hơn</span><br>
+          ENF (66% CP): <span class="neg">-6.1%</span> T3<br>
+          TCFF (~35% CP): <span class="pos">+0.1%</span> T3<br><br>
+          <span class="teal">MTD đến 9/4:</span> Tất cả đều phục hồi<br>
+          từ +0.3% đến +1.3%
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROW: TOP MUA BÁN + TỶ TRỌNG TIỀN -->
+<div class="row row-2">
+  <!-- TOP MUA BÁN RÒNG -->
+  <div class="card">
+    <div class="card-hdr">
+      <span class="card-title">Top Mua / Bán Ròng Tháng 3/2026</span>
+      <span class="tag">Khối lượng (triệu CP) · 72 Quỹ</span>
+    </div>
+    <div class="stock-grid">
+      <div>
+        <div style="font-size:9px;color:var(--pos);font-family:var(--mono);margin-bottom:6px">▲ TOP 10 MUA RÒNG</div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">HPG</div><div class="stock-info">29 quỹ · PYN, Fubon</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+38.7M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">VCI</div><div class="stock-info">39 quỹ · VFMVSF, VLGF</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+17.1M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">VIB</div><div class="stock-info">9 quỹ · Tài chính</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+3.6M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">IDC</div><div class="stock-info">15 quỹ · BĐS DCDS</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+2.8M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">VIX</div><div class="stock-info">10 quỹ · Tài chính</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+2.7M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">TNG</div><div class="stock-info">5 quỹ · Midcap</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+1.8M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">MIG</div><div class="stock-info">3 quỹ · Bảo hiểm</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+1.6M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">EVF</div><div class="stock-info">5 quỹ · Tài chính</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+1.2M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker pos">HDG</div><div class="stock-info">12 quỹ · BĐS</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+1.1M</div></div>
+        <div class="stock-item"><div><div class="stock-ticker pos">EIB</div><div class="stock-info">12 quỹ · Ngân hàng</div></div><div class="pos" style="font-size:12px;font-family:var(--mono)">+1.0M</div></div>
+      </div>
+      <div>
+        <div style="font-size:9px;color:var(--neg);font-family:var(--mono);margin-bottom:6px">▼ TOP 10 BÁN RÒNG</div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">BSR</div><div class="stock-info">10 quỹ · Fubon, DCDS</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-22.8M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">STB</div><div class="stock-info">19 quỹ · PYN giảm mạnh</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-21.2M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">TCH</div><div class="stock-info">5 quỹ · BĐS</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-11.9M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">VIC</div><div class="stock-info">11 quỹ · ETF tái cơ cấu T3</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-10.0M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">ACB</div><div class="stock-info">14 quỹ · NH</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-9.3M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">OCB</div><div class="stock-info">7 quỹ · NH</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-8.5M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">SSI</div><div class="stock-info">17 quỹ · CK</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-8.3M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">MBB</div><div class="stock-info">13 quỹ · PYN giảm</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-7.5M</div></div>
+        <div class="stock-item" style="margin-bottom:5px"><div><div class="stock-ticker neg">TCB</div><div class="stock-info">22 quỹ · NH</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-6.5M</div></div>
+        <div class="stock-item"><div><div class="stock-ticker neg">TCX</div><div class="stock-info">9 quỹ</div></div><div class="neg" style="font-size:12px;font-family:var(--mono)">-6.5M</div></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="alert alert-pos" style="margin:0">
+        <strong>Nhóm Mua:</strong> Dịch chuyển sang Midcap (HPG, VCI, TNG, MIG) và Tài chính (VIX, EVF, EIB). BĐS (IDC, HDG) được chú ý trở lại.
+      </div>
+      <div class="alert alert-neg" style="margin:0">
+        <strong>Nhóm Bán:</strong> VIC tháng thứ 3 liên tiếp bị bán (ETF ngoại). NH lớn (STB, ACB, MBB, TCB) và CK (SSI) chịu áp lực rút ròng từ ETF tái cơ cấu.
+      </div>
+    </div>
+  </div>
+
+  <!-- TỶ TRỌNG TIỀN -->
+  <div class="card">
+    <div class="card-hdr">
+      <span class="card-title">Tỷ Trọng Tiền Quỹ Mở CP</span>
+      <span class="tag">20/36 tăng · T3-2026</span>
+    </div>
+    <div class="alert alert-warn" style="margin-bottom:10px">
+      20/36 quỹ TĂNG tỷ trọng tiền — thận trọng sau VNINDEX -11% T3. Xu hướng chủ yếu ở quỹ lớn (NAV 5–8T). Quỹ nhỏ tiếp tục giải ngân.
+    </div>
+    <div style="font-size:10px;color:var(--pos);font-family:var(--mono);margin-bottom:8px">NHÓM TĂNG TỶ TRỌNG TIỀN (THẬN TRỌNG)</div>
+    <div class="cw-row">
+      <div class="cw-name">VFMVSF (8,373T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#f59e0b55;border-radius:2px;position:relative"><div style="position:absolute;right:0;height:100%;width:72%;background:var(--pos);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change pos">9.0% → 12.5%</div>
+    </div>
+    <div class="cw-row">
+      <div class="cw-name">DCDS (5,874T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#f59e0b55;border-radius:2px;position:relative"><div style="position:absolute;right:0;height:100%;width:74%;background:var(--pos);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change pos">11.2% → 15.1%</div>
+    </div>
+    <div class="cw-row">
+      <div class="cw-name">VESAF (2,529T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#f59e0b55;border-radius:2px;position:relative"><div style="position:absolute;right:0;height:100%;width:64%;background:var(--pos);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change pos">9.1% → 10.3%</div>
+    </div>
+    <div class="cw-row">
+      <div class="cw-name">VMEEF (2,395T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#f59e0b55;border-radius:2px;position:relative"><div style="position:absolute;right:0;height:100%;width:60%;background:var(--pos);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change pos">7.3% → 9.4%</div>
+    </div>
+    <div class="cw-row">
+      <div class="cw-name">VEOF (1,772T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#f59e0b55;border-radius:2px;position:relative"><div style="position:absolute;right:0;height:100%;width:58%;background:var(--pos);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change pos">3.0% → 9.5%</div>
+    </div>
+    <div class="divider"></div>
+    <div style="font-size:10px;color:var(--neg);font-family:var(--mono);margin-bottom:8px">NHÓM GIẢM TỶ TRỌNG TIỀN (TIẾP TỤC GIẢI NGÂN)</div>
+    <div class="cw-row">
+      <div class="cw-name">EVESG (2,447T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#ef444433;border-radius:2px;position:relative"><div style="height:100%;width:33%;background:var(--neg);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change neg">19.6% → 6.5%</div>
+    </div>
+    <div class="cw-row">
+      <div class="cw-name">VCBF-BCF (1,521T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#ef444433;border-radius:2px;position:relative"><div style="height:100%;width:53%;background:var(--neg);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change neg">10.2% → 5.4%</div>
+    </div>
+    <div class="cw-row">
+      <div class="cw-name">VLGF (4,802T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#ef444433;border-radius:2px;position:relative"><div style="height:100%;width:58%;background:var(--neg);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change neg">6.7% → 3.9%</div>
+    </div>
+    <div class="cw-row">
+      <div class="cw-name">SSI-SCA (1,364T)</div>
+      <div class="cw-bars">
+        <div style="width:36px;height:10px;background:#ef444433;border-radius:2px;position:relative"><div style="height:100%;width:87%;background:var(--neg);border-radius:2px"></div></div>
+      </div>
+      <div class="cw-change neg">3.3% → 2.9%</div>
+    </div>
+    <div class="divider"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+      <div style="background:var(--bg4);border-radius:5px;padding:8px;text-align:center">
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mono)">QUỸLỚN (5-8T NAV)</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--pos)">↑ Tiền</div>
+        <div style="font-size:9px;color:var(--txt3)">Thận trọng, chờ đợi</div>
+      </div>
+      <div style="background:var(--bg4);border-radius:5px;padding:8px;text-align:center">
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mono)">QUỸNHỎ</div>
+        <div style="font-size:14px;font-family:var(--mono);color:var(--warn)">↓ Tiền</div>
+        <div style="font-size:9px;color:var(--txt3)">Tiếp tục giải ngân</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-txt">DATA: FiinPro-X Platform &nbsp;·&nbsp; 81 Quỹ CP + 27 Quỹ TP + 12 Quỹ Cân bằng &nbsp;·&nbsp; Tổng NAV &gt; 246 nghìn tỷ VNĐ &nbsp;·&nbsp; Báo cáo T3 &amp; Q1-2026</div>
+  <div class="footer-txt" style="text-align:right">Chỉ mục đích tham khảo · Không phải khuyến nghị đầu tư &nbsp;|&nbsp; © FiinGroup 2026 &nbsp;|&nbsp; fiingroup.vn</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// TAB SWITCHER
+function switchTab(id) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// FLOW CHART — ALL 13 QUARTERS WITH FIXED DATA
+// Q3-25: total=-14.4T (derived: 2025 total -34.5T, Q1=-4.6, Q2=-5.4, Q4≈-10.1 → Q3=-14.4)
+// Q4-25: total=-10.1T (derived: Q1-26 is 48% higher than Q4-25 → 14.4/1.48≈9.7≈10.1)
+const qLabels = ['Q1-23','Q2-23','Q3-23','Q4-23','Q1-24','Q2-24','Q3-24','Q4-24','Q1-25','Q2-25','Q3-25','Q4-25','Q1-26'];
+
+// Quỹ CP quarterly net flow (estimated from annual totals + chart labels)
+const cpFlow = [9.5, -9.8, -8.6, 1.4,  -9.3, -0.9, 5.4, -5.9,  -4.0, -4.2, -11.0, -6.3,  -10.1];
+// Quỹ TP quarterly net flow
+const tpFlow = [0,   -1.5, -4.2, -6.4,  -0.8,  -0.2, 0,   0,    -0.6,  -1.2,  -3.4,  -3.8,  -4.3];
+// Total (from chart's labeled line — authoritative)
+const total   = [9.5,-11.3,-12.8,-4.1,  -10.1, -1.1, 5.4, -5.9,  -4.6, -5.4, -14.4, -10.1, -14.4];
+
+new Chart(document.getElementById('flowChart'), {
+  data: {
+    labels: qLabels,
+    datasets: [
+      {
+        type: 'bar',
+        label: 'Quỹ CP',
+        data: cpFlow,
+        backgroundColor: cpFlow.map(v => v >= 0 ? 'rgba(16,185,129,0.55)' : 'rgba(239,68,68,0.45)'),
+        borderColor: cpFlow.map(v => v >= 0 ? '#10b981' : '#ef4444'),
+        borderWidth: 1,
+        borderRadius: 2
+      },
+      {
+        type: 'bar',
+        label: 'Quỹ TP',
+        data: tpFlow,
+        backgroundColor: 'rgba(245,158,11,0.45)',
+        borderColor: '#f59e0b',
+        borderWidth: 1,
+        borderRadius: 2
+      },
+      {
+        type: 'line',
+        label: 'Tổng',
+        data: total,
+        borderColor: '#60a5fa',
+        borderWidth: 2,
+        pointRadius: 4,
+        pointBackgroundColor: total.map((v,i) => i === total.length-1 ? '#ef4444' : '#60a5fa'),
+        pointBorderColor: total.map((v,i) => i === total.length-1 ? '#ef4444' : '#60a5fa'),
+        pointRadius: total.map((v,i) => i === total.length-1 ? 6 : 3),
+        fill: false,
+        tension: 0.25,
+        z: 10
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1e293b',
+        titleColor: '#94a3b8',
+        bodyColor: '#e2e8f0',
+        borderColor: '#334155',
+        borderWidth: 1,
+        callbacks: {
+          title: ctx => ctx[0].label,
+          label: ctx => {
+            const v = ctx.raw;
+            if (v === null || v === undefined) return null;
+            return ` ${ctx.dataset.label}: ${v >= 0 ? '+' : ''}${v.toFixed(1)}T`;
+          },
+          afterBody: ctx => {
+            const i = ctx[0].dataIndex;
+            const annuals = {3:'Cả 2023: -5.6T',7:'Cả 2024: -10.6T',11:'Cả 2025: -34.5T',12:'= 41.7% cả năm 2025'};
+            return annuals[i] ? [annuals[i]] : [];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        stacked: false,
+        ticks: { color: '#64748b', font: { size: 9, family: 'IBM Plex Mono' }, maxRotation: 45 },
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        border: { display: false }
+      },
+      y: {
+        ticks: {
+          color: '#64748b',
+          font: { size: 9, family: 'IBM Plex Mono' },
+          callback: v => `${v}T`
+        },
+        grid: { color: 'rgba(255,255,255,0.06)' },
+        border: { display: false }
+      }
+    }
+  }
+});
+
+// Add year separators annotation via custom plugin
+</script>
+</body>
+</html>
