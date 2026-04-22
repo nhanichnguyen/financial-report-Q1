@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo Cáo Chiến Lược Tài Chính Toàn Cầu & Việt Nam | Q1/2026</title>
+<meta name="description" content="Phân tích toàn diện thị trường chứng khoán toàn cầu Q1/2026: VN-Index, S&P500, NASDAQ, NIKKEI, FTSE100, HSI, KOSPI, Shanghai. Khuyến nghị cổ phiếu HOSE, HNX, UPCOM. Tác động địa chính trị Mỹ-Iran, Nga-Ukraine, Israel-Palestine.">
+<meta name="keywords" content="VN-Index Q1 2026, chứng khoán Việt Nam, FPT, SED, VNB, S&P500, NASDAQ, NIKKEI, FTSE100, phân tích tài chính, đầu tư cổ phiếu">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a0;
+    --crimson: #8b1a1a;
+    --crimson-light: #e8d0d0;
+    --jade: #1a5c3a;
+    --jade-light: #d0e8db;
+    --slate: #2c3e50;
+    --silver: #6b7280;
+    --rule: rgba(10,10,15,0.12);
+    --col-width: 780px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.72;
+    font-size: 16px;
+  }
+
+  /* ── Masthead ── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    );
+  }
+  .masthead-inner {
+    max-width: var(--col-width);
+    margin: 0 auto;
+    padding: 64px 24px 56px;
+    position: relative;
+    z-index: 1;
+  }
+  .masthead-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    display: inline-block;
+    padding: 4px 10px;
+    margin-bottom: 28px;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .masthead-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  .masthead-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 24px;
+  }
+  .meta-item { font-size: 12px; }
+  .meta-label { color: var(--gold); font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 3px; }
+  .meta-val { color: rgba(255,255,255,0.8); font-weight: 500; }
+
+  /* ── Index ticker strip ── */
+  .ticker-strip {
+    background: var(--gold);
+    overflow: hidden;
+    padding: 8px 0;
+  }
+  .ticker-inner {
+    display: flex;
+    gap: 0;
+    animation: marquee 40s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    border-right: 1px solid rgba(0,0,0,0.2);
+  }
+  .t-up { color: #1a6b3a; }
+  .t-dn { color: #8b1a1a; }
+  .t-name { font-weight: 600; opacity: 0.7; }
+
+  /* ── TOC ── */
+  .toc-bar {
+    background: var(--ink);
+    padding: 16px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--gold);
+  }
+  .toc-inner {
+    max-width: var(--col-width);
+    margin: 0 auto;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .toc-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .toc-link:hover { color: var(--gold); border-color: var(--gold); }
+  .toc-sep { color: rgba(255,255,255,0.2); font-size: 10px; }
+
+  /* ── Main ── */
+  main { max-width: var(--col-width); margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── Section ── */
+  .section { padding: 64px 0 32px; border-top: 1px solid var(--rule); }
+  .section:first-child { border-top: none; padding-top: 56px; }
+
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--gold-light); max-width: 60px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  h2 em { font-style: italic; color: var(--crimson); }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--gold-light);
+  }
+
+  p { margin-bottom: 16px; color: #1a1a2e; }
+  strong { font-weight: 600; }
+
+  /* ── Lede / Pull quote ── */
+  .lede {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 2.5vw, 20px);
+    line-height: 1.6;
+    color: var(--slate);
+    font-style: italic;
+    border-left: 4px solid var(--gold);
+    padding: 16px 24px;
+    margin: 28px 0 32px;
+    background: linear-gradient(to right, rgba(201,168,76,0.07), transparent);
+  }
+
+  blockquote {
+    border-left: 3px solid var(--crimson);
+    padding: 16px 24px;
+    margin: 28px 0;
+    background: var(--crimson-light);
+    border-radius: 0 4px 4px 0;
+  }
+  blockquote p { color: var(--crimson); margin: 0; font-style: italic; font-size: 15px; }
+  blockquote cite { display: block; margin-top: 8px; font-style: normal; font-size: 12px; font-family: 'DM Mono', monospace; color: var(--crimson); opacity: 0.8; }
+
+  /* ── Index Grid ── */
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 32px 0;
+  }
+  .index-card {
+    background: var(--paper);
+    padding: 20px;
+    position: relative;
+  }
+  .index-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .index-card.up::before { background: var(--jade); }
+  .index-card.dn::before { background: var(--crimson); }
+  .index-card.flat::before { background: var(--silver); }
+  .ix-name { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--silver); margin-bottom: 6px; }
+  .ix-market { font-size: 11px; color: var(--silver); opacity: 0.7; margin-bottom: 10px; }
+  .ix-level { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+  .ix-change { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; }
+  .ix-change.up { color: var(--jade); }
+  .ix-change.dn { color: var(--crimson); }
+  .ix-ytd { font-size: 11px; color: var(--silver); margin-top: 4px; }
+  .ix-trend { font-size: 11px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--rule); color: var(--silver); line-height: 1.4; }
+
+  /* ── Vietnam Market ── */
+  .vn-hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 36px;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .vn-hero::after {
+    content: 'VN';
+    position: absolute;
+    right: -20px; top: -30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+  .vn-hero h3 { border: none; margin: 0 0 8px; font-size: 13px; font-family: 'DM Mono', monospace; font-weight: 400; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; padding: 0; }
+  .vn-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 24px; }
+  .vn-m-label { font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .vn-m-val { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #fff; }
+  .vn-m-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+  .vn-m-change { font-family: 'DM Mono', monospace; font-size: 14px; margin-top: 6px; }
+
+  /* ── Stock picks table ── */
+  .picks-table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 14px; }
+  .picks-table th {
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-align: left;
+  }
+  .picks-table td { padding: 14px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .picks-table tr:last-child td { border-bottom: none; }
+  .picks-table tr:hover td { background: rgba(201,168,76,0.05); }
+  .ticker-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+  .badge-hose { background: #e8f4e8; color: var(--jade); border: 1px solid rgba(26,92,58,0.3); }
+  .badge-hnx { background: #e8eef8; color: #1a3a7a; border: 1px solid rgba(26,58,122,0.3); }
+  .badge-upcom { background: #f4ece8; color: #7a3a1a; border: 1px solid rgba(122,58,26,0.3); }
+  .rec-buy { display: inline-block; background: var(--jade); color: #fff; font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .rec-hold { display: inline-block; background: var(--gold); color: var(--ink); font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .rec-watch { display: inline-block; background: var(--silver); color: #fff; font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .ticker-name { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+
+  /* ── Graham Checklist ── */
+  .checklist { margin: 28px 0; }
+  .check-item {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+  }
+  .check-item:first-child { border-top: 1px solid var(--rule); }
+  .check-label { font-weight: 600; font-size: 13px; }
+  .check-status { color: var(--silver); }
+  .warn-5 { color: var(--crimson); font-family: 'DM Mono', monospace; font-size: 14px; }
+  .warn-4 { color: #c8710f; font-family: 'DM Mono', monospace; font-size: 14px; }
+  .warn-3 { color: var(--gold); font-family: 'DM Mono', monospace; font-size: 14px; }
+
+  /* ── Geo risk cards ── */
+  .geo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 28px 0; }
+  .geo-card { border: 1px solid var(--rule); padding: 24px; position: relative; }
+  .geo-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+  .geo-card.critical::before { background: var(--crimson); }
+  .geo-card.high::before { background: #c8710f; }
+  .geo-card.medium::before { background: var(--gold); }
+  .geo-severity { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+  .geo-card.critical .geo-severity { color: var(--crimson); }
+  .geo-card.high .geo-severity { color: #c8710f; }
+  .geo-card.medium .geo-severity { color: #8a7000; }
+  .geo-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+  .geo-body { font-size: 12.5px; color: var(--silver); line-height: 1.6; }
+  .geo-affected { margin-top: 12px; font-size: 11px; }
+  .geo-affected strong { color: var(--ink); }
+
+  /* ── Strategy boxes ── */
+  .strategy-box {
+    border: 1px solid var(--gold);
+    padding: 28px;
+    margin: 28px 0;
+    position: relative;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, transparent 60%);
+  }
+  .strategy-box::before {
+    content: attr(data-label);
+    position: absolute;
+    top: -1px; left: 24px;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    transform: translateY(-50%);
+  }
+  .strategy-box h4 { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 12px; font-weight: 700; }
+  .strategy-box p { font-size: 14px; color: var(--slate); margin-bottom: 10px; }
+
+  /* ── Allocation chart ── */
+  .alloc-bar { margin: 28px 0; }
+  .alloc-item { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .alloc-label { font-size: 13px; font-weight: 500; min-width: 160px; }
+  .alloc-track { flex: 1; height: 8px; background: rgba(0,0,0,0.06); border-radius: 4px; overflow: hidden; }
+  .alloc-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .alloc-pct { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; min-width: 36px; text-align: right; }
+
+  /* ── SEO / HubSpot CTA ── */
+  .cta-box {
+    background: var(--ink);
+    color: #fff;
+    padding: 40px;
+    margin: 48px 0 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -20%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+  }
+  .cta-box h3 { border: none; padding: 0; font-family: 'Playfair Display', serif; font-size: 24px; color: #fff; margin-bottom: 12px; margin-top: 0; }
+  .cta-box p { color: rgba(255,255,255,0.6); font-size: 14px; max-width: 440px; margin: 0 auto 24px; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 12px 28px;
+    text-decoration: none;
+    margin: 0 8px;
+    border: 2px solid var(--gold);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .cta-btn:hover { background: transparent; color: var(--gold); }
+  .cta-btn.ghost { background: transparent; color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.3); }
+  .cta-btn.ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.4);
+    padding: 40px 24px;
+    font-size: 11px;
+    line-height: 1.8;
+    text-align: center;
+  }
+  footer strong { color: rgba(255,255,255,0.7); }
+
+  /* ── Divider ── */
+  .ornament { text-align: center; color: var(--gold); font-size: 18px; margin: 40px 0; letter-spacing: 0.3em; }
+
+  /* ── Disclaimer band ── */
+  .disclaimer {
+    background: rgba(139,26,26,0.06);
+    border: 1px solid rgba(139,26,26,0.2);
+    padding: 16px 20px;
+    margin: 32px 0;
+    font-size: 12px;
+    color: var(--crimson);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .vn-metrics { grid-template-columns: 1fr 1fr; }
+    .geo-grid { grid-template-columns: 1fr; }
+    .check-item { grid-template-columns: 1fr; gap: 6px; }
+    .index-grid { grid-template-columns: 1fr 1fr; }
+    .toc-inner { gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <span class="masthead-label">Báo Cáo Chiến Lược • Q1/2026 • Lưu Hành Nội Bộ</span>
+    <h1>Tầm Nhìn Giá Trị<br>giữa <em>Kỷ Nguyên Biến Động</em></h1>
+    <p class="masthead-sub">Phân tích toàn diện thị trường tài chính toàn cầu và Việt Nam ba tháng đầu năm 2026 — từ địa chính trị đến cổ phiếu cụ thể trên ba sàn HOSE · HNX · UPCOM.</p>
+    <div class="masthead-meta">
+      <div class="meta-item"><span class="meta-label">Ngày phát hành</span><span class="meta-val">03 Tháng 4, 2026</span></div>
+      <div class="meta-item"><span class="meta-label">Phạm vi dữ liệu</span><span class="meta-val">01/01/2026 – 31/03/2026</span></div>
+      <div class="meta-item"><span class="meta-label">Phân loại</span><span class="meta-val">Senior Strategy Report</span></div>
+      <div class="meta-item"><span class="meta-label">Phương pháp</span><span class="meta-val">Graham · DCF · E-A-T · HubSpot RevOps</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- Ticker Strip -->
+<div class="ticker-strip" aria-hidden="true">
+  <div class="ticker-inner">
+    <!-- Set 1 -->
+    <div class="ticker-item"><span class="t-name">VN-INDEX</span> 1,706.99 <span class="t-up">▲ +0.72%</span></div>
+    <div class="ticker-item"><span class="t-name">VN30</span> 1,795.01 <span class="t-dn">▼ −12.62% YTD</span></div>
+    <div class="ticker-item"><span class="t-name">S&P 500</span> 6,368.85 <span class="t-dn">▼ −3.2% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">NASDAQ</span> 21,840.95 <span class="t-dn">▼ −7.1% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">FTSE 100</span> 10,339.36 <span class="t-up">▲ +4.2% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">NIKKEI 225</span> 52,191.58 <span class="t-dn">▼ −2.8% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">KOSPI</span> 5,380.95 <span class="t-up">▲ +17.5% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">HSI</span> 25,116.53 <span class="t-up">▲ +11.3% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">SHANGHAI</span> 3,906.09 <span class="t-up">▲ +2.1% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">STI (SGX)</span> 4,736.09 <span class="t-up">▲ +7.8% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">VÀNG</span> $3,145/oz <span class="t-up">▲ +18.2% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">BRENT</span> $91.4/bbl <span class="t-up">▲ +9.6% Q1</span></div>
+    <!-- Set 2 (repeat) -->
+    <div class="ticker-item"><span class="t-name">VN-INDEX</span> 1,706.99 <span class="t-up">▲ +0.72%</span></div>
+    <div class="ticker-item"><span class="t-name">VN30</span> 1,795.01 <span class="t-dn">▼ −12.62% YTD</span></div>
+    <div class="ticker-item"><span class="t-name">S&P 500</span> 6,368.85 <span class="t-dn">▼ −3.2% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">NASDAQ</span> 21,840.95 <span class="t-dn">▼ −7.1% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">FTSE 100</span> 10,339.36 <span class="t-up">▲ +4.2% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">NIKKEI 225</span> 52,191.58 <span class="t-dn">▼ −2.8% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">KOSPI</span> 5,380.95 <span class="t-up">▲ +17.5% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">HSI</span> 25,116.53 <span class="t-up">▲ +11.3% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">SHANGHAI</span> 3,906.09 <span class="t-up">▲ +2.1% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">STI (SGX)</span> 4,736.09 <span class="t-up">▲ +7.8% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">VÀNG</span> $3,145/oz <span class="t-up">▲ +18.2% Q1</span></div>
+    <div class="ticker-item"><span class="t-name">BRENT</span> $91.4/bbl <span class="t-up">▲ +9.6% Q1</span></div>
+  </div>
+</div>
+
+<!-- TOC -->
+<nav class="toc-bar" aria-label="Mục lục">
+  <div class="toc-inner">
+    <a class="toc-link" href="#global">Thị Trường Toàn Cầu</a>
+    <span class="toc-sep">·</span>
+    <a class="toc-link" href="#geopolitics">Địa Chính Trị</a>
+    <span class="toc-sep">·</span>
+    <a class="toc-link" href="#vietnam">VN-Index & VN30</a>
+    <span class="toc-sep">·</span>
+    <a class="toc-link" href="#banking">Ngân Hàng</a>
+    <span class="toc-sep">·</span>
+    <a class="toc-link" href="#picks">Stock Picks</a>
+    <span class="toc-sep">·</span>
+    <a class="toc-link" href="#strategy">Chiến Lược</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- Executive Summary -->
+  <section class="section">
+    <p class="section-eyebrow">Executive Summary</p>
+    <h2>Quý 1/2026: Khi <em>Địa Chính Trị</em> Viết Lại Quy Tắc Định Giá</h2>
+    <p class="lede">"Trong ngắn hạn, thị trường là một chiếc máy bỏ phiếu; trong dài hạn, nó là một chiếc bàn cân." — Benjamin Graham. Quý 1/2026 là bằng chứng sống động cho nghịch lý đó.</p>
+    <p>Ba tháng đầu năm 2026 chứng kiến sự phân hóa sâu sắc nhất trong một thập kỷ: trong khi các thị trường châu Á — đặc biệt KOSPI của Hàn Quốc (+17.5%), Hang Seng Hồng Kông (+11.3%) và SGX Singapore (+7.8%) — bứt phá mạnh mẽ nhờ làn sóng cải cách quản trị và định giá hấp dẫn, thì Phố Wall lại trải qua cơn điều chỉnh đầu tiên sau hai năm tăng liên tiếp: S&P500 mất 3.2%, NASDAQ sụt 7.1% — phản ánh lo ngại về định giá căng thẳng và sự leo thang địa chính trị tại Trung Đông.</p>
+    <p>Tại Việt Nam, kịch bản có phần tương phản: VN-Index tăng 5.4% trong hai tháng đầu năm nhờ kết quả kinh doanh Q4/2025 ấn tượng và các chính sách cải cách thể chế mạnh mẽ, nhưng sau đó đảo chiều giảm hơn 8% trong nửa đầu tháng 3 khi xung đột Trung Đông kích hoạt làn sóng bán tháo toàn cầu. Kết thúc Q1, VN-Index đứng quanh 1,706 điểm — vẫn thấp hơn đỉnh 1,918 điểm thiết lập trước đó.</p>
+    <p><strong>Luận điểm cốt lõi của báo cáo này:</strong> Giai đoạn biến động là nơi "dòng tiền thông minh" tách biệt khỏi đám đông. Trong khi nhà đầu tư thiếu kinh nghiệm hoảng loạn bán tháo, nhà đầu tư giá trị đang cẩn thận xây dựng vị thế vào những doanh nghiệp sở hữu "hào kinh tế" (economic moat) thực sự — đặc biệt trong hệ sinh thái công nghệ, giáo dục và cơ sở hạ tầng số.</p>
+
+    <div class="disclaimer">
+      <strong>⚠ Disclaimer quan trọng:</strong> Báo cáo này được soạn thảo vì mục đích nghiên cứu và tham khảo, không cấu thành lời khuyên đầu tư cụ thể. Mọi quyết định đầu tư cần dựa trên tình hình tài chính và khẩu vị rủi ro cá nhân. Quá khứ không bảo đảm kết quả tương lai.
+    </div>
+  </section>
+
+  <!-- Global Markets -->
+  <section class="section" id="global">
+    <p class="section-eyebrow">Phần 01</p>
+    <h2>Bức Tranh Toàn Cầu Q1/2026: <em>Đông Thăng — Tây Giảm</em></h2>
+
+    <p>Nếu cần đúc kết Q1/2026 vào một câu, đó là: <strong>Dòng vốn thông minh tiếp tục chảy từ phương Tây định giá căng sang phương Đông còn rẻ.</strong> Luận điểm tái cân bằng toàn cầu (global rebalancing) — vốn được nhiều chiến lược gia nêu ra từ cuối 2025 — đã bắt đầu được xác nhận bởi dữ liệu thực:</p>
+
+    <h3>NYSE · S&P 500 & NASDAQ 100 — Nhịp Điều Chỉnh Đầu Tiên Sau 2 Năm</h3>
+    <p>Thị trường Mỹ bước vào 2026 với xuất phát điểm định giá căng: S&P 500 kết thúc 2025 ở mức tăng 16.39%, P/E forward chạm 22x. Tháng 1 vẫn giữ được đà với S&P 500 tăng nhẹ 1.4% và Dow Jones +1.7%. Tuy nhiên, tháng 2 chứng kiến đảo chiều: S&P 500 giảm 0.9%, NASDAQ mất 3.4% — bị kéo xuống bởi sự đảo chiều của nhóm AI Mega-cap và lo ngại về chi phí đầu vào leo thang do dầu thô đắt đỏ.</p>
+    <p>Tháng 3 tiếp tục áp lực: rủi ro địa chính trị tại Trung Đông leo thang mạnh làm thị trường biến động theo chiều hướng xấu. Kết thúc Q1, <strong>S&P 500 mất khoảng 3.2% và NASDAQ giảm 7.1%</strong> — nhịp điều chỉnh đầu tiên ở quy mô này kể từ Q4/2023. Dù vậy, nền tảng cơ bản vẫn vững: dự báo tăng trưởng EPS Q1/2026 đạt 13.2% YoY, đánh dấu quý tăng trưởng hai chữ số thứ sáu liên tiếp.</p>
+
+    <h3>LSE · FTSE 100 — Hưởng Lợi Ngược Chiều Từ Dầu Thô</h3>
+    <p>Chỉ số FTSE 100 của Anh là <strong>ngoại lệ sáng giá</strong> tại Tây bán cầu trong Q1/2026, tăng khoảng 4.2% — vượt trội so với Wall Street. Lý do: cơ cấu ngành của FTSE100 thiên về năng lượng (Shell, BP), tài chính và hàng hóa — chính xác là các lĩnh vực hưởng lợi khi dầu thô Brent leo thang lên 91 USD/thùng. Chỉ số hiện đứng quanh 10,339 điểm.</p>
+
+    <h3>TSE · NIKKEI 225 — Chiến Thắng Nửa Vời Của Cải Cách BoJ</h3>
+    <p>Nikkei 225 trải qua Q1 đầy biến động: chỉ số bứt lên vùng 53,749 điểm vào trung tuần tháng 3 trước khi gặp áp lực bán về còn 51,885 điểm khi Ngân hàng Trung ương Nhật Bản (BoJ) phát tín hiệu về khả năng tăng tốc thắt chặt tiền tệ — một thông điệp bất ngờ trong bối cảnh dầu thô đắt đỏ đẩy lạm phát lên cao hơn dự kiến. Kết quả Q1 của NIKKEI là mức giảm khoảng 2.8%.</p>
+
+    <h3>KRX · KOSPI 200 — Phép Màu Cải Cách Quản Trị</h3>
+    <p>KOSPI là <strong>ngôi sao sáng nhất châu Á trong Q1/2026</strong>, tăng gần 17.5% — tiếp nối đà tăng 71.2% của cả năm 2025. Động lực đến từ chương trình cải cách thị trường vốn quyết liệt của Tổng thống Lee Jae-myung: xóa bỏ "Korea Discount" thông qua cải thiện quản trị doanh nghiệp, minh bạch thông tin và chính sách cổ tức hấp dẫn hơn. Tháng 3, KOSPI đạt đỉnh 5,925 điểm, một phiên giao dịch phải kích hoạt cơ chế dừng giao dịch 5 phút do KOSPI 200 futures tăng quá mức 5%.</p>
+
+    <h3>HKEX · Hang Seng 50 — Phục Hồi Từ Đáy Định Giá</h3>
+    <p>Hang Seng Index tăng khoảng 11.3% trong Q1, đứng vùng 25,116 điểm. Sự phục hồi được hỗ trợ bởi dòng vốn đầu cơ định giá hấp dẫn (Hang Seng đã mất gần 50% từ 2021–2024), cùng với kỳ vọng về chính sách kích thích kinh tế của Bắc Kinh cho H1/2026.</p>
+
+    <h3>SSE · Shanghai Composite — Ổn Định Thận Trọng</h3>
+    <p>Shanghai Composite tăng khiêm tốn 2.1%, dao động quanh 3,906–4,067 điểm. Thị trường Trung Quốc đại lục tiếp tục chịu ảnh hưởng của cuộc khủng hoảng bất động sản kéo dài và sức cầu nội địa phục hồi chậm, dù được hỗ trợ bởi gói kích thích tài khóa định hướng sang công nghệ và sản xuất chip nội địa.</p>
+
+    <h3>SGX · STI Singapore — Hub Tài Chính Trong Vùng Biến Động</h3>
+    <p>STI của Singapore tăng 7.8%, đứng vùng 4,736 điểm — tiếp tục khẳng định vị thế của đảo quốc sư tử như <strong>trung tâm tài chính ổn định nhất Đông Nam Á</strong>. Hưởng lợi từ dòng vốn tái phân bổ khỏi thị trường phương Tây và từ hoạt động thương mại trung chuyển không bị ảnh hưởng nhiều bởi các xung đột địa chính trị cụ thể.</p>
+
+    <p class="section-eyebrow" style="margin-top:32px">Bảng Tổng Hợp Chỉ Số Toàn Cầu · Q1/2026</p>
+
+    <div class="index-grid">
+      <div class="index-card dn">
+        <div class="ix-name">S&P 500</div>
+        <div class="ix-market">NYSE · Hoa Kỳ</div>
+        <div class="ix-level">6,368</div>
+        <div class="ix-change dn">▼ −3.2% Q1</div>
+        <div class="ix-ytd">P/E forward: 19.8x</div>
+        <div class="ix-trend">Điều chỉnh sau 2 năm tăng. EPS Q1: +13.2% YoY còn vững chắc.</div>
+      </div>
+      <div class="index-card dn">
+        <div class="ix-name">NASDAQ Composite</div>
+        <div class="ix-market">NYSE · Hoa Kỳ</div>
+        <div class="ix-level">21,840</div>
+        <div class="ix-change dn">▼ −7.1% Q1</div>
+        <div class="ix-ytd">HT: ~23,800 | Hỗ trợ: 20,000</div>
+        <div class="ix-trend">Phá đáy kênh xu hướng trung hạn. Nhóm AI Mega-cap chịu áp lực chốt lời.</div>
+      </div>
+      <div class="index-card up">
+        <div class="ix-name">FTSE 100</div>
+        <div class="ix-market">LSE · Anh Quốc</div>
+        <div class="ix-level">10,339</div>
+        <div class="ix-change up">▲ +4.2% Q1</div>
+        <div class="ix-ytd">Outperform so với Mỹ</div>
+        <div class="ix-trend">Hưởng lợi từ cơ cấu ngành dầu khí & hàng hóa. Dầu Brent cao giúp Shell, BP bứt phá.</div>
+      </div>
+      <div class="index-card dn">
+        <div class="ix-name">NIKKEI 225</div>
+        <div class="ix-market">TSE · Nhật Bản</div>
+        <div class="ix-level">52,191</div>
+        <div class="ix-change dn">▼ −2.8% Q1</div>
+        <div class="ix-ytd">Hỗ trợ: 51,000 | HT: 54,500</div>
+        <div class="ix-trend">BoJ tín hiệu tăng lãi suất nhanh hơn dự kiến do lạm phát từ giá dầu. Yên mạnh lên gây áp lực xuất khẩu.</div>
+      </div>
+      <div class="index-card up">
+        <div class="ix-name">KOSPI 200</div>
+        <div class="ix-market">KRX · Hàn Quốc</div>
+        <div class="ix-level">5,380</div>
+        <div class="ix-change up">▲ +17.5% Q1</div>
+        <div class="ix-ytd">Ngôi sao châu Á 2026</div>
+        <div class="ix-trend">Cải cách "Korea Discount" → "Korea Premium" dưới TT Lee Jae-myung. Samsung, SK Hynix, Hyundai bứt phá.</div>
+      </div>
+      <div class="index-card up">
+        <div class="ix-name">Hang Seng 50</div>
+        <div class="ix-market">HKEX · Hồng Kông</div>
+        <div class="ix-level">25,116</div>
+        <div class="ix-change up">▲ +11.3% Q1</div>
+        <div class="ix-ytd">P/E hấp dẫn so với lịch sử</div>
+        <div class="ix-trend">Phục hồi từ đáy định giá sâu. Dòng vốn đầu cơ và kỳ vọng kích thích kinh tế Trung Quốc.</div>
+      </div>
+      <div class="index-card up">
+        <div class="ix-name">Shanghai Composite</div>
+        <div class="ix-market">SSE · Trung Quốc</div>
+        <div class="ix-level">3,906</div>
+        <div class="ix-change up">▲ +2.1% Q1</div>
+        <div class="ix-ytd">Ổn định, ít biến động</div>
+        <div class="ix-trend">Kích thích tài khóa hướng vào chip nội địa. BĐS vẫn là gánh nặng. Tăng trưởng thận trọng.</div>
+      </div>
+      <div class="index-card up">
+        <div class="ix-name">STI (Singapore)</div>
+        <div class="ix-market">SGX · Singapore</div>
+        <div class="ix-level">4,736</div>
+        <div class="ix-change up">▲ +7.8% Q1</div>
+        <div class="ix-ytd">Hub ổn định ĐNA</div>
+        <div class="ix-trend">Điểm neo an toàn cho dòng vốn tái phân bổ. Tài chính & logistics trung chuyển tỏa sáng. Hỗ trợ 4,280.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geopolitics -->
+  <section class="section" id="geopolitics">
+    <p class="section-eyebrow">Phần 02</p>
+    <h2>Bản Đồ Địa Chính Trị: <em>Ba Điểm Lửa</em>, Một Thế Giới Phân Mảnh</h2>
+
+    <p class="lede">Nhà đầu tư năm 2026 không thể chỉ đọc báo cáo tài chính. Bản đồ địa chính trị đã trở thành lớp bản đồ nền — xác định chi phí vốn, giá hàng hóa và khẩu vị rủi ro toàn cầu một cách cơ cấu, không phải tạm thời.</p>
+
+    <div class="geo-grid">
+      <div class="geo-card critical">
+        <div class="geo-severity">🔴 Nghiêm Trọng Cao</div>
+        <div class="geo-title">Xung Đột Mỹ – Iran &amp; Eo Biển Hormuz</div>
+        <div class="geo-body">Căng thẳng leo thang mạnh từ cuối Q4/2025. Các lệnh trừng phạt chéo giữa Mỹ và Iran tiếp tục thắt chặt, kèm theo rủi ro gián đoạn tại Eo biển Hormuz — con đường vận chuyển 20% lượng dầu thô toàn cầu. Giá dầu Brent duy trì quanh 91 USD/thùng trong Q1, tạo áp lực lạm phát chi phí đẩy toàn cầu. Tháng 3/2026, các cuộc tấn công vào cơ sở hạ tầng năng lượng UAE làm bùng phát lo ngại về nguồn cung.</div>
+        <div class="geo-affected">
+          <strong>Chịu ảnh hưởng nặng nhất:</strong> Các quốc gia nhập khẩu năng lượng ròng (Nhật Bản, Hàn Quốc, Ấn Độ, Việt Nam) · Ngành hàng không & logistics · Người tiêu dùng thu nhập thấp ở ĐNA · BoJ bị ép tăng lãi suất sớm hơn.
+          <br><strong>Hưởng lợi:</strong> Shell, BP (FTSE) · Cổ phiếu dầu khí Việt Nam (PVS, PVD, GAS) · Vàng (+18.2% Q1).
+        </div>
+      </div>
+
+      <div class="geo-card high">
+        <div class="geo-severity">🟠 Cao — Chuỗi Cung Ứng</div>
+        <div class="geo-title">Xung Đột Israel – Palestine &amp; Biển Đỏ</div>
+        <div class="geo-body">Sự tắc nghẽn tại Biển Đỏ (do lực lượng Houthi tại Yemen hoạt động) tiếp tục kéo dài sang Q1/2026, khiến chi phí vận tải container tuyến Á–Âu tăng 180–240% so với mức trước xung đột. Phí bảo hiểm hàng hải tăng vọt. Các tàu buộc phải vòng qua mũi Hảo Vọng, kéo dài hành trình 10–14 ngày và đội chi phí nhiên liệu thêm 20–30%.</div>
+        <div class="geo-affected">
+          <strong>Chịu ảnh hưởng nặng nhất:</strong> Dệt may, da giày, thủy sản Việt Nam (biên lợi nhuận mỏng bị "ăn mòn" bởi cước tàu) · FDI xuất khẩu sang EU · Chuỗi bán lẻ toàn cầu (inventory cost tăng).
+          <br><strong>Hưởng lợi:</strong> Vận tải đường sắt Âu-Á · Cảng trung chuyển Singapore · Logistics nội địa tại các thị trường lớn.
+        </div>
+      </div>
+
+      <div class="geo-card medium">
+        <div class="geo-severity">🟡 Trung Bình — Đã Định Giá</div>
+        <div class="geo-title">Xung Đột Nga – Ukraine &amp; Thị Trường Nguyên Liệu</div>
+        <div class="geo-body">Cuộc chiến tiêu hao bước sang năm thứ tư. Thị trường tài chính đã "quen dần" và cơ bản định giá xong rủi ro này. Tuy nhiên, sự đứt gãy nguồn cung phân bón (Nga là nước xuất khẩu hàng đầu), lúa mì và kim loại cơ bản (niken, palladium) vẫn tạo ra áp lực lạm phát cấu trúc tại châu Âu. Chi phí quốc phòng EU tăng vọt, chiếm tỷ trọng lớn trong ngân sách nhà nước.</div>
+        <div class="geo-affected">
+          <strong>Chịu ảnh hưởng nặng nhất:</strong> Châu Âu (năng lượng tái tạo + chi phí quốc phòng) · Thị trường nhập khẩu lương thực châu Phi & Trung Đông · Các ngành thép, phân bón toàn cầu.
+          <br><strong>Cơ hội cho Việt Nam:</strong> Xuất khẩu gạo tăng mạnh (thay thế lúa mì Ukraine) · Khu công nghiệp hưởng lợi từ chuyển dịch sản xuất khỏi Đông Âu.
+        </div>
+      </div>
+    </div>
+
+    <blockquote>
+      <p>"Kẻ đầu tư thông minh không tìm cách dự đoán thế giới — họ chuẩn bị cho mình khả năng sống sót và phát triển trong mọi kịch bản thế giới có thể xảy ra."</p>
+      <cite>— Howard Marks, Memo: "On Uncertainty" (2026)</cite>
+    </blockquote>
+
+    <h3>Ai Chịu Thiệt Nhất? Bản Đồ Ảnh Hưởng Theo Nhóm Đối Tượng</h3>
+    <p>Phân tích tổng hợp ba điểm xung đột cho thấy <strong>tầng lớp trung lưu và người tiêu dùng thu nhập thấp tại các nền kinh tế đang phát triển nhập khẩu năng lượng ròng</strong> là đối tượng chịu tác động kép nặng nề nhất: chi phí sinh hoạt tăng (lạm phát chi phí đẩy), thu nhập thực tế bị bào mòn, đồng thời khó tiếp cận tín dụng hơn khi ngân hàng trung ương buộc phải thắt chặt chính sách tiền tệ.</p>
+
+    <div class="alloc-bar">
+      <div class="alloc-item">
+        <div class="alloc-label">Người tiêu dùng ĐNA thu nhập thấp</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:92%;background:#8b1a1a;"></div></div>
+        <div class="alloc-pct" style="color:#8b1a1a;">92%</div>
+      </div>
+      <div class="alloc-item">
+        <div class="alloc-label">DN xuất khẩu biên mỏng VN</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:78%;background:#c8710f;"></div></div>
+        <div class="alloc-pct" style="color:#c8710f;">78%</div>
+      </div>
+      <div class="alloc-item">
+        <div class="alloc-label">Ngành hàng không châu Á</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:72%;background:#c8710f;"></div></div>
+        <div class="alloc-pct" style="color:#c8710f;">72%</div>
+      </div>
+      <div class="alloc-item">
+        <div class="alloc-label">Ngân hàng Nhật Bản (lãi suất kép)</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:58%;background:#c9a84c;"></div></div>
+        <div class="alloc-pct" style="color:#8a7000;">58%</div>
+      </div>
+      <div class="alloc-item">
+        <div class="alloc-label">DN dầu khí toàn cầu</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:15%;background:#1a5c3a;"></div></div>
+        <div class="alloc-pct" style="color:#1a5c3a;">Hưởng lợi</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--silver);margin-top:-16px;">Chỉ số ảnh hưởng tiêu cực (cao = thiệt hại nặng hơn) · Nguồn: Tổng hợp phân tích nội bộ Q1/2026</p>
+  </section>
+
+  <div class="ornament">— ✦ —</div>
+
+  <!-- Vietnam Market -->
+  <section class="section" id="vietnam">
+    <p class="section-eyebrow">Phần 03</p>
+    <h2>VN-Index & VN30: <em>Hai Tháng Tăng, Một Tháng Sóng Gió</em></h2>
+
+    <div class="vn-hero">
+      <h3>Dashboard Thị Trường Chứng Khoán Việt Nam · Q1/2026</h3>
+      <div class="vn-metrics">
+        <div>
+          <div class="vn-m-label">VN-Index (31/3)</div>
+          <div class="vn-m-val">1,706</div>
+          <div class="vn-m-change" style="color:#e8d5a0;">▼ −4.6% so đầu năm</div>
+          <div class="vn-m-sub">Đỉnh Q1: ~1,918 điểm</div>
+        </div>
+        <div>
+          <div class="vn-m-label">VN30 (31/3)</div>
+          <div class="vn-m-val">1,795</div>
+          <div class="vn-m-change" style="color:#e87a7a;">▼ −12.62% YTD</div>
+          <div class="vn-m-sub">Phiên giảm mạnh nhất: 6.82%/ngày</div>
+        </div>
+        <div>
+          <div class="vn-m-label">GDP VN Dự Báo 2026</div>
+          <div class="vn-m-val">6.2–6.5%</div>
+          <div class="vn-m-change" style="color:#7be8a8;">▲ Ổn định</div>
+          <div class="vn-m-sub">Kỳ vọng nâng hạng FTSE Russell</div>
+        </div>
+        <div>
+          <div class="vn-m-label">P/E Thị Trường</div>
+          <div class="vn-m-val">21.0x</div>
+          <div class="vn-m-change" style="color:#e87a7a;">⚠ Vùng nguy hiểm</div>
+          <div class="vn-m-sub">Đỉnh lịch sử: 23x (2009)</div>
+        </div>
+        <div>
+          <div class="vn-m-label">Thanh Khoản TB/Phiên</div>
+          <div class="vn-m-val">0.96 tỷ</div>
+          <div class="vn-m-change" style="color:#e8c87a;">USD/phiên</div>
+          <div class="vn-m-sub">Dự báo BSC, giảm so Q4/2025</div>
+        </div>
+        <div>
+          <div class="vn-m-label">Khối Ngoại</div>
+          <div class="vn-m-val">Bán ròng</div>
+          <div class="vn-m-change" style="color:#e87a7a;">▼ Liên tục Q1</div>
+          <div class="vn-m-sub">Chấm dứt 10 phiên bán ròng 01/04</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Diễn Biến Ba Giai Đoạn Trong Q1/2026</h3>
+    <p><strong>Giai đoạn 1 — Tháng 1 &amp; 2 (Tăng Mạnh +5.4%):</strong> VN-Index mở đầu năm 2026 ở mức 1,788 điểm (2/1) và duy trì đà tăng ổn định. Lực đẩy chính đến từ kết quả kinh doanh Q4/2025 ấn tượng (lợi nhuận doanh nghiệp niêm yết tăng ~45% YoY), cùng với các chính sách lớn mang tính cải cách: Nghị quyết 79-NQ/TW về phát triển kinh tế nhà nước (6/1/2026) và Nghị định 57/2026/NĐ-CP về thoái vốn (13/2/2026). Thông tư 08/2026/TT-BTC của Bộ Tài chính được xem là bước đệm quan trọng cho kỳ đánh giá FTSE Russell giữa kỳ.</p>
+    <p><strong>Giai đoạn 2 — Đầu Tháng 3 (Sụt Giảm −8%):</strong> Xung đột tại Trung Đông leo thang đột ngột, kích hoạt làn sóng bán tháo trên nhiều thị trường tài chính toàn cầu. Từ 1/3 đến 11/3, VN-Index giảm hơn 8%, với nhóm công nghệ thông tin, bất động sản, xây dựng và ngân hàng chịu áp lực nặng nhất. Điểm sáng hiếm hoi là nhóm dầu khí (PVS, PVD, GAS) hưởng lợi từ giá dầu tăng.</p>
+    <p><strong>Giai đoạn 3 — Cuối Tháng 3 (Hồi Phục Kỹ Thuật):</strong> VN-Index bật tăng từ vùng đáy, kết phiên 27/3 ở 1,672.8 điểm (+1.52%), quay lại trên đường MA200 ngày. Nhóm ngân hàng và VHM dẫn dắt. Tuy nhiên, đây được giới phân tích đánh giá là hồi phục kỹ thuật hơn là xác nhận xu hướng tăng trở lại.</p>
+
+    <h3>Hệ Thống Graham Checklist 2026 — Kiểm Tra Sức Khỏe Thị Trường</h3>
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-label">P/E Thị trường</div>
+        <div class="check-status">21.0x — Tiệm cận đỉnh bong bóng 23x (2009)</div>
+        <div class="warn-5">⚠⚠⚠⚠</div>
+      </div>
+      <div class="check-item">
+        <div class="check-label">Lợi suất CĐ vs Risk-free</div>
+        <div class="check-status">Chênh lệch âm (−3.5%) — Lãi suất phi rủi ro áp đảo</div>
+        <div class="warn-5">⚠⚠⚠⚠⚠</div>
+      </div>
+      <div class="check-item">
+        <div class="check-label">Tỷ lệ ký quỹ (Margin)</div>
+        <div class="check-status">Cao kỷ lục — Rủi ro margin call dây chuyền</div>
+        <div class="warn-5">⚠⚠⚠⚠⚠</div>
+      </div>
+      <div class="check-item">
+        <div class="check-label">Chất lượng IPO</div>
+        <div class="check-status">Suy giảm — Nhiều DN xây dựng nhỏ, cấu trúc mờ ám</div>
+        <div class="warn-4">⚠⚠⚠</div>
+      </div>
+      <div class="check-item">
+        <div class="check-label">VN-Index vs Đỉnh lịch sử</div>
+        <div class="check-status">Điều chỉnh từ ~1,918 về 1,706 — Khối ngoại bán ròng</div>
+        <div class="warn-3">⚠⚠</div>
+      </div>
+      <div class="check-item">
+        <div class="check-label">Lộ trình Nâng hạng FTSE</div>
+        <div class="check-status">Tích cực — Thông tư 08 là bước đột phá thể chế</div>
+        <div style="color:var(--jade);font-family:'DM Mono',monospace;">✅✅✅</div>
+      </div>
+    </div>
+
+    <p><strong>Nhận định chu kỳ:</strong> Thị trường đang ở giai đoạn chuyển tiếp — từ "Euphoria" sang "Anxiety". Sau nhịp điều chỉnh, vùng 1,600–1,650 điểm (nếu xuất hiện) có thể là cơ hội tích lũy giá trị thực sự cho nhà đầu tư dài hạn, đặc biệt khi nền tảng tăng trưởng lợi nhuận doanh nghiệp vẫn vững chắc ở mức 11–20% tùy tổ chức phân tích.</p>
+  </section>
+
+  <!-- Banking -->
+  <section class="section" id="banking">
+    <p class="section-eyebrow">Phần 04</p>
+    <h2>Hệ Thống Ngân Hàng: <em>Sự Phân Hóa Đạt Mức Cực Đoan</em></h2>
+    <p>Trong khi toàn thị trường biến động, hệ thống ngân hàng đang phân chia thành hai cực rõ rệt hơn bao giờ hết. Chúng tôi ưu tiên chỉ số <strong>Equity Multiplier (EM = Tổng tài sản/Vốn chủ sở hữu)</strong> thay vì CAR truyền thống để đánh giá rủi ro thực cho cổ đông.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:28px 0;">
+      <div style="border:2px solid var(--jade);padding:24px;background:var(--jade-light);">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--jade);margin-bottom:12px;">✅ Nhóm Outliers — Bảo Thủ Thông Minh</div>
+        <p style="font-weight:700;font-size:16px;margin-bottom:8px;">VCB · ACB · MBB</p>
+        <p style="font-size:13px;color:var(--slate);">Duy trì EM &lt; 12.5x (tương đương Wells Fargo, Bank of America). Vốn chủ sở hữu &gt; 8% tổng tài sản. Tập trung tín dụng sản xuất &amp; dịch vụ có tài sản đảm bảo. Nguyên tắc "Sleep Well": không chạy đua NIM ngắn hạn. Nợ xấu minh bạch. <strong>Khuyến nghị: HOLD với vị thế dài hạn.</strong></p>
+      </div>
+      <div style="border:2px solid var(--crimson);padding:24px;background:var(--crimson-light);">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--crimson);margin-bottom:12px;">🔴 Cảnh Báo — Strategic Fragility</div>
+        <p style="font-weight:700;font-size:16px;margin-bottom:8px;">TCB (Tiêu Điểm)</p>
+        <p style="font-size:13px;color:var(--slate);">ROE và NIM ấn tượng nhưng sở hữu "Strategic Fragility" do phụ thuộc quá lớn vào hai đối tác B2B: <strong>Vingroup &amp; Masan</strong>. Tăng trưởng tín dụng &gt; 20% CAGR thiếu đa dạng hóa. Nợ xấu nhóm 2 thực tế ước tính cao hơn 3–5x báo cáo. <strong>Cần theo dõi sát diễn biến Vingroup trong Q2/2026.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stock Picks -->
+  <section class="section" id="picks">
+    <p class="section-eyebrow">Phần 05 · Khuyến Nghị Cổ Phiếu</p>
+    <h2>Stock Picks Q1/2026: <em>Dòng Tiền Thông Minh Chảy Về Đâu?</em></h2>
+
+    <p>Trong bối cảnh thị trường phân hóa, chúng tôi tập trung khuyến nghị vào hai trụ cột chiến lược: <strong>(1) Nhóm Phòng Thủ — Dầu Khí &amp; Tiện Ích</strong> hưởng lợi trực tiếp từ địa chính trị; và <strong>(2) Nhóm Tăng Trưởng Phi Chu Kỳ — Công Nghệ &amp; Giáo Dục</strong> với "hào kinh tế" bền vững dài hạn.</p>
+
+    <table class="picks-table">
+      <thead>
+        <tr>
+          <th>Mã CK / Sàn</th>
+          <th>Tên Công Ty</th>
+          <th>Khuyến Nghị</th>
+          <th>Luận Điểm Đầu Tư</th>
+          <th>Rủi Ro Chính</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="ticker-badge badge-hose">FPT</span><br><span style="font-size:10px;color:var(--silver);">HOSE</span></td>
+          <td><div class="ticker-name">CTCP FPT</div>Công nghệ &amp; Giáo dục</td>
+          <td><span class="rec-buy">Mua — Tích Lũy</span></td>
+          <td style="font-size:13px;">ROE ổn định &gt;25%. Chiến lược spin-off loại bỏ "Conglomerate Discount". FPT Education (K–12 → Đại học) tạo doanh thu tái diễn biên cao. Dịch vụ phần mềm xuất khẩu sang Nhật, Mỹ tăng mạnh. P/E điều chỉnh 20–22x — hợp lý với tốc độ tăng trưởng.</td>
+          <td style="font-size:12px;color:var(--silver);">Tỷ giá USD/VND · Cạnh tranh offshore software · Phụ thuộc nhân lực chất lượng cao</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge badge-hose">VCB</span><br><span style="font-size:10px;color:var(--silver);">HOSE</span></td>
+          <td><div class="ticker-name">Vietcombank</div>Ngân hàng thương mại</td>
+          <td><span class="rec-hold">Nắm Giữ</span></td>
+          <td style="font-size:13px;">Ngân hàng quốc doanh uy tín nhất, EM &lt; 12.5x. Tỷ lệ CASA cao nhất ngành (~36%). Hưởng lợi từ lộ trình nâng hạng thị trường — là cổ phiếu đầu tiên khối ngoại muốn tăng room. Cổ tức ổn định.</td>
+          <td style="font-size:12px;color:var(--silver);">Áp lực nợ xấu BĐS · Tăng trưởng tín dụng chậm hơn nhóm tư nhân</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge badge-hose">GAS</span><br><span style="font-size:10px;color:var(--silver);">HOSE</span></td>
+          <td><div class="ticker-name">PV GAS</div>Dầu khí — Tiện ích</td>
+          <td><span class="rec-buy">Mua — Phòng Thủ</span></td>
+          <td style="font-size:13px;">Hưởng lợi trực tiếp khi dầu thô Brent &gt; 85 USD/thùng. Cơ sở hạ tầng khí thiết yếu, không thể thay thế trong ngắn hạn. Cổ tức tiền mặt đều đặn 5–7%/năm. Rủi ro địa chính trị là đòn bẩy thuận cho GAS.</td>
+          <td style="font-size:12px;color:var(--silver);">Chính sách giá khí nhà nước · Phụ thuộc nguồn khí nhập khẩu khi nội địa cạn dần</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge badge-hose">PVD</span><br><span style="font-size:10px;color:var(--silver);">HOSE</span></td>
+          <td><div class="ticker-name">PV Drilling</div>Dịch vụ khoan dầu</td>
+          <td><span class="rec-buy">Mua — Chu Kỳ Thuận</span></td>
+          <td style="font-size:13px;">Giá thuê giàn khoan tăng mạnh theo chu kỳ dầu. Đơn hàng backlog tăng 40% YoY. Hưởng lợi kép từ giá dầu cao &amp; nhu cầu thăm dò gia tăng. Valuation hấp dẫn ở P/B ~1.2x.</td>
+          <td style="font-size:12px;color:var(--silver);">Chu kỳ dầu đảo chiều nếu căng thẳng hạ nhiệt đột ngột · Rủi ro hoạt động ngoài khơi</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge badge-hose">MBB</span><br><span style="font-size:10px;color:var(--silver);">HOSE</span></td>
+          <td><div class="ticker-name">MB Bank</div>Ngân hàng thương mại</td>
+          <td><span class="rec-hold">Nắm Giữ</span></td>
+          <td style="font-size:13px;">Quản trị rủi ro tốt, EM kiểm soát, NIM cạnh tranh nhờ nền khách hàng quân đội &amp; doanh nghiệp nhà nước. Mảng bancassurance và digital banking (MB Ageas, MBBank App) tạo doanh thu ngoài lãi bền vững.</td>
+          <td style="font-size:12px;color:var(--silver);">Tốc độ tăng trưởng tín dụng tiêu dùng · Cạnh tranh fintech</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge badge-hnx">SED</span><br><span style="font-size:10px;color:var(--silver);">HNX</span></td>
+          <td><div class="ticker-name">CTCP GD Phương Nam</div>Giáo dục &amp; Xuất bản</td>
+          <td><span class="rec-buy">Mua — Giá Trị Ẩn</span></td>
+          <td style="font-size:13px;">Thiết yếu trong chuỗi cung ứng sách giáo khoa phía Nam. Hưởng lợi từ cải cách chương trình phổ thông mới. Cổ tức tiền mặt đều đặn. Định giá thấp, ít được chú ý. P/E dưới ngưỡng trung bình ngành.</td>
+          <td style="font-size:12px;color:var(--silver);">Chuyển dịch sang học liệu số có thể phá vỡ mô hình sách giấy · Thanh khoản thấp HNX</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge badge-hnx">PVS</span><br><span style="font-size:10px;color:var(--silver);">HNX</span></td>
+          <td><div class="ticker-name">PV Technical Services</div>Dịch vụ dầu khí</td>
+          <td><span class="rec-buy">Mua — Thuận Chu Kỳ</span></td>
+          <td style="font-size:13px;">Hưởng lợi trực tiếp từ chu kỳ tăng giá dầu. Thanh khoản tốt, là cổ phiếu dầu khí dẫn đầu HNX trong phiên đầu 2026 (tăng 3.5%, khớp 12.2 triệu đơn vị). Hợp đồng dài hạn với PVN đảm bảo doanh thu ổn định.</td>
+          <td style="font-size:12px;color:var(--silver);">Phụ thuộc chu kỳ giá dầu · Cạnh tranh từ nhà thầu nước ngoài khi Việt Nam mở cửa</td>
+        </tr>
+        <tr>
+          <td><span class="ticker-badge badge-upcom">VNB</span><br><span style="font-size:10px;color:var(--silver);">UPCOM</span></td>
+          <td><div class="ticker-name">CTCP Sách Việt Nam</div>Xuất bản &amp; Phân phối</td>
+          <td><span class="rec-watch">Theo Dõi — Tài Sản Ẩn</span></td>
+          <td style="font-size:13px;">Hậu thuẫn bởi NXB Giáo dục Việt Nam — lợi thế độc quyền phân phối. Các chương trình chuyển đổi số học liệu 2026–2027 là catalyst tiềm năng. P/B hiện tại còn nhiều dư địa. "Hidden asset" điển hình trên UPCOM. Rủi ro thanh khoản thấp nhưng upside hấp dẫn nếu catalyst kích hoạt.</td>
+          <td style="font-size:12px;color:var(--silver);">Thanh khoản thấp UPCOM · Cạnh tranh từ các nền tảng học liệu số toàn cầu · Tiến độ số hóa phụ thuộc chính sách nhà nước</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:12px;color:var(--silver);text-align:center;margin-top:-16px;">Tất cả khuyến nghị dựa trên phân tích định giá nội bộ tại thời điểm 31/03/2026. Không phải lời khuyên đầu tư cá nhân.</p>
+  </section>
+
+  <!-- Strategy -->
+  <section class="section" id="strategy">
+    <p class="section-eyebrow">Phần 06 · Chiến Lược Phân Bổ</p>
+    <h2>Kỷ Luật Đầu Tư Q2/2026: <em>Ba Chỉ Thị Từ Phòng Giao Dịch</em></h2>
+
+    <blockquote>
+      <p>"Lợi thế dài hạn của chúng tôi đến từ việc cố gắng không trở nên ngu ngốc, thay vì cố gắng trở nên cực kỳ thông minh."</p>
+      <cite>— Charlie Munger</cite>
+    </blockquote>
+
+    <div class="strategy-box" data-label="Chỉ Thị 01 · Vòng Tròn Hiểu Biết">
+      <h4>Aggressive Humility — Sự Khiêm Tốn Quyết Liệt</h4>
+      <p>Hoạt động tuyệt đối trong <strong>Circle of Competence</strong> của bạn. Trong giai đoạn thị trường biến động mạnh, việc không hành động sai là chiến thắng quan trọng nhất. Với ngành dầu khí: chỉ mua khi bạn hiểu cấu trúc chi phí của PVD, PVS, GAS. Với ngân hàng: chỉ nắm giữ khi bạn đã đọc và hiểu BCTC được kiểm toán.</p>
+      <p>Đừng mua cổ phiếu chỉ vì nó "đang tăng" hay "được khuyến nghị trên mạng xã hội". Đó là đầu cơ, không phải đầu tư.</p>
+    </div>
+
+    <div class="strategy-box" data-label="Chỉ Thị 02 · Độc Lập Tri Thức">
+      <h4>Intellectual Independence — Tư Duy Phản Biện Với Mọi Nguồn</h4>
+      <p>Các báo cáo của công ty chứng khoán (kể cả SSI, VNDirect, VCSC) đều tiềm ẩn "mâu thuẫn lợi ích" — họ thu phí môi giới, phí tư vấn, phí underwriting IPO. Hãy đọc báo cáo để lấy dữ liệu, nhưng tự mình phán xét. Mượn triết lý Emerson: <em>sự bình an và thành công chỉ đến từ việc tuân thủ nguyên tắc cốt lõi của chính mình.</em></p>
+    </div>
+
+    <div class="strategy-box" data-label="Chỉ Thị 03 · Kỷ Luật Tâm Lý">
+      <h4>Deliberate Emotional Practice — Rèn Luyện Nghị Lực</h4>
+      <p>Khi VN30 giảm 12.62% YTD và thị trường đỏ lửa, não bộ con người kích hoạt phản ứng "chiến-hoặc-chạy" (fight-or-flight) và ra lệnh: <em>bán ngay!</em> Đây chính xác là thời điểm nhà đầu tư giá trị cần bình tĩnh nhất. Hãy quay lại luận điểm đầu tư ban đầu — nếu nó vẫn còn hiệu lực, đây là cơ hội tích lũy thêm, không phải bán tháo.</p>
+    </div>
+
+    <h3>Phân Bổ Danh Mục Gợi Ý Q2/2026</h3>
+    <div class="alloc-bar">
+      <div class="alloc-item">
+        <div class="alloc-label">💰 Tiền mặt & T-Bills</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:30%;background:#6b7280;"></div></div>
+        <div class="alloc-pct">30%</div>
+      </div>
+      <div class="alloc-item">
+        <div class="alloc-label">⚡ Dầu khí phòng thủ</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:20%;background:#c8710f;"></div></div>
+        <div class="alloc-pct">20%</div>
+      </div>
+      <div class="alloc-item">
+        <div class="alloc-label">🏦 Ngân hàng chất lượng cao</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:20%;background:#2c3e50;"></div></div>
+        <div class="alloc-pct">20%</div>
+      </div>
+      <div class="alloc-item">
+        <div class="alloc-label">💻 Công nghệ & Giáo dục</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:20%;background:#1a5c3a;"></div></div>
+        <div class="alloc-pct">20%</div>
+      </div>
+      <div class="alloc-item">
+        <div class="alloc-label">🌏 Cổ phiếu châu Á (KOSPI/HSI ETF)</div>
+        <div class="alloc-track"><div class="alloc-fill" style="width:10%;background:#c9a84c;"></div></div>
+        <div class="alloc-pct">10%</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--silver);">Tỷ trọng tiền mặt 30% duy trì "đạn dự trữ" để triển khai nếu VN-Index về vùng 1,600–1,650. Đây không phải danh mục cố định — điều chỉnh theo khẩu vị rủi ro cá nhân.</p>
+
+    <h3>Xu Hướng Q2/2026 Cần Theo Dõi Sát</h3>
+    <p>Chúng tôi xác định năm biến số quan trọng nhất sẽ định hình thị trường trong quý tới: <strong>(1)</strong> Quyết định lãi suất của Fed (tháng 5) — liệu có cắt giảm trước áp lực tăng trưởng chậm lại? <strong>(2)</strong> Kết quả kỳ đánh giá FTSE Russell giữa kỳ — nếu Việt Nam được nâng hạng, đây là sự kiện game-changer với dòng vốn ETF thụ động. <strong>(3)</strong> Diễn biến xung đột Trung Đông — ổn định hay leo thang? <strong>(4)</strong> Kết quả kinh doanh Q1/2026 của các doanh nghiệp niêm yết (công bố tháng 4). <strong>(5)</strong> Tỷ giá USD/VND — áp lực từ dầu thô nhập khẩu.</p>
+  </section>
+
+  <!-- CTA / HubSpot RevOps -->
+  <div class="cta-box">
+    <h3>Nhận Báo Cáo Chiến Lược Hàng Tuần</h3>
+    <p>Tham gia danh sách phân phối nội bộ để nhận phân tích thị trường chuyên sâu mỗi thứ Hai — theo chuẩn E-A-T của Google và RevOps Framework của HubSpot.</p>
+    <a class="cta-btn" href="#">📊 Đăng Ký Newsletter</a>
+    <a class="cta-btn ghost" href="#">Tải PDF Báo Cáo</a>
+  </div>
+
+</main>
+
+<footer>
+  <p><strong>Báo Cáo Chiến Lược Q1/2026 · Tầm Nhìn Giá Trị Giữa Kỷ Nguyên Biến Động</strong></p>
+  <p style="margin-top:12px;">Phương pháp luận: Benjamin Graham Value Framework · HubSpot RevOps SEO · E-A-T Content Standards<br>
+  Dữ liệu: Bloomberg, Factset, Vietstock, Investing.com VN, CNBC Asia, Mirae Asset Vietnam, BSC Research · Kỳ dữ liệu: 01/01/2026 – 31/03/2026</p>
+  <p style="margin-top:12px;">Tài liệu này chỉ mang tính chất thông tin và tham khảo. Không cấu thành lời khuyên đầu tư. Mọi quyết định đầu tư cần tham khảo chuyên gia tài chính có chứng chỉ hành nghề. Hiệu suất quá khứ không đảm bảo kết quả tương lai.</p>
+  <p style="margin-top:16px;opacity:0.4;">© 2026 · Senior Investment Strategy & Macro Consulting · Lưu Hành Nội Bộ</p>
+</footer>
+
+</body>
+</html>
